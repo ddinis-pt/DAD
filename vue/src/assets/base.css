@@ -1,7 +1,16 @@
-@import "tailwindcss/base";
-@import "tailwindcss/components";
-@import "tailwindcss/utilities";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
+/* Add this to your main CSS file (e.g., base.css) */
+@media (min-width: 768px) {
+  body {
+    max-width: 500px;
+    border: black 1px solid;
+    /*  center the body*/
+    margin: 0 auto;
+  }
+}
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -69,10 +78,11 @@
 }
 
 @layer base {
+  /*
   * {
     @apply border-border;
   }
   body {
     @apply bg-background text-foreground;
-  }
+  }*/
 }
