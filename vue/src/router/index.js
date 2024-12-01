@@ -7,6 +7,9 @@ import About from '@/components/About.vue'
 import Game3x4 from '@/components/Game3x4.vue'
 import Game4x4 from '@/components/registered/Game4x4.vue'
 import Game6x6 from '@/components/registered/Game6x6.vue'
+import History from '@/components/History.vue'
+import BuyCoins from '@/components/BuyCoins.vue'
+import LeaderBoard from '@/components/Leaderboard.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 
 const router = createRouter({
@@ -31,6 +34,21 @@ const router = createRouter({
       path: '/about',
       name: 'about',
       component: About
+    },
+    {
+      path: '/history',
+      name: 'history',
+      component: History
+    },
+    {
+      path: '/buy-coins',
+      name: 'buy-coins',
+      component: BuyCoins
+    },
+    {
+      path: '/leaderboard',
+      name: 'leaderboard',
+      component: LeaderBoard
     },
     {
       path: '/testers',

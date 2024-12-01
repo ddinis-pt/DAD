@@ -1,6 +1,7 @@
 <script setup>
 import { ref, watch, nextTick } from 'vue';
 import axios from 'axios';
+import { format } from 'date-fns';
 import CardComponent from './ui/card/CardComponent.vue';
 
 import { useAuthStore } from '@/stores/auth';
@@ -43,12 +44,14 @@ watch(nParesEncontrados, async (n) => {
                 created_user_id: user.id,
                 type: 'S',
                 status: 'E',
-                began_at: startedAt,
-                ended_at: new Date(),
+                began_at: format(startedAt, 'yyyy-MM-dd HH:mm:ss'),
+                ended_at: format(new Date(), 'yyyy-MM-dd HH:mm:ss'),
                 total_time: timer.value,
                 board_id: 1,
+                custom: JSON.stringify({
+                    nJogadas: nJogadas.value,
+                })
             };
-            console.log(game);
             await axios.post('/games', game);
         }
     }

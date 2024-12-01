@@ -25,10 +25,11 @@ class SaveGameRequest extends FormRequest
             'created_user_id' => 'required|integer',
             'type' => 'required|string|in:S,M',
             'status' => 'required|string|in:PE,PL,E,I',
-            'began_at' => 'required|datetime',
-            'ended_at' => 'required|datetime',
+            'began_at' => 'required|date',
+            'ended_at' => 'required|date',
             'total_time' => 'required|integer',
             'board_id' => 'required|integer',
+            'custom' => 'nullable|string',
         ];
     }
 }

@@ -14,5 +14,8 @@ class Game extends Model
         'ended_at',
         'total_time',
         'board_id',
+        'custom',
     ];
+
+    public $timestamps = true;
 }
