@@ -16,6 +16,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
 });
 
 Route::post('/auth/login', [AuthController::class, "login"]);
+Route::post('/auth/loginTAES', [AuthController::class, "loginTAES"]);
 
 Route::get('/users', [UserController::class, "index"]);
 Route::get('/users/{id}', [UserController::class, "show"]);

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\LoginRequest;
+use App\Http\Requests\LoginTaesRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\User;
@@ -26,6 +27,17 @@ class AuthController extends Controller
     }
 
     public function login(LoginRequest $request)
+    {
+        $this->purgeExpiredTokens();
+        $credentials = $request->validated();
+        if (!Auth::attempt($credentials)) {
+            return response()->json(['message' => 'Unauthorized'], 401);
+        }
+        $token = $request->user()->createToken('authToken', ['*'], now()->addHours(2))->plainTextToken;
+        return response()->json(['token' => $token]);
+    }
+
+    public function loginTAES(LoginTaesRequest $request)
     {
         $this->purgeExpiredTokens();
         $credentials = $request->validated();

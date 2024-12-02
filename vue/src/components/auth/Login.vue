@@ -28,7 +28,7 @@ const submit = async () => {
   let user = null
   try {
     user = await authStore.login({
-      nickname: username.value,
+      email: username.value,
       password: password.value
     })
   } catch (error) {
