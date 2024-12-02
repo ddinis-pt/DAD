@@ -13,14 +13,21 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::post('/auth/logout', [AuthController::class, "logout"]);
     Route::post('/auth/refreshtoken', [AuthController::class, "refreshtoken"]);
+    Route::put('/users/{id}', [UserController::class, "update"]);
+
+    Route::delete('/users/{id}', [UserController::class, "destroy"]);
 });
 
+//Auth
 Route::post('/auth/login', [AuthController::class, "login"]);
+Route::post('/auth/register', [AuthController::class, "register"]);
 Route::post('/auth/loginTAES', [AuthController::class, "loginTAES"]);
 
+//Users
 Route::get('/users', [UserController::class, "index"]);
 Route::get('/users/{id}', [UserController::class, "show"]);
 
+//Games
 Route::get('/games', [GameController::class, "index"]);
 Route::get('/games/{id}', [GameController::class, "show"]);
 Route::post('/games', [GameController::class, "store"]);

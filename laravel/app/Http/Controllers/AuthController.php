@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\LoginRequest;
+use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\LoginTaesRequest;
+use App\Http\Requests\UpdateUserRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\User;
@@ -61,6 +63,15 @@ class AuthController extends Controller
         $this->purgeExpiredTokens();
         $this->revokeCurrentToken($request->user());
         $token = $request->user()->createToken('authToken', ['*'], now()->addHours(2))->plainTextToken;
+        return response()->json(['token' => $token]);
+    }
+
+    public function register(RegisterRequest $request) {
+        $data = $request->validated();
+        $data['password'] = bcrypt($data['password']);
+        $user = User::create($data);
+        $user->save();
+        $token = $user->createToken('authToken', ['*'], now()->addHours(2))->plainTextToken;
         return response()->json(['token' => $token]);
     }
 }
