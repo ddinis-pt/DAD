@@ -16,6 +16,16 @@ spec:
                 name: vue-app
                 port:
                   number: 80
+    - host: taes-dad-group-10-172.22.21.101.sslip.io
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: taes-app
+                port:
+                  number: 80
     - host: api-dad-group-10-172.22.21.101.sslip.io
       http:
         paths:
