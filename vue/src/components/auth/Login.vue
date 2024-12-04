@@ -12,7 +12,7 @@ const authStore = useAuthStore()
 
 const router = useRouter()
 
-const username = ref('')
+const email = ref('')
 
 const password = ref('123')
 const responseData = ref('')
@@ -28,7 +28,7 @@ const submit = async () => {
   let user = null
   try {
     user = await authStore.login({
-      email: username.value,
+      email: email.value,
       password: password.value
     })
   } catch (error) {
@@ -54,14 +54,19 @@ const submit = async () => {
 </script>
 
 <template>
-  <div class="min-h-screen grid">
-    <Header></Header>
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <div class="flex flex-col space-y-8">
-
-        <div class="text-center">
+  <div class="flex items-center w-full justify-center bg-gray-800 min-h-screen min-w-screen">
+    <main class="w-full max-w-md px-6 py-4 bg-white rounded-xl shadow-md dark:bg-gray-800">
+      <div class="flex flex-col space-y-2">
+        
+        <!-- Logo -->
+        <div class="flex items-center justify-center bg-gray-800 rounded-xl py-2">
+          <img class="flex-none inline-block h-8" src="../../assets/cards-light.png" alt="ESTG Logo" />
+        </div>
+        
+        <div class="text-center py-4">
           <h2 class="block text-2xl font-bold text-gray-800 dark:text-white">Log into your account</h2>
         </div>
+
 
         <div class="mt-5">
 
@@ -70,12 +75,12 @@ const submit = async () => {
             <div class="grid gap-y-4">
               <!-- Form Group -->
               <div>
-                <label for="username" class="block text-sm mb-2 dark:text-white">Username</label>
+                <label for="email" class="block text-sm mb-2 dark:text-white">Email</label>
                 <div class="relative">
-                  <input v-model="username" type="text" id="username" name="username"
-                    placeholder="Your username goes here"
+                  <input v-model="email" type="text" id="email" name="email"
+                    placeholder="Your email goes here"
                     class="appearance-none py-3 px-4 block w-full border border-gray-400 rounded-lg text-sm focus:border-blue-600"
-                    required aria-describedby="username-error">
+                    required aria-describedby="email-error">
                   <div class="hidden absolute inset-y-0 end-0 pointer-events-none pe-3">
                     <svg class="size-5 text-red-500" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"
                       aria-hidden="true">
@@ -145,7 +150,7 @@ const submit = async () => {
 
       </div>
 
-      <div class="text-center py-8">
+      <div class="text-center pt-4">
         <RouterLink :to="{name: 'about'}"
           class="text-sm text-blue-600 hover:underline focus:outline-none focus:underline font-medium dark:text-blue-500">
           About
