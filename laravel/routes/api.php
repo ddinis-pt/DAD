@@ -14,8 +14,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/auth/logout', [AuthController::class, "logout"]);
     Route::post('/auth/refreshtoken', [AuthController::class, "refreshtoken"]);
     Route::put('/users/{id}', [UserController::class, "update"]);
-
     Route::delete('/users/{id}', [UserController::class, "destroy"]);
+
+    Route::get('/spend/{value}', [GameController::class, "spendCoins"]);
+    Route::get('/buy/{value}', [GameController::class, "buyCoins"]);
 });
 
 //Auth
