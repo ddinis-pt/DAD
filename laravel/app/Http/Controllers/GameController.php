@@ -97,6 +97,7 @@ class GameController extends Controller
         return response()->json(Game::where('status', 'E')
                                     ->where('type', 'S')
                                     ->orderBy('total_time', 'asc')
+                                    ->orderBy('total_turns_winner', 'asc')
                                     ->take(3)
                                     ->get(), 200);
     }
@@ -105,6 +106,7 @@ class GameController extends Controller
         return response()->json(Game::where('status', 'E')
                                     ->where('type', 'S')
                                     ->orderBy('total_turns_winner', 'asc')
+                                    ->orderBy('total_time', 'asc')
                                     ->take(3)
                                     ->get(), 200);
     }
