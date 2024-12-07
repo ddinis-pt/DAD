@@ -18,6 +18,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::get('/spend/{value}', [GameController::class, "spendCoins"]);
     Route::get('/buy/{value}', [GameController::class, "buyCoins"]);
+
+    Route::get('/leaderboard/time', [GameController::class, "getTopTenByTime"]);
+    Route::get('/leaderboard/turns', [GameController::class, "getTopTenByTurns"]);
 });
 
 //Auth
@@ -34,3 +37,6 @@ Route::get('/games', [GameController::class, "index"]);
 Route::get('/games/{id}', [GameController::class, "show"]);
 Route::post('/games', [GameController::class, "store"]);
 Route::get('/games/user/{userId}', [GameController::class, "getAllGamesByUser"]);
+
+Route::get('/leaderboard/time/global', [GameController::class, "getTopTenByTimeGlobal"]);
+Route::get('/leaderboard/turns/global', [GameController::class, "getTopTenByTurnsGlobal"]);

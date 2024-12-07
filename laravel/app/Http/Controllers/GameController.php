@@ -74,4 +74,38 @@ class GameController extends Controller
             return response()->json(['message' => 'Error' + $e], 500);
         }
     }
+
+    public function getTopTenByTime(Request $request) {
+        return response()->json(Game::where('status', 'E')
+                                    ->where('type', 'S')
+                                    ->where('created_user_id', '=', $request->user()->id)
+                                    ->orderBy('total_time', 'asc')
+                                    ->take(10)
+                                    ->get(), 200);
+    }
+
+    public function getTopTenByTurns(Request $request) {
+        return response()->json(Game::where('status', 'E')
+                                    ->where('type', 'S')
+                                    ->where('created_user_id', '=', $request->user()->id)
+                                    ->orderBy('total_turns_winner', 'asc')
+                                    ->take(10)
+                                    ->get(), 200);
+    }
+
+    public function getTopTenByTimeGlobal() {
+        return response()->json(Game::where('status', 'E')
+                                    ->where('type', 'S')
+                                    ->orderBy('total_time', 'asc')
+                                    ->take(3)
+                                    ->get(), 200);
+    }
+
+    public function getTopTenByTurnsGlobal() {
+        return response()->json(Game::where('status', 'E')
+                                    ->where('type', 'S')
+                                    ->orderBy('total_turns_winner', 'asc')
+                                    ->take(3)
+                                    ->get(), 200);
+    }
 }
