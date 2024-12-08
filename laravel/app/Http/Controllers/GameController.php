@@ -42,8 +42,16 @@ class GameController extends Controller
     public function getAllGamesByUser($userId)
     {
         return response()->json(Game::where('created_user_id', $userId)
+        ->where('type','S')
         ->orderBy('ended_at', 'desc')
         ->get(), 200);
+    }
+    public function getAllSingleGamesByUser($userId)
+    {
+        return response()->json(Game::where('created_user_id', $userId)
+            ->where('type', 'S')
+            ->orderBy('ended_at', 'desc')
+            ->get(), 200);
     }
 
     public function spendCoins(Request $request, int $value) {
