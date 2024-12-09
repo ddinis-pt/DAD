@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\BuyCoinsRequest;
 use Illuminate\Http\Request;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
+use Error;
+use Illuminate\Support\Facades\Http;
 
 class UserController extends Controller
 {
@@ -42,5 +45,109 @@ class UserController extends Controller
         DB::update('update users set brain_coins_balance = 0 where id = ?', [$id]);
         $user->delete();
         return response()->json(null, 204);
+    }
+
+    public function spendCoins(Request $request, int $value)
+    {
+        try {
+            $user = $request->user();
+            if (!$user) {
+                return response()->json(['message' => 'Error fetching the user'], 200);
+            }
+            $user->decrement('brain_coins_balance', $value);
+            $user->save();
+            return response()->json(['message' => [`Balance decreased to $user->brain_coins_balance`]], 200);
+        } catch (Error $e) {
+            return response()->json(['message' => 'Error' + $e], 500);
+        }
+    }
+
+    public function buyCoins(BuyCoinsRequest $request)
+    {
+        $type = $request->validated()['type'];
+        switch ($type) {
+            case 'PAYPAL':
+                if (preg_match("/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/", $request->validated()['reference']) == 0) {
+                    return response()->json(['message' => 'Invalid reference'], 500);
+                }
+                $pedido = Http::post('https://dad-202425-payments-api.vercel.app/api/debit', $request->validated());
+                if($pedido->status() == 201) {
+                    $user = $request->user();
+                    $user->increment('brain_coins_balance', $request->validated()['value']*10);
+                    $user->save();
+                    return response()->json(['message' => 'Coins bought successfully'], 201);
+                } else if($pedido->status() == 422) {
+                    return response()->json(['message' => $pedido->body()['message']], $pedido->status());
+                } else {
+                    return response()->json(['message' => 'Error buying coins'], 500);
+                }
+                break;
+            case 'MBWAY':
+                if (preg_match("/^9\d{8}$/", $request->validated()['reference']) == 0) {
+                    return response()->json(['message' => 'Invalid reference'], 500);
+                }
+                $pedido = Http::post('https://dad-202425-payments-api.vercel.app/api/debit', $request->validated());
+                if($pedido->status() == 201) {
+                    $user = $request->user();
+                    $user->increment('brain_coins_balance', $request->validated()['value']*10);
+                    $user->save();
+                    return response()->json(['message' => 'Coins bought successfully'], 201);
+                } else if($pedido->status() == 422) {
+                    return response()->json(['message' => $pedido->body()['message']], $pedido->status());
+                } else {
+                    return response()->json(['message' => 'Error buying coins'], 500);
+                }
+                break;
+            case 'IBAN':
+                if (preg_match("/^[A-Z]{2}\d{23}$/", $request->validated()['reference']) == 0) {
+                    return response()->json(['message' => 'Invalid reference'], 500);
+                }
+                $pedido = Http::post('https://dad-202425-payments-api.vercel.app/api/debit', $request->validated());
+                if($pedido->status() == 201) {
+                    $user = $request->user();
+                    $user->increment('brain_coins_balance', $request->validated()['value']*10);
+                    $user->save();
+                    return response()->json(['message' => 'Coins bought successfully'], 201);
+                } else if($pedido->status() == 422) {
+                    return response()->json(['message' => $pedido->body()['message']], $pedido->status());
+                } else {
+                    return response()->json(['message' => 'Error buying coins'], 500);
+                }
+                break;
+            case 'MB':
+                if (preg_match("/^\d{5}-\d{9}/", $request->validated()['reference']) == 0) {
+                    return response()->json(['message' => 'Invalid reference'], 500);
+                }
+                $pedido = Http::post('https://dad-202425-payments-api.vercel.app/api/debit', $request->validated());
+                if($pedido->status() == 201) {
+                    $user = $request->user();
+                    $user->increment('brain_coins_balance', $request->validated()['value']*10);
+                    $user->save();
+                    return response()->json(['message' => 'Coins bought successfully'], 201);
+                } else if($pedido->status() == 422) {
+                    return response()->json(['message' => $pedido->body()['message']], $pedido->status());
+                } else {
+                    return response()->json(['message' => 'Error buying coins'], 500);
+                }
+                break;
+            case 'VISA':
+                if (preg_match("/^4\d{15}$/", $request->validated()['reference']) == 0) {
+                    return response()->json(['message' => 'Invalid reference'], 500);
+                }
+                $pedido = Http::post('https://dad-202425-payments-api.vercel.app/api/debit', $request->validated());
+                if($pedido->status() == 201) {
+                    $user = $request->user();
+                    $user->increment('brain_coins_balance', $request->validated()['value']*10);
+                    $user->save();
+                    return response()->json(['message' => 'Coins bought successfully'], 201);
+                } else if($pedido->status() == 422) {
+                    return response()->json(['message' => $pedido->body()['message']], $pedido->status());
+                } else {
+                    return response()->json(['message' => 'Error buying coins'], 500);
+                }
+                break;
+            default:
+                break;
+        }
     }
 }
