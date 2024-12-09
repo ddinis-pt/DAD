@@ -29,10 +29,10 @@ const router = useRouter()
 const authStore = useAuthStore()
 
 const logout = async () => {
-    if(authStore.user) {
+    if (authStore.user) {
         await authStore.logout()
     }
-    router.push({name: 'login'})
+    router.push({ name: 'login' })
 }
 
 </script>

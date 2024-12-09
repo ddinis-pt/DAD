@@ -16,8 +16,8 @@ const authStore = useAuthStore()
     <Header></Header>
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <div v-if="authStore.user" class="text-center flex justify-center items-center -mt-32">
-        <img @click="logout" class="inline-block size-[80px] rounded-full border-8 border-slate-800 mt-4" :src="authStore.userPhotoUrl"
-          alt="Avatar">
+        <img @click="logout" class="inline-block size-[80px] rounded-full border-8 border-slate-800 mt-4"
+          :src="authStore.userPhotoUrl" alt="Avatar">
         <h2 class="block text-2xl font-bold text-white">Hello, {{ authStore.userFirstLastName }}!</h2>
       </div>
       <div class="grid grid-cols-3 grid-rows-2">
@@ -45,7 +45,7 @@ const authStore = useAuthStore()
                   Singleplayer
                 </h3>
                 <div class="mt-6 grid gap-y-2">
-                  <RouterLink to="/modes">
+                  <RouterLink :to="{name: 'modes'}">
                     <button type="button"
                       class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
                       Start
@@ -83,7 +83,7 @@ const authStore = useAuthStore()
                   Multiplayer
                 </h3>
                 <div class="mt-6 grid gap-y-2">
-                  <RouterLink to="/modes">
+                  <RouterLink :to="{name: 'modes'}">
                     <button type="button"
                       class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
                       Find Lobby
@@ -124,7 +124,7 @@ const authStore = useAuthStore()
                   Coins
                 </h3>
                 <div class="mt-6 grid gap-y-2">
-                  <RouterLink :to="{name: 'buy-coins'}">
+                  <RouterLink :to="{ name: 'buy-coins' }">
                     <button type="button"
                       class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
                       Buy
@@ -170,7 +170,7 @@ const authStore = useAuthStore()
                   Scoreboards
                 </h3>
                 <div class="mt-6 grid gap-y-2">
-                  <RouterLink :to="{name: 'leaderboard'}">
+                  <RouterLink :to="{ name: 'leaderboard' }">
                     <button type="button"
                       class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
                       Check
@@ -207,7 +207,7 @@ const authStore = useAuthStore()
                   Game History
                 </h3>
                 <div class="mt-6 grid gap-y-2">
-                  <RouterLink :to="{name: 'history'}">
+                  <RouterLink :to="{ name: 'history' }">
                     <button type="button"
                       class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
                       Access
@@ -245,7 +245,7 @@ const authStore = useAuthStore()
                   Settings
                 </h3>
                 <div class="mt-6 grid gap-y-2">
-                  <RouterLink :to="{name: 'settings'}">
+                  <RouterLink :to="{ name: 'settings' }">
                     <button type="button"
                       class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
                       Open

@@ -1,11 +1,11 @@
 <template>
-    <div class="min-h-screen grid content-between bg-gray-800">
+    <div class="min-h-screen  bg-gray-800">
         <Header></Header>
-        <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <main class="px-4 sm:px-6 lg:px-8">
             <div class="flex flex-col space-y-8">
                 <div class="flex flex-col gap-y">
-                    <h1 class="text-2xl font-bold text-gray-800 text-white">Leaderboard</h1>
-                    <p class="text-gray-800 text-white">This is the leaderboard. You can see the top players here.
+                    <h1 class="text-2xl font-bold text-white">Leaderboard</h1>
+                    <p class="text-white">This is the leaderboard. You can see the top players here.
                     </p>
                     <div class="overflow-y-auto max-h-96">
                         <table class="min-w-full divide-y divide-gray-200">
@@ -66,13 +66,8 @@
                         </table>
                     </div>
                 </div>
-                <button @click.prevent="goBack" type="button"
-                    class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
-                    Go Back
-                </button>
             </div>
         </main>
-        <Footer></Footer>
     </div>
 </template>
 <script setup>

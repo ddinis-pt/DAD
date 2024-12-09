@@ -130,7 +130,7 @@ const showHint = () => {
     <div class="min-h-screen flex flex-col justify-between bg-gray-800">
         <header>
             <div class="flex gap-x-8 gap-y-4 grid-cols-3 justify-between items-center px-4 py-2">
-                <RouterLink to="/dashboard">
+                <RouterLink :to="{name: 'dashboard'}">
                     <div id="back" class="justify-center">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                             <path d="M12 19L5 12L12 5" stroke="black" stroke-linecap="round" stroke-linejoin="round" />

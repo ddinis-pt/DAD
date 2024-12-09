@@ -5,18 +5,18 @@ const authStore = useAuthStore()
 const router = useRouter()
 
 const logout = async () => {
-  if (authStore.user) {
-    if (!await authStore.logout(authStore.user))
-      console.log(errorStore.message + ' ' + errorStore.statusCode)
-  }
-  router.push({ name: 'login' })
+    if (authStore.user) {
+        if (!await authStore.logout(authStore.user))
+            console.log(errorStore.message + ' ' + errorStore.statusCode)
+    }
+    router.push({ name: 'login' })
 }
 </script>
 <template>
     <footer class="bg-gray-dark">
         <div class="grid gap-x-8 gap-y-4 grid-cols-3 justify-center items-center justify-items-center">
             <div class="leaderboard">
-                <RouterLink to="/leaderboard" class="">
+                <RouterLink :to="{name: 'leaderboard'}" class="">
                     <!-- Icon -->
                     <svg width="41" height="41" viewBox="0 0 41 41" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path
@@ -45,7 +45,7 @@ const logout = async () => {
                     :src="authStore.userPhotoUrl" alt="Avatar">
             </div>
             <div class="history">
-                <RouterLink to="/history">
+                <RouterLink :to="{name: 'history'}">
                     <svg width="41" height="41" viewBox="0 0 41 41" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path
                             d="M13.8334 35.5H33.8334C34.7174 35.5 35.5653 35.1488 36.1904 34.5237C36.8155 33.8986 37.1667 33.0507 37.1667 32.1667V28.8333H17.1667V32.1667C17.1667 33.0507 16.8155 33.8986 16.1904 34.5237C15.5653 35.1488 14.7174 35.5 13.8334 35.5ZM13.8334 35.5C12.9493 35.5 12.1015 35.1488 11.4764 34.5237C10.8512 33.8986 10.5 33.0507 10.5 32.1667V8.83333C10.5 7.94928 10.1489 7.10143 9.52373 6.47631C8.89861 5.85119 8.05076 5.5 7.16671 5.5C6.28265 5.5 5.43481 5.85119 4.80968 6.47631C4.18456 7.10143 3.83337 7.94928 3.83337 8.83333V13.8333H10.5"
