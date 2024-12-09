@@ -1,4 +1,4 @@
-import { ref, computed } from 'vue'
+import { ref, computed, inject } from 'vue'
 import { defineStore } from 'pinia'
 import axios from 'axios'
 import { useErrorStore } from '@/stores/error'
@@ -7,6 +7,8 @@ import avatarNoneAssetURL from '@/assets/avatar-none.png'
 
 export const useAuthStore = defineStore('auth', () => {
   const storeError = useErrorStore()
+
+  const socket = inject('socket')
 
   const user = ref(JSON.parse(localStorage.getItem('user')) || null)
   const token = ref(localStorage.getItem('token') || '')
@@ -53,6 +55,9 @@ export const useAuthStore = defineStore('auth', () => {
   // This function is "private" - not exported by the store
   const clearUser = () => {
     resetIntervalToRefreshToken()
+    if (user.value) {
+      socket.emit('logout', user.value)
+    } 
     user.value = null
     token.value = ''
     localStorage.removeItem('user')
@@ -68,6 +73,7 @@ export const useAuthStore = defineStore('auth', () => {
       axios.defaults.headers.common.Authorization = 'Bearer ' + token.value
       const responseUser = await axios.get('users/me')
       user.value = responseUser.data
+      socket.emit('login', user.value)
       localStorage.setItem('token', token.value)
       localStorage.setItem('user', JSON.stringify(user.value))
       repeatRefreshToken()
@@ -122,6 +128,12 @@ export const useAuthStore = defineStore('auth', () => {
           token.value = response.data.token
           axios.defaults.headers.common.Authorization = 'Bearer ' + token.value
           localStorage.setItem('token', token.value)
+          
+          const responseUser = await axios.get('users/me')
+          user.value = responseUser.data
+          console.log('User refreshed:', user.value)
+          socket.emit('login', user.value)
+          
           return true
         } catch (e) {
           clearUser()

@@ -13,10 +13,35 @@ httpServer.listen(PORT, () => {
   console.log(`listening on localhost:${PORT}`);
 });
 
-io.on("connection", (socket) => {
-  console.log(`client ${socket.id} has connected`);
+io.on('connection', (socket) => {
+  console.log('New connection:', socket.id);
 
-  socket.on("echo", (message) => {
-    socket.emit("echo", message);
-  });
-});
+  // ***********  Login  *********** //
+  socket.on('login', (user) => {
+    socket.data.user = user
+    if (user && user.id) {
+      socket.join('user_' + user.id)
+    }
+    console.log('User logged:', user)
+  })
+
+  // ***********  Logout  *********** //
+  socket.on('logout', (user) => {
+    if (user && user.id) {
+      socket.leave('user_' + user.id)
+    }
+    socket.data.user = undefined
+    console.log('User logout:', user)
+  })
+
+  // ***********  Chat Global   *********** //
+  socket.on('chatMessage', (message) => {
+    const payload = {
+      user: socket.data.user,
+      message: message,
+    }
+    console.log('Chat message:', payload)
+    io.sockets.emit('chatMessage', payload)
+  })
+
+})
