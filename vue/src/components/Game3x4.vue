@@ -127,7 +127,7 @@ const showHint = () => {
 </script>
 
 <template>
-    <div class="min-h-screen flex flex-col justify-between bg-gray-50">
+    <div class="min-h-screen flex flex-col justify-between bg-gray-800">
         <header>
             <div class="flex gap-x-8 gap-y-4 grid-cols-3 justify-between items-center px-4 py-2">
                 <RouterLink to="/dashboard">

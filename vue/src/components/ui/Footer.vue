@@ -4,9 +4,12 @@ import { useRouter } from 'vue-router'
 const authStore = useAuthStore()
 const router = useRouter()
 
-const logout = () => {
-    authStore.logout()
-    router.push('/')
+const logout = async () => {
+  if (authStore.user) {
+    if (!await authStore.logout(authStore.user))
+      console.log(errorStore.message + ' ' + errorStore.statusCode)
+  }
+  router.push({ name: 'login' })
 }
 </script>
 <template>

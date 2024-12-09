@@ -1,12 +1,12 @@
 <template>
-    <div class="min-h-screen grid content-between">
+    <div class="min-h-screen grid content-between bg-gray-800">
         <Header></Header>
         <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <div class="flex flex-col space-y-8">
                 <div class="flex flex-col gap-y">
-                    <h1 class="text-2xl font-bold text-gray-800 dark:text-white text-center">History</h1>
+                    <h1 class="text-2xl font-bold text-gray-800 text-white text-center">History</h1>
                     <div v-if="user">
-                        <p class="text-gray-800 dark:text-white">This is the history of your games. You can see the games you have played here.</p>
+                        <p class="text-gray-800 text-white">This is the history of your games. You can see the games you have played here.</p>
                     <div class="overflow-y-auto max-h-96">
                         <table class="min-w-full divide-y divide-gray-200">
                             <thead class="bg-gray-50">
@@ -28,9 +28,9 @@
                     </div>
                     </div>
                     <div v-else>
-                        <span class="text-gray-800 dark:text-white">You need to be </span>
+                        <span class="text-gray-800 text-white">You need to be </span>
                             <RouterLink to="/" class="text-blue-600 hover:underline">logged in </RouterLink>
-                        <span class="text-gray-800 dark:text-white">to see your history.</span>
+                        <span class="text-gray-800 text-white">to see your history.</span>
                     </div>
                 </div>
                 <button @click.prevent="goBack" type="button"

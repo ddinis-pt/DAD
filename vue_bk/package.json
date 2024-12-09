@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "NODE_ENV=production vite build",
+    "build": "vite build",
     "preview": "vite preview",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore",
     "format": "prettier --write src/"
@@ -15,19 +15,23 @@
     "axios": "^1.7.7",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
+    "date-fns": "^4.1.0",
     "lucide-vue-next": "^0.456.0",
     "pinia": "^2.1.7",
     "postcss": "^8.4.47",
+    "preline": "^2.5.1",
     "radix-vue": "^1.9.9",
     "socket.io-client": "^4.8.1",
     "tailwind-merge": "^2.5.4",
     "tailwindcss": "^3.4.14",
     "tailwindcss-animate": "^1.0.7",
     "vue": "^3.4.29",
+    "vue-flip": "^3.0.2",
     "vue-router": "^4.3.3"
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.8.0",
+    "@tailwindcss/forms": "^0.5.9",
     "@vitejs/plugin-vue": "^5.0.5",
     "@vue/eslint-config-prettier": "^9.0.0",
     "eslint": "^8.57.0",

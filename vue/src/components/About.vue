@@ -1,11 +1,11 @@
 <template>
-    <div class="min-h-screen grid">
+    <div class="min-h-screen grid  bg-gray-800">
         <Header></Header>
         <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <div class="flex flex-col space-y-8">
                 <div class="flex flex-col gap-y">
-                    <h1 class="text-2xl font-bold text-gray-800 dark:text-white">About</h1>
-                    <p class="text-gray-800 dark:text-white">This is a simple game that you can play with your friends.
+                    <h1 class="text-2xl font-bold text-white">About</h1>
+                    <p class="text-white">This is a simple game that you can play with your friends.
                         You can create a room and invite your friends to join. You can also join a room that your friend
                         has created. The game is simple, you will be given a word and you have to draw it. Your friends
                         will have to guess the word based on your drawing. The game is timed, so you have to be quick.

@@ -18,10 +18,10 @@ const password = ref('123')
 const responseData = ref('')
 
 const continueAsGuest = async () => {
-  if(authStore.user) {
+  if (authStore.user) {
     await authStore.logout()
   }
-  router.push({name: 'dashboard'})
+  router.push({ name: 'dashboard' })
 }
 
 const submit = async () => {
@@ -37,7 +37,7 @@ const submit = async () => {
   }
 
   if (user) {
-    router.push({name: 'dashboard'})
+    router.push({ name: 'dashboard' })
   }
   else {
     if (errorStore.statusCode === 401) {
@@ -55,16 +55,16 @@ const submit = async () => {
 
 <template>
   <div class="flex items-center w-full justify-center bg-gray-800 min-h-screen min-w-screen">
-    <main class="w-full max-w-md px-6 py-4 bg-white rounded-xl shadow-md dark:bg-gray-800">
+    <main class="w-full max-w-md px-6 py-4 rounded-xl shadow-md bg-white">
       <div class="flex flex-col space-y-2">
-        
+
         <!-- Logo -->
         <div class="flex items-center justify-center bg-gray-800 rounded-xl py-2">
           <img class="flex-none inline-block h-8" src="../../assets/cards-light.png" alt="ESTG Logo" />
         </div>
-        
+
         <div class="text-center py-4">
-          <h2 class="block text-2xl font-bold text-gray-800 dark:text-white">Log into your account</h2>
+          <h2 class="block text-2xl font-bold text-gray-800">Log into your account</h2>
         </div>
 
 
@@ -75,11 +75,10 @@ const submit = async () => {
             <div class="grid gap-y-4">
               <!-- Form Group -->
               <div>
-                <label for="email" class="block text-sm mb-2 dark:text-white">Email</label>
+                <label for="email" class="block text-sm mb-2 text-gray-800">Email</label>
                 <div class="relative">
-                  <input v-model="email" type="text" id="email" name="email"
-                    placeholder="Your email goes here"
-                    class="appearance-none py-3 px-4 block w-full border border-gray-400 rounded-lg text-sm focus:border-blue-600"
+                  <input v-model="email" type="text" id="email" name="email" placeholder="Your email goes here"
+                    class="appearance-none py-3 px-4 block w-full border border-gray-500 rounded-lg text-sm focus:border-blue-600"
                     required aria-describedby="email-error">
                   <div class="hidden absolute inset-y-0 end-0 pointer-events-none pe-3">
                     <svg class="size-5 text-red-500" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"
@@ -95,14 +94,14 @@ const submit = async () => {
               <!-- Form Group -->
               <div>
                 <div class="flex justify-between items-center">
-                  <label for="password" class="block text-sm mb-2 dark:text-white">Password</label>
-                  <!--<a class="inline-flex items-center gap-x-1 text-sm text-blue-600 decoration-2 hover:underline focus:outline-none focus:underline font-medium dark:text-blue-500"
+                  <label for="password" class="block text-sm mb-2 text-gray-800">Password</label>
+                  <!--<a class="inline-flex items-center gap-x-1 text-sm text-blue-600 decoration-2 hover:underline focus:outline-none focus:underline font-medium text-blue-500"
                    href="../examples/html/recover-account.html">Forgot password?</a>-->
                 </div>
                 <div class="relative">
                   <input v-model="password" type="password" id="password" name="password"
                     placeholder="&#9679; &#9679; &#9679; &#9679; &#9679; &#9679; &#9679; &#9679; &#9679; "
-                    class="py-3 px-4 block w-full border border-gray-400 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
+                    class="py-3 px-4 block w-full border border-gray-500 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none text-neutral-400 placeholder-neutral-500"
                     required aria-describedby="password-error">
                   <div class="hidden absolute inset-y-0 end-0 pointer-events-none pe-3">
                     <svg class="size-5 text-red-500" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"
@@ -120,10 +119,10 @@ const submit = async () => {
               <div class="flex items-center">
                 <div class="flex">
                   <input id="remember-me" name="remember-me" type="checkbox" checked
-                    class="shrink-0 mt-0.5 border-gray-200 rounded text-blue-600 focus:ring-blue-500 dark:bg-neutral-800 dark:border-neutral-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800">
+                    class="shrink-0 mt-0.5 border-gray-200 rounded text-blue-600 focus:ring-blue-500 bg-neutral-800 checked:bg-blue-500 checked:border-blue-500 focus:ring-offset-gray-800">
                 </div>
                 <div class="ms-3">
-                  <label for="remember-me" class="text-sm dark:text-white">Remember me</label>
+                  <label for="remember-me" class="text-sm text-gray-800">Remember me</label>
                 </div>
               </div>
               <!-- End Checkbox -->
@@ -133,10 +132,10 @@ const submit = async () => {
                 Log in
               </button>
 
-              <div class="flex items-center text-xs text-black uppercase dark:text-neutral-500 py-3">
-                <div class="flex-1 border-t border-black dark:border-neutral-600"></div>
+              <div class="flex items-center text-xs uppercase text-neutral-500 py-3">
+                <div class="flex-1 border-t border-neutral-600"></div>
                 <span class="px-3">Or</span>
-                <div class="flex-1 border-t border-black dark:border-neutral-600"></div>
+                <div class="flex-1 border-t border-neutral-600"></div>
               </div>
               <button @click.prevent="continueAsGuest"
                 class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-blue-text bg-white text-blue-text hover:bg-blue-text hover:text-white focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
@@ -151,8 +150,8 @@ const submit = async () => {
       </div>
 
       <div class="text-center pt-4">
-        <RouterLink :to="{name: 'about'}"
-          class="text-sm text-blue-600 hover:underline focus:outline-none focus:underline font-medium dark:text-blue-500">
+        <RouterLink :to="{ name: 'about' }"
+          class="text-sm hover:underline focus:outline-none focus:underline font-medium text-blue-500">
           About
         </RouterLink>
       </div>
