@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\BuyCoinsRequest;
+use App\Http\Requests\ImageRequest;
 use Illuminate\Http\Request;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
@@ -20,6 +21,12 @@ class UserController extends Controller
     public function show($id)
     {
         return response()->json(User::findOrFail($id), 200);
+    }
+
+    public function getImagePath(ImageRequest $request)
+    {
+        $path = $request->file('photo')->store('photos', 'public');
+        return response()->json(['photo_filename' => $path], 200);
     }
 
     public function update(UpdateUserRequest $request, $id)

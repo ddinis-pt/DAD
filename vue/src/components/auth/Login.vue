@@ -132,6 +132,15 @@ const submit = async () => {
                 Log in
               </button>
 
+              <!-- Divider -->
+              <div class="flex items-center text-xs uppercase text-neutral-500 py-3">
+                <div class="flex-1 border-t border-blue-600 rounded-full border-8"></div>
+              </div>
+
+              <RouterLink :to="{ name: 'register' }"
+                class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-blue-text bg-white text-blue-text hover:bg-blue-text hover:text-white focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
+                Register
+              </RouterLink>
               <div class="flex items-center text-xs uppercase text-neutral-500 py-3">
                 <div class="flex-1 border-t border-neutral-600"></div>
                 <span class="px-3">Or</span>

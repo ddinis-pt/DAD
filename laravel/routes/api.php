@@ -43,3 +43,5 @@ Route::get('/games/user/{userId}', [GameController::class, "getAllGamesByUser"])
 
 Route::get('/leaderboard/time/global', [GameController::class, "getTopTenByTimeGlobal"]);
 Route::get('/leaderboard/turns/global', [GameController::class, "getTopTenByTurnsGlobal"]);
+
+Route::post('/images', [UserController::class, "getImagePath"]);

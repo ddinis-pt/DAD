@@ -90,6 +90,31 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
 
+  const register = async (credentials) => {
+    storeError.resetMessages()
+    try {
+      const responseRegister = await axios.post('auth/register', credentials)
+      token.value = responseRegister.data.token
+      axios.defaults.headers.common.Authorization = 'Bearer ' + token.value
+      const responseUser = await axios.get('users/me')
+      user.value = responseUser.data
+      socket.emit('register', user.value)
+      sessionStorage.setItem('token', token.value)
+      sessionStorage.setItem('user', JSON.stringify(user.value))
+      repeatRefreshToken()
+      return user.value
+    } catch (e) {
+      clearUser()
+      storeError.setErrorMessages(
+        e.response.data.message,
+        e.response.data.errors,
+        e.response.status,
+        'Authentication Error!'
+      )
+      return false
+    }
+  }
+
   const logout = async (user) => {
     storeError.resetMessages()
     try {
@@ -176,6 +201,7 @@ export const useAuthStore = defineStore('auth', () => {
     userCoins,
     login,
     logout,
-    restoreToken
+    restoreToken,
+    register
   }
 })
