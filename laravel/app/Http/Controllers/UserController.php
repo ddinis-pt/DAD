@@ -24,7 +24,7 @@ class UserController extends Controller
 
     public function update(UpdateUserRequest $request, $id)
     {
-        if($request->user()->id != $id){
+        if ($request->user()->id != $id) {
             return response()->json(['message' => 'Unauthorized'], 401);
         }
         $user = User::find($id);
@@ -35,10 +35,10 @@ class UserController extends Controller
     public function destroy(Request $request, $id)
     {
         $user = User::find($id);
-        if($request?->user()?->id != $id){
+        if ($request?->user()?->id != $id) {
             return response()->json(['message' => $request?->user()?->id], 401);
         }
-        if($request?->user()?->id == $id && $request?->user()?->type == 'A'){
+        if ($request?->user()?->id == $id && $request?->user()?->type == 'A') {
             return response()->json(['message' => 'Forbidden'], 403);
         }
         $user->tokens()->delete();
@@ -71,13 +71,21 @@ class UserController extends Controller
                     return response()->json(['message' => 'Invalid reference'], 500);
                 }
                 $pedido = Http::post('https://dad-202425-payments-api.vercel.app/api/debit', $request->validated());
-                if($pedido->status() == 201) {
+                $responseBody = json_decode($pedido->body(), true);
+                if ($pedido->status() == 201) {
                     $user = $request->user();
-                    $user->increment('brain_coins_balance', $request->validated()['value']*10);
+                    $user->increment('brain_coins_balance', $request->validated()['value'] * 10);
                     $user->save();
                     return response()->json(['message' => 'Coins bought successfully'], 201);
-                } else if($pedido->status() == 422) {
-                    return response()->json(['message' => $pedido->body()['message']], $pedido->status());
+                } else if ($pedido->status() == 422) {
+                    $status = $responseBody['status'] ?? 'Unknown';
+                    $description = $responseBody['message'] ?? 'An error occurred';
+
+                    return response()->json([
+                        'message' => 'API Error',
+                        'status' => $status,
+                        'description' => $description,
+                    ], $pedido->status());
                 } else {
                     return response()->json(['message' => 'Error buying coins'], 500);
                 }
@@ -87,12 +95,12 @@ class UserController extends Controller
                     return response()->json(['message' => 'Invalid reference'], 500);
                 }
                 $pedido = Http::post('https://dad-202425-payments-api.vercel.app/api/debit', $request->validated());
-                if($pedido->status() == 201) {
+                if ($pedido->status() == 201) {
                     $user = $request->user();
-                    $user->increment('brain_coins_balance', $request->validated()['value']*10);
+                    $user->increment('brain_coins_balance', $request->validated()['value'] * 10);
                     $user->save();
                     return response()->json(['message' => 'Coins bought successfully'], 201);
-                } else if($pedido->status() == 422) {
+                } else if ($pedido->status() == 422) {
                     return response()->json(['message' => $pedido->body()['message']], $pedido->status());
                 } else {
                     return response()->json(['message' => 'Error buying coins'], 500);
@@ -103,12 +111,12 @@ class UserController extends Controller
                     return response()->json(['message' => 'Invalid reference'], 500);
                 }
                 $pedido = Http::post('https://dad-202425-payments-api.vercel.app/api/debit', $request->validated());
-                if($pedido->status() == 201) {
+                if ($pedido->status() == 201) {
                     $user = $request->user();
-                    $user->increment('brain_coins_balance', $request->validated()['value']*10);
+                    $user->increment('brain_coins_balance', $request->validated()['value'] * 10);
                     $user->save();
                     return response()->json(['message' => 'Coins bought successfully'], 201);
-                } else if($pedido->status() == 422) {
+                } else if ($pedido->status() == 422) {
                     return response()->json(['message' => $pedido->body()['message']], $pedido->status());
                 } else {
                     return response()->json(['message' => 'Error buying coins'], 500);
@@ -119,12 +127,12 @@ class UserController extends Controller
                     return response()->json(['message' => 'Invalid reference'], 500);
                 }
                 $pedido = Http::post('https://dad-202425-payments-api.vercel.app/api/debit', $request->validated());
-                if($pedido->status() == 201) {
+                if ($pedido->status() == 201) {
                     $user = $request->user();
-                    $user->increment('brain_coins_balance', $request->validated()['value']*10);
+                    $user->increment('brain_coins_balance', $request->validated()['value'] * 10);
                     $user->save();
                     return response()->json(['message' => 'Coins bought successfully'], 201);
-                } else if($pedido->status() == 422) {
+                } else if ($pedido->status() == 422) {
                     return response()->json(['message' => $pedido->body()['message']], $pedido->status());
                 } else {
                     return response()->json(['message' => 'Error buying coins'], 500);
@@ -135,12 +143,12 @@ class UserController extends Controller
                     return response()->json(['message' => 'Invalid reference'], 500);
                 }
                 $pedido = Http::post('https://dad-202425-payments-api.vercel.app/api/debit', $request->validated());
-                if($pedido->status() == 201) {
+                if ($pedido->status() == 201) {
                     $user = $request->user();
-                    $user->increment('brain_coins_balance', $request->validated()['value']*10);
+                    $user->increment('brain_coins_balance', $request->validated()['value'] * 10);
                     $user->save();
                     return response()->json(['message' => 'Coins bought successfully'], 201);
-                } else if($pedido->status() == 422) {
+                } else if ($pedido->status() == 422) {
                     return response()->json(['message' => $pedido->body()['message']], $pedido->status());
                 } else {
                     return response()->json(['message' => 'Error buying coins'], 500);
