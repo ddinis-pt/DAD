@@ -212,7 +212,6 @@ const submit = async () => {
                                 <label for="file-upload" class="inline-block text-sm mb-2 text-gray-800">Profile
                                     Picture</label>
                                 <div class="relative">
-                                    <img class="w-64 h-64" :src="photo" alt="Profile Picture">
                                     <input type="file" id="file-upload" name="file-upload"
                                         class="appearance-none py-3 px-4 border w-full bg-blue-600 rounded-lg text-sm focus:border-blue-600"
                                         @change="handleFileUpload">

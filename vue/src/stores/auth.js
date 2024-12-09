@@ -21,6 +21,14 @@ export const useAuthStore = defineStore('auth', () => {
     return user.value ? user.value.name : ''
   })
 
+  const userNickname = computed(() => {
+    return user.value ? user.value.nickname : ''
+  })
+
+  const userPassword = computed(() => {
+    return user.value ? user.value.password : ''
+  })
+
   const userFirstLastName = computed(() => {
     const names = userName.value.trim().split(' ')
     const firstName = names[0] ?? ''
@@ -199,6 +207,8 @@ export const useAuthStore = defineStore('auth', () => {
     userGender,
     userPhotoUrl,
     userCoins,
+    userNickname,
+    userPassword,
     login,
     logout,
     restoreToken,

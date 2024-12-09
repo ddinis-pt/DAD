@@ -1,10 +1,8 @@
 <script setup>
 import { ref } from 'vue'
 import { useAuthStore } from '@/stores/auth';
-import { Button } from '@/components/ui/button';
 import { useRouter } from 'vue-router';
-import { toast } from "@/components/ui/toast/index.js";
-import Header from "@/components/ui/Header.vue";
+import Toaster from '@/components/ui/toast/Toaster.vue';
 
 import { useErrorStore } from '@/stores/error';
 const errorStore = useErrorStore()
@@ -54,6 +52,7 @@ const submit = async () => {
 </script>
 
 <template>
+  <Toaster />
   <div class="flex items-center w-full justify-center bg-gray-800 min-h-screen min-w-screen">
     <main class="w-full max-w-md px-6 py-4 rounded-xl shadow-md bg-white">
       <div class="flex flex-col space-y-2">

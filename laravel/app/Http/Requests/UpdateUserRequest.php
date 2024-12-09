@@ -21,10 +21,12 @@ class UpdateUserRequest extends FormRequest
      */
     public function rules(): array
     {
+        $userId = $this->route('id');
+
         return [
-            "email" => "nullable|email|unique:users,email",
+            "email" => "nullable|email|unique:users,email,{$userId}",
             "name" => "nullable|string",
-            "nickname" => "nullable|string|unique:users,nickname",
+            "nickname" => "nullable|string|unique:users,nickname,{$userId}",
             "password" => "nullable|string|min:3",
             "photo_filename" => "nullable|string",
         ];

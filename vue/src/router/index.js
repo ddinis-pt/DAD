@@ -15,6 +15,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 import MultiplayerArea from '@/components/registered/MultiplayerArea.vue'
 import Register from '@/components/auth/Register.vue'
+import DeleteAccount from '@/components/registered/DeleteAccount.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -28,6 +29,11 @@ const router = createRouter({
       path: '/register',
       name: 'register',
       component: Register,
+    },
+    {
+      path: '/deleteAccount',
+      name: 'deleteAccount',
+      component: DeleteAccount
     },
     {
       path: '/multiplayer',
