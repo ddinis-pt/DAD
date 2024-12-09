@@ -4,6 +4,7 @@ import { useRouter } from 'vue-router';
 import { useErrorStore } from '@/stores/error';
 import Header from '@/components/ui/Header.vue'
 import Footer from '@/components/ui/Footer.vue';
+import Chat from '@/components/ui/chat/Chat.vue';
 
 const router = useRouter()
 const errorStore = useErrorStore()
@@ -83,7 +84,7 @@ const authStore = useAuthStore()
                   Multiplayer
                 </h3>
                 <div class="mt-6 grid gap-y-2">
-                  <RouterLink :to="{name: 'modes'}">
+                  <RouterLink :to="{name: 'multiplayer'}">
                     <button type="button"
                       class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
                       Find Lobby

@@ -12,6 +12,8 @@ import BuyCoins from '@/components/BuyCoins.vue'
 import LeaderBoard from '@/components/Leaderboard.vue'
 import Settings from '@/components/registered/Settings.vue'
 import { createRouter, createWebHistory } from 'vue-router'
+import { useAuthStore } from '@/stores/auth'
+import MultiplayerArea from '@/components/registered/MultiplayerArea.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -20,6 +22,11 @@ const router = createRouter({
       path: '/',
       name: 'login',
       component: Login
+    },
+    {
+      path: '/multiplayer',
+      name: 'multiplayer',
+      component: MultiplayerArea
     },
     {
       path: '/dashboard',
@@ -90,6 +97,17 @@ const router = createRouter({
       ]
     }
   ]
+})
+
+let handlingFirstRoute = true
+
+router.beforeEach(async (to, from, next) => {
+    const storeAuth = useAuthStore()
+    if (handlingFirstRoute) {
+        handlingFirstRoute = false
+        await storeAuth.restoreToken()
+    }
+    next()
 })
 
 export default router

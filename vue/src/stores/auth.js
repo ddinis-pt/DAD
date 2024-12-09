@@ -10,8 +10,8 @@ export const useAuthStore = defineStore('auth', () => {
 
   const socket = inject('socket')
 
-  const user = ref(JSON.parse(localStorage.getItem('user')) || null)
-  const token = ref(localStorage.getItem('token') || '')
+  const user = ref(JSON.parse(sessionStorage.getItem('user')) || null)
+  const token = ref(sessionStorage.getItem('token') || '')
 
   if (token.value) {
     axios.defaults.headers.common.Authorization = 'Bearer ' + token.value
@@ -57,11 +57,11 @@ export const useAuthStore = defineStore('auth', () => {
     resetIntervalToRefreshToken()
     if (user.value) {
       socket.emit('logout', user.value)
-    } 
+    }
     user.value = null
     token.value = ''
-    localStorage.removeItem('user')
-    localStorage.removeItem('token')
+    sessionStorage.removeItem('user')
+    sessionStorage.removeItem('token')
     axios.defaults.headers.common.Authorization = ''
   }
 
@@ -74,8 +74,8 @@ export const useAuthStore = defineStore('auth', () => {
       const responseUser = await axios.get('users/me')
       user.value = responseUser.data
       socket.emit('login', user.value)
-      localStorage.setItem('token', token.value)
-      localStorage.setItem('user', JSON.stringify(user.value))
+      sessionStorage.setItem('token', token.value)
+      sessionStorage.setItem('user', JSON.stringify(user.value))
       repeatRefreshToken()
       return user.value
     } catch (e) {
@@ -127,13 +127,7 @@ export const useAuthStore = defineStore('auth', () => {
           const response = await axios.post('auth/refreshtoken')
           token.value = response.data.token
           axios.defaults.headers.common.Authorization = 'Bearer ' + token.value
-          localStorage.setItem('token', token.value)
-          
-          const responseUser = await axios.get('users/me')
-          user.value = responseUser.data
-          console.log('User refreshed:', user.value)
-          socket.emit('login', user.value)
-          
+          sessionStorage.setItem('token', token.value);
           return true
         } catch (e) {
           clearUser()
@@ -151,6 +145,26 @@ export const useAuthStore = defineStore('auth', () => {
     return intervalToRefreshToken
   }
 
+  const restoreToken = async function () {
+    let storedToken = sessionStorage.getItem('token')
+    if (storedToken) {
+      try {
+        token.value = storedToken
+        axios.defaults.headers.common.Authorization = 'Bearer ' + token.value
+        const responseUser = await axios.get('users/me')
+        user.value = responseUser.data
+        socket.emit('login', user.value)
+        console.log('User refreshed:', user.value)
+        repeatRefreshToken()
+        return true
+      } catch {
+        clearUser()
+        return false
+      }
+    }
+    return false
+  }
+
   return {
     user,
     userName,
@@ -161,6 +175,7 @@ export const useAuthStore = defineStore('auth', () => {
     userPhotoUrl,
     userCoins,
     login,
-    logout
+    logout,
+    restoreToken
   }
 })
