@@ -49,37 +49,36 @@ const submit = async () => {
                 'Content-Type': 'multipart/form-data'
             }
         })
-            .then((response) => {
-                console.log(response.data)
-            })
-        return;
-    }
-    let user = null
-    try {
-        user = await authStore.register({
-            email: email.value,
-            name: name.value,
-            nickname: nickname.value,
-            password: password.value,
-            photo_filename: photo.value
+        .then(async (response) => {
+            let user = null
+            try {
+                user = await authStore.register({
+                    email: email.value,
+                    name: name.value,
+                    nickname: nickname.value,
+                    password: password.value,
+                    photo_filename: response.data.photo_filename
+                })
+            } catch (error) {
+                responseData.value = 'Unable to register, please try again later'
+                document.getElementById('error').classList.remove('hidden')
+            }
+
+            if (user) {
+                router.push({ name: 'dashboard' })
+            }
+            else {
+                if (errorStore.statusCode === 401) {
+                    responseData.value = 'Invalid credentials'
+                }
+
+                else if (errorStore.statusCode === 422) {
+                    responseData.value = 'Please fill all the fields above'
+                }
+                document.getElementById('error').classList.remove('hidden')
+            }
         })
-    } catch (error) {
-        responseData.value = 'Unable to register, please try again later'
-        document.getElementById('error').classList.remove('hidden')
-    }
-
-    if (user) {
-        router.push({ name: 'dashboard' })
-    }
-    else {
-        if (errorStore.statusCode === 401) {
-            responseData.value = 'Invalid credentials'
-        }
-
-        else if (errorStore.statusCode === 422) {
-            responseData.value = 'Please fill all the fields above'
-        }
-        document.getElementById('error').classList.remove('hidden')
+        return;
     }
 }
 
@@ -184,9 +183,9 @@ const submit = async () => {
                                 <label for="confirmPassword" class="block text-sm mb-2 text-gray-800">Confirm
                                     password</label>
                                 <div class="relative">
-                                    <input v-model="confirmPassword" type="password" id="password" name="password"
+                                    <input v-model="confirmPassword" type="password" id="confirmPassword" name="confirmPassword"
                                         class="appearance-none py-3 px-4 block w-full border border-gray-500 rounded-lg text-sm focus:border-blue-600"
-                                        required aria-describedby="password-error">
+                                        required aria-describedby="confirmPassword-error">
                                     <div class="hidden absolute inset-y-0 end-0 pointer-events-none pe-3">
                                         <svg class="size-5 text-red-500" width="16" height="16" fill="currentColor"
                                             viewBox="0 0 16 16" aria-hidden="true">

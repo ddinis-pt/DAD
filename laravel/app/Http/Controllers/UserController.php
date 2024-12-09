@@ -26,7 +26,8 @@ class UserController extends Controller
     public function getImagePath(ImageRequest $request)
     {
         $path = $request->file('photo')->store('photos', 'public');
-        return response()->json(['photo_filename' => $path], 200);
+        $caminho = explode('/', $path);
+        return response()->json(['photo_filename' => $caminho[1]], 200);
     }
 
     public function update(UpdateUserRequest $request, $id)
