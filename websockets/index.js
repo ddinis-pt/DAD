@@ -1,3 +1,5 @@
+const { time } = require("console");
+
 const httpServer = require("http").createServer();
 const io = require("socket.io")(httpServer, {
   cors: {
@@ -40,8 +42,32 @@ io.on('connection', (socket) => {
       user: socket.data.user,
       message: message,
     }
-    console.log('Chat message:', payload)
+    console.log('Message received: ', socket.data.user.name, ':' ,message)
     io.sockets.emit('chatMessage', payload)
   })
+
+  // ***********  Chat Private   *********** //
+  socket.on('privateMessage', (clientMessageObj, callback) => {
+      const destinationRoomName = 'user_' + clientMessageObj?.destinationUser?.id
+      // Check if the destination user is online
+      if (io.sockets.adapter.rooms.get(destinationRoomName)) {
+          const payload = {
+          user: socket.data.user,
+          message: clientMessageObj.message
+        }
+        // send the "privateMessage" to the destination user (using "his" room)
+        io.to(destinationRoomName).emit('privateMessage', payload)
+        if (callback) {
+          callback({success: true})
+        }
+      } else {
+        if (callback) {
+          callback({
+            errorCode: 1,
+            errorMessage: `User "${clientMessageObj?.destinationUser?.name}" is not online!`
+          })
+        }
+      }
+    }) 
 
 })

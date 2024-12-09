@@ -25,7 +25,6 @@ const canSendMessageToUser = (user) => {
 }
 
 const sendMessageToChat = () => {
-    // send a message to the websocket server 
     storeChat.sendMessageToChat(message.value)
     message.value = ''
 }
@@ -47,8 +46,9 @@ const sendPrivateMessageToUser = (user) => {
 }
 
 const handleMessageFromInputDialog = (message) => {
-    console.log('SEND PRIVATE MESSAGE TO WEBSOCKET SERVER' + message)
+    storeChat.sendPrivateMessageToUser(userDestination, message)
 }
+
 </script>
 
 <template>
