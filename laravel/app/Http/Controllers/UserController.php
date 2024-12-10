@@ -20,7 +20,7 @@ class UserController extends Controller
 
     public function show($id)
     {
-        return response()->json(User::findOrFail($id), 200);
+        return response()->json(User::withTrashed()->findOrFail($id), 200);
     }
 
     public function getImagePath(ImageRequest $request)

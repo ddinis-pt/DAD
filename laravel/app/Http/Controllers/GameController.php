@@ -14,13 +14,17 @@ class GameController extends Controller
     {
         return response()->json(Game::where('status', 'e')
             ->orderBy('total_time', 'asc')
-            ->take(100)
             ->get(), 200);
     }
 
     public function show($id)
     {
         return response()->json(Game::findOrFail($id), 200);
+    }
+
+    public function totalGames()
+    {
+        return Game::count();
     }
 
     public function store(SaveGameRequest $request)

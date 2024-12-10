@@ -23,6 +23,12 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/leaderboard/turns', [GameController::class, "getTopTenByTurns"]);
 
     Route::get('/games/singleplayer/{id}', [GameController::class, "getAllSingleGamesByUser"]);
+
+    Route::get('/games', [GameController::class, 'index']);
+    Route::get('/games/{game}', [GameController::class, 'show']);
+    Route::post('/games', [GameController::class, 'store']);
+    Route::patch('/games/{game}', [GameController::class, 'updateStatus']);
+    Route::delete('/games/{game}', [GameController::class, 'destroy']);
 });
 
 //Auth
@@ -35,9 +41,6 @@ Route::get('/users', [UserController::class, "index"]);
 Route::get('/users/{id}', [UserController::class, "show"]);
 
 //Games
-Route::get('/games', [GameController::class, "index"]);
-Route::get('/games/{id}', [GameController::class, "show"]);
-Route::post('/games', [GameController::class, "store"]);
 Route::get('/games/user/{userId}', [GameController::class, "getAllGamesByUser"]);
 
 
