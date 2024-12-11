@@ -1,5 +1,4 @@
 <script setup>
-import { inject } from 'vue'
 import {
     Card,
     CardContent,
@@ -8,10 +7,10 @@ import {
     CardTitle,
 } from '@/components/ui/card'
 import { Button } from '@/components/ui/button';
-import { computed } from 'vue'
+import { computed, inject } from 'vue'
+import Board from '@/components/ui/game/BoardComponent.vue'
 import { useAuthStore } from '@/stores/auth'
 import { useGamesStore } from '@/stores/games'
-import Game3x4 from '../Game3x4.vue';
 
 const storeGames = useGamesStore()
 const storeAuth = useAuthStore()
@@ -80,10 +79,11 @@ const buttonClasses = computed(() => {
 })
 
 const statusGameMessage = computed(() => {
+    let figure = null;
     switch (props.game.gameStatus) {
         case null:
         case 0:
-            const figure = props.game.currentPlayer === 1 ? '(cross)' : '(circle)'
+            figure = props.game.currentPlayer === 1 ? '(cross)' : '(circle)'
             return currentUserTurn.value ? 'Your turn ' + figure : 'Opponent turn ' + figure
         case 1:
         case 2:
@@ -115,15 +115,11 @@ const close = () => {
 const quit = () => {
     storeGames.quit(props.game)
 }
-
 </script>
-
 <template>
-    <!-- <Card class="mx-auto my-8 p-2 px-4 min-w-[20rem] max-w-[25rem]"> -->
     <Card class="relative grow mx-4 mt-8 pt-2 pb-4 px-1" :class="cardBgColor">
         <CardHeader class="pb-0">
             <Button @click="clickCardButton" class="absolute top-4 right-4" :class="buttonClasses">
-                <!-- class="absolute -mt-8 -mr-20" :class="buttonClasses"> -->
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="size-6">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
@@ -133,7 +129,7 @@ const quit = () => {
             <CardTitle>#{{ game.id }}</CardTitle>
             <CardDescription>
                 <div class="text-base"><span class="font-bold">Opponent:</span> {{ opponentName }}
-                    {{ game.status == 'interrupted' ? ' / Interrupted' :'' }}</div>
+                    {{ game.status == 'interrupted' ? ' / Interrupted' : '' }}</div>
             </CardDescription>
         </CardHeader>
         <CardContent class="py-4 px-8">
@@ -141,8 +137,7 @@ const quit = () => {
                 {{ statusGameMessage }}
             </h3>
             <div>
-                <!-- <Board :board="game.board" @play="playPieceOfBoard"></Board> -->
-                 <Game3x4></Game3x4>
+                <Board :board="game.board" @play="playPieceOfBoard"></Board>
             </div>
         </CardContent>
     </Card>

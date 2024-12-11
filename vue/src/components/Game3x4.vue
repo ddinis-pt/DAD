@@ -2,7 +2,7 @@
 import { ref, watch, nextTick } from 'vue';
 import axios from 'axios';
 import { format } from 'date-fns';
-import CardComponent from './ui/card/CardComponent.vue';
+import CardComponent from './ui/game/CardComponent.vue';
 
 import { useAuthStore } from '@/stores/auth';
 

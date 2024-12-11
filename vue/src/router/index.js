@@ -13,7 +13,7 @@ import LeaderBoard from '@/components/Leaderboard.vue'
 import Settings from '@/components/registered/Settings.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
-import MultiplayerArea from '@/components/registered/MultiplayerArea.vue'
+import MultiplayerArea from '@/components/ui/game/MultiplayerArea.vue'
 import Register from '@/components/auth/Register.vue'
 import DeleteAccount from '@/components/registered/DeleteAccount.vue'
 
@@ -28,7 +28,7 @@ const router = createRouter({
     {
       path: '/register',
       name: 'register',
-      component: Register,
+      component: Register
     },
     {
       path: '/deleteAccount',
@@ -114,12 +114,12 @@ const router = createRouter({
 let handlingFirstRoute = true
 
 router.beforeEach(async (to, from, next) => {
-    const storeAuth = useAuthStore()
-    if (handlingFirstRoute) {
-        handlingFirstRoute = false
-        await storeAuth.restoreToken()
-    }
-    next()
+  const storeAuth = useAuthStore()
+  if (handlingFirstRoute) {
+    handlingFirstRoute = false
+    await storeAuth.restoreToken()
+  }
+  next()
 })
 
 export default router

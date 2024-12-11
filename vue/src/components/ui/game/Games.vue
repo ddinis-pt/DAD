@@ -11,7 +11,8 @@ onMounted(() => {
 </script>
 
 <template>
-    <div v-for="game in storeGames.games" :key="game.id" :game="game" class="flex flex-wrap justify-stretch">
-        <Game3x4></Game3x4>
+    <div class="flex flex-wrap justify-stretch">
+        <Game v-for="game in storeGames.games" :key="game.id" :game="game">
+        </Game>
     </div>
 </template>
