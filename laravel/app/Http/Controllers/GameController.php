@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\SaveGameRequest;
+use App\Http\Requests\UpdateGameRequest;
 use App\Models\Game;
 use Error;
 use Illuminate\Support\Facades\DB;
@@ -31,6 +32,95 @@ class GameController extends Controller
     {
         $game = Game::create($request->validated());
         return response()->json($game, 201);
+    }
+
+    public function updateStatus(UpdateGameRequest $request, Game $game)
+    {
+        $data = $request->validated();
+        $newStatus = $data["status"];
+        // Only playing games can have their status changed (to ended or interrupted)
+        if ($game->status != "PL") {
+            throw ValidationException::withMessages([
+                "status" =>
+                    "Cannot change game #" .
+                    $game->id .
+                    " status from '" .
+                    $game->status .
+                    "' to '$newStatus'!",
+            ]);
+        }
+        switch ($game->status) {
+            case "P":
+                if (
+                    $newStatus == "PL" &&
+                    $request->user()->id == $game->created_user_id
+                ) {
+                    return response()->json(
+                        [
+                            "message" =>
+                                "Forbidden! Player 1 cannot start the game without player 2.",
+                        ],
+                        403
+                    );
+                }
+                if ($newStatus == "E") {
+                    throw ValidationException::withMessages([
+                        "status" =>
+                            "Cannot change game #" .
+                            $game->id .
+                            " status from 'pending' to 'ended'!",
+                    ]);
+                }
+                $game->status = $newStatus;
+                $game->winner_user_id = null;
+                if ($newStatus == "PL") {
+                    $game->custom = $data["custom"];
+                }
+                break;
+            case "PL":
+                if ($newStatus == "E") {
+                    $winner_user_id = null;
+                    if (array_key_exists("winner_user_id", $data)) {
+                        $winner_user_id = $data["winner_user_id"];
+                        if ($winner_user_id != null) {
+                            if (
+                                $winner_user_id != $game->player1_id &&
+                                $winner_user_id != json_decode($data["custom"])->{"player2"}
+                            ) {
+                                throw ValidationException::withMessages([
+                                    "winner_id" =>
+                                        "Cannot change game #" .
+                                        $game->id .
+                                        " status from 'playing' to 'ended', because the winner is invalid!",
+                                ]);
+                            }
+                        }
+                    }
+                    $game->status = $newStatus;
+                    $game->winner_id = $winner_user_id;
+                } else {
+                    $game->status = $newStatus;
+                }
+                break;
+            case "interrupted":
+                throw ValidationException::withMessages([
+                    "status" =>
+                        "Cannot change game #" .
+                        $game->id .
+                        " status because it already has been interrupted!",
+                ]);
+                break;
+            case "ended":
+                throw ValidationException::withMessages([
+                    "status" =>
+                        "Cannot change game #" .
+                        $game->id .
+                        " status because it already has ended!",
+                ]);
+                break;
+        }
+        $game->save();
+        return response()->json($game, 200);
     }
 
     public function getAllSinglePlayerGames()

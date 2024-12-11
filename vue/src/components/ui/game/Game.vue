@@ -24,11 +24,11 @@ const props = defineProps({
 
 const alertDialog = inject('alertDialog')
 
-const opponentName = computed(() => {
-    return storeGames.playerNumberOfCurrentUser(props.game) === 1 ?
-        storeAuth.getFirstLastName(props.game.player2_name) :
-        storeAuth.getFirstLastName(props.game.player1_name)
-})
+// const opponentName = computed(() => {
+//     return storeGames.playerNumberOfCurrentUser(props.game) === 1 ?
+//         storeAuth.getFirstLastName(JSON.parse(props.game.custom).player2) :
+//         storeAuth.getFirstLastName(props.game.created_user_id)
+// })
 
 const gameEnded = computed(() => {
     return props.game.gameStatus > 0
@@ -127,10 +127,10 @@ const quit = () => {
                 {{ gameEnded ? 'Close' : 'Quit' }}
             </Button>
             <CardTitle>#{{ game.id }}</CardTitle>
-            <CardDescription>
+            <!-- <CardDescription>
                 <div class="text-base"><span class="font-bold">Opponent:</span> {{ opponentName }}
-                    {{ game.status == 'interrupted' ? ' / Interrupted' : '' }}</div>
-            </CardDescription>
+                    {{ game.status == 'I' ? ' / Interrupted' : '' }}</div>
+            </CardDescription> -->
         </CardHeader>
         <CardContent class="py-4 px-8">
             <h3 class="pt-0 text-2xl font-bold py-2" :class="statusMessageColor">

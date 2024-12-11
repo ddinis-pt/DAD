@@ -8,6 +8,7 @@ class Game extends Model
 {
     protected $fillable = [
         'created_user_id',
+        'winner_user_id',
         'type',
         'status',
         'began_at',
@@ -18,4 +19,14 @@ class Game extends Model
     ];
 
     public $timestamps = true;
+
+    public function created_user_id(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'created_user_id');
+    }
+
+    public function winner_user_id(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'winner_user_id');
+    }
 }

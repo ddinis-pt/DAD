@@ -1,5 +1,6 @@
 import { ref, computed, inject } from 'vue'
 import { defineStore } from 'pinia'
+import { format } from 'date-fns'
 import axios from 'axios'
 import { useErrorStore } from '@/stores/error'
 import { useAuthStore } from '@/stores/auth'
@@ -66,10 +67,16 @@ export const useLobbyStore = defineStore('lobby', () => {
                 return
             }
             const APIresponse = await axios.post('games', {
-                player1_id: response.player1.id,
-                player2_id: response.player2.id,
+                created_user_id: storeAuth.user.id,
+                type: 'M',
+                status: 'PL',
+                began_at: format(new Date(), 'yyyy-MM-dd HH:mm:ss'),
+                board_id: 1,
+                custom: {
+                    player2: response.player2.id,
+                }
             })
-            const newGameOnDB = APIresponse.data.data
+            const newGameOnDB = APIresponse.data
             newGameOnDB.player1SocketId = response.player1SocketId
             newGameOnDB.player2SocketId = response.player2SocketId
             // After adding the game to the DB emit a message to the server to start the game

@@ -1,6 +1,6 @@
 exports.createLobby = () => { 
     const games = new Map()
-    let id = 1
+    let id = 0
 
     const addGame = (user, socketId) => {
         id++

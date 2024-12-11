@@ -48,9 +48,7 @@ watch(nParesEncontrados, async (n) => {
                 ended_at: format(new Date(), 'yyyy-MM-dd HH:mm:ss'),
                 total_time: timer.value,
                 board_id: 1,
-                custom: JSON.stringify({
-                    nJogadas: nJogadas.value,
-                })
+                total_turns_winner: nJogadas.value,
             };
             await axios.post('/games', game);
         }

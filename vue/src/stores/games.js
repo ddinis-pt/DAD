@@ -24,10 +24,10 @@ export const useGamesStore = defineStore('games', () => {
     }
 
     const playerNumberOfCurrentUser = (game) => {
-        if (game.player1_id === storeAuth.userId) {
+        if (game.player1_id === storeAuth.user.id) {
             return 1
         }
-        if (game.player2_id === storeAuth.userId) {
+        if (game.player2_id === storeAuth.user.id) {
             return 2
         }
         return null
@@ -93,7 +93,7 @@ export const useGamesStore = defineStore('games', () => {
     } 
     
     socket.on('gameStarted', async (game) => {
-        if (game.player1_id === storeAuth.userId) {
+        if (game.player1_id === storeAuth.user.id) {
             toast({
                     title: 'Game Started',
                     description: `Game #${game.id} has started!`,

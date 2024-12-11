@@ -28,6 +28,7 @@ export const useErrorStore = defineStore('error', () => {
   }
 
   const resetMessages = () => {
+    toast().dismiss()
     _message.value = ''
     _fieldErrorMessages.value = []
     _statusCode.value = 0
