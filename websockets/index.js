@@ -179,17 +179,6 @@ io.on('connection', (socket) => {
     }
   })
 
-  socket.on('addGame', (callback) => {
-    if (!util.checkAuthenticatedUser(socket, callback)) {
-      return
-    }
-    const game = lobby.addGame(socket.data.user, socket.id)
-    io.to('lobby').emit('lobbyChanged', lobby.getGames())
-    if (callback) {
-      callback(game)
-    }
-  })
-
   socket.on('joinGame', (id, callback) => {
     if (!util.checkAuthenticatedUser(socket, callback)) {
       return
