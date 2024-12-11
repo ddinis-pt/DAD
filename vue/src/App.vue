@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, useTemplateRef, provide, inject } from 'vue'
+import { useTemplateRef, provide, inject } from 'vue'
 import { RouterView } from 'vue-router'
 import { useChatStore } from '@/stores/chat'
 import GlobalAlertDialog from '@/components/common/GlobalAlertDialog.vue'
@@ -20,7 +20,7 @@ socket.on('privateMessage', (messageObj) => {
   userDestination = messageObj.user
   inputDialog.value.open(
     handleMessageFromInputDialog,
-    'Message from ' + messageObj.user.name
+    'Message from ' + messageObj.user.name,
     `This is a private message sent by ${messageObj?.user?.name}!`,
     'Reply Message', '',
     'Close', 'Reply',
@@ -35,7 +35,7 @@ const handleMessageFromInputDialog = (message) => {
 </script>
 
 <template>
-    <GlobalAlertDialog ref="alert-dialog"></GlobalAlertDialog>
-    <GlobalInputDialog ref="input-dialog"></GlobalInputDialog>
-    <RouterView />
+  <GlobalAlertDialog ref="alert-dialog"></GlobalAlertDialog>
+  <GlobalInputDialog ref="input-dialog"></GlobalInputDialog>
+  <RouterView />
 </template>

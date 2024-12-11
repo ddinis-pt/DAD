@@ -1,8 +1,8 @@
 const { time } = require("console");
-const { createLobby } = require('./lobby')
-const lobby = createLobby()
-const { createUtil } = require('./util')
-const util = createUtil()
+const { createLobby } = require("./lobby");
+const lobby = createLobby();
+const { createUtil } = require("./util");
+const util = createUtil();
 
 const httpServer = require("http").createServer();
 const io = require("socket.io")(httpServer, {
@@ -19,207 +19,206 @@ httpServer.listen(PORT, () => {
   console.log(`listening on localhost:${PORT}`);
 });
 
-io.on('connection', (socket) => {
-  console.log('New connection:', socket.id);
+io.on("connection", (socket) => {
+  console.log("New connection:", socket.id);
 
   // ***********  Login  *********** //
-  socket.on('login', (user) => {
-    socket.data.user = user
+  socket.on("login", (user) => {
+    socket.data.user = user;
     if (user && user.id) {
-      socket.join('user_' + user.id)
-      socket.join('lobby')
+      socket.join("user_" + user.id);
+      socket.join("lobby");
     }
-    console.log('User logged:', user)
-  })
+    console.log("User logged:", user);
+  });
 
   // ***********  Logout  *********** //
-  socket.on('logout', (user) => {
+  socket.on("logout", (user) => {
     if (user && user.id) {
-      socket.leave('user_' + user.id)
-      lobby.leaveLobby(socket.id)
-      io.to('lobby').emit('lobbyChanged', lobby.getGames())
-      socket.leave('lobby')
+      socket.leave("user_" + user.id);
+      lobby.leaveLobby(socket.id);
+      io.to("lobby").emit("lobbyChanged", lobby.getGames());
+      socket.leave("lobby");
       util.getRoomGamesPlaying(socket).forEach(([roomName, room]) => {
-        socket.leave(roomName)
+        socket.leave(roomName);
         if (!gameEngine.gameEnded(room.game)) {
-          room.game.status = 'interrupted'
-          room.game.gameStatus = 3
-          io.to(roomName).emit('gameInterrupted', room.game)
+          room.game.status = "interrupted";
+          room.game.gameStatus = 3;
+          io.to(roomName).emit("gameInterrupted", room.game);
         }
-      })
+      });
     }
-    socket.data.user = undefined
-    console.log('User logout:', user)
-  })
+    socket.data.user = undefined;
+    console.log("User logout:", user);
+  });
 
   // ***********  Chat Global   *********** //
-  socket.on('chatMessage', (message) => {
+  socket.on("chatMessage", (message) => {
     const payload = {
       user: socket.data.user,
       message: message,
-    }
-    console.log('Message received: ', socket.data.user.name, ':', message)
-    io.sockets.emit('chatMessage', payload)
-  })
+    };
+    io.sockets.emit("chatMessage", payload);
+  });
 
   // ***********  Chat Private   *********** //
-  socket.on('privateMessage', (clientMessageObj, callback) => {
-    const destinationRoomName = 'user_' + clientMessageObj?.destinationUser?.id
+  socket.on("privateMessage", (clientMessageObj, callback) => {
+    const destinationRoomName = "user_" + clientMessageObj?.destinationUser?.id;
     // Check if the destination user is online
     if (io.sockets.adapter.rooms.get(destinationRoomName)) {
       const payload = {
         user: socket.data.user,
-        message: clientMessageObj.message
-      }
+        message: clientMessageObj.message,
+      };
       // send the "privateMessage" to the destination user (using "his" room)
-      io.to(destinationRoomName).emit('privateMessage', payload)
+      io.to(destinationRoomName).emit("privateMessage", payload);
       if (callback) {
-        callback({ success: true })
+        callback({ success: true });
       }
     } else {
       if (callback) {
         callback({
           errorCode: 1,
-          errorMessage: `User "${clientMessageObj?.destinationUser?.name}" is not online!`
-        })
+          errorMessage: `User "${clientMessageObj?.destinationUser?.name}" is not online!`,
+        });
       }
     }
-  })
+  });
 
   // ***********  Lobby   *********** //
   socket.on("disconnecting", (reason) => {
-    socket.rooms.forEach(room => {
-      if (room == 'lobby') {
-        lobby.leaveLobby(socket.id)
-        io.to('lobby').emit('lobbyChanged', lobby.getGames())
+    socket.rooms.forEach((room) => {
+      if (room == "lobby") {
+        lobby.leaveLobby(socket.id);
+        io.to("lobby").emit("lobbyChanged", lobby.getGames());
       }
-    })
+    });
     util.getRoomGamesPlaying(socket).forEach(([roomName, room]) => {
-      socket.leave(roomName)
+      socket.leave(roomName);
       if (!gameEngine.gameEnded(room.game)) {
-        room.game.status = 'interrupted'
-        room.game.gameStatus = 3
-        io.to(roomName).emit('gameInterrupted', room.game)
+        room.game.status = "interrupted";
+        room.game.gameStatus = 3;
+        io.to(roomName).emit("gameInterrupted", room.game);
       }
-    })
-  })
+    });
+  });
 
-  socket.on('fetchGames', (callback) => {
+  socket.on("fetchGames", (callback) => {
     if (!util.checkAuthenticatedUser(socket, callback)) {
-      return
+      return;
     }
-    const games = lobby.getGames()
+    const games = lobby.getGames();
     if (callback) {
-      callback(games)
+      callback(games);
     }
-  })
+  });
 
-  socket.on('addGame', (callback) => {
+  socket.on("addGame", (callback) => {
     if (!util.checkAuthenticatedUser(socket, callback)) {
-      return
+      return;
     }
-    const game = lobby.addGame(socket.data.user, socket.id)
-    io.to('lobby').emit('lobbyChanged', lobby.getGames())
+    const game = lobby.addGame(socket.data.user, socket.id);
+    io.to("lobby").emit("lobbyChanged", lobby.getGames());
     if (callback) {
-      callback(game)
+      callback(game);
     }
-  })
+  });
 
-  socket.on('joinGame', (id, callback) => {
+  socket.on("joinGame", (id, callback) => {
     if (!util.checkAuthenticatedUser(socket, callback)) {
-      return
+      return;
     }
-    const game = lobby.getGame(id)
+    const game = lobby.getGame(id);
     if (socket.data.user.id == game.player1.id) {
       if (callback) {
         callback({
           errorCode: 3,
-          errorMessage: 'User cannot join a game that he created!'
-        })
+          errorMessage: "User cannot join a game that he created!",
+        });
       }
-      return
+      return;
     }
-    game.player2 = socket.data.user
-    game.player2SocketId = socket.id
-    lobby.removeGame(id)
-    io.to('lobby').emit('lobbyChanged', lobby.getGames())
+    game.player2 = socket.data.user;
+    game.player2SocketId = socket.id;
+    lobby.removeGame(id);
+    io.to("lobby").emit("lobbyChanged", lobby.getGames());
     if (callback) {
-      callback(game)
+      callback(game);
     }
-  })
+  });
 
-  socket.on('removeGame', (id, callback) => {
+  socket.on("removeGame", (id, callback) => {
     if (!util.checkAuthenticatedUser(socket, callback)) {
-      return
+      return;
     }
-    const game = lobby.getGame(id)
+    const game = lobby.getGame(id);
     if (socket.data.user.id != game.player1.id) {
       if (callback) {
         callback({
           errorCode: 4,
-          errorMessage: 'User cannot remove a game that he has not created!'
-        })
+          errorMessage: "User cannot remove a game that he has not created!",
+        });
       }
-      return
+      return;
     }
-    lobby.removeGame(game.id)
-    io.to('lobby').emit('lobbyChanged', lobby.getGames())
+    lobby.removeGame(game.id);
+    io.to("lobby").emit("lobbyChanged", lobby.getGames());
     if (callback) {
-      callback(game)
+      callback(game);
     }
-  })
+  });
 
-  socket.on('fetchGames', (callback) => {
+  socket.on("fetchGames", (callback) => {
     if (!util.checkAuthenticatedUser(socket, callback)) {
-      return
+      return;
     }
-    const games = lobby.getGames()
+    const games = lobby.getGames();
     if (callback) {
-      callback(games)
+      callback(games);
     }
-  })
+  });
 
-  socket.on('joinGame', (id, callback) => {
+  socket.on("joinGame", (id, callback) => {
     if (!util.checkAuthenticatedUser(socket, callback)) {
-      return
+      return;
     }
-    const game = lobby.getGame(id)
+    const game = lobby.getGame(id);
     if (socket.data.user.id == game.player1.id) {
       if (callback) {
         callback({
           errorCode: 3,
-          errorMessage: 'User cannot join a game that he created!'
-        })
+          errorMessage: "User cannot join a game that he created!",
+        });
       }
-      return
+      return;
     }
-    game.player2 = socket.data.user
-    game.player2SocketId = socket.id
-    lobby.removeGame(id)
-    io.to('lobby').emit('lobbyChanged', lobby.getGames())
+    game.player2 = socket.data.user;
+    game.player2SocketId = socket.id;
+    lobby.removeGame(id);
+    io.to("lobby").emit("lobbyChanged", lobby.getGames());
     if (callback) {
-      callback(game)
+      callback(game);
     }
-  })
+  });
 
-  socket.on('removeGame', (id, callback) => {
+  socket.on("removeGame", (id, callback) => {
     if (!util.checkAuthenticatedUser(socket, callback)) {
-      return
+      return;
     }
-    const game = lobby.getGame(id)
+    const game = lobby.getGame(id);
     if (socket.data.user.id != game.player1.id) {
       if (callback) {
         callback({
           errorCode: 4,
-          errorMessage: 'User cannot remove a game that he has not created!'
-        })
+          errorMessage: "User cannot remove a game that he has not created!",
+        });
       }
-      return
+      return;
     }
-    lobby.removeGame(game.id)
-    io.to('lobby').emit('lobbyChanged', lobby.getGames())
+    lobby.removeGame(game.id);
+    io.to("lobby").emit("lobbyChanged", lobby.getGames());
     if (callback) {
-      callback(game)
+      callback(game);
     }
-  })
-})
+  });
+});
