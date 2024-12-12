@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\SaveGameRequest;
 use App\Http\Requests\UpdateGameRequest;
+use Illuminate\Validation\ValidationException;
 use App\Models\Game;
 use Error;
 use Illuminate\Support\Facades\DB;

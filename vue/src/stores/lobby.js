@@ -77,8 +77,11 @@ export const useLobbyStore = defineStore('lobby', () => {
                 }
             })
             const newGameOnDB = APIresponse.data
+            newGameOnDB.player1 = storeAuth.user.id
+            newGameOnDB.player2 = response.player2.id
             newGameOnDB.player1SocketId = response.player1SocketId
             newGameOnDB.player2SocketId = response.player2SocketId
+            console.log(newGameOnDB);
             // After adding the game to the DB emit a message to the server to start the game
             socket.emit('startGame', newGameOnDB, (startedGame) => {
                 console.log('Game has started', startedGame)
@@ -88,12 +91,12 @@ export const useLobbyStore = defineStore('lobby', () => {
 
     // Whether the current user can remove a specific game from the lobby
     const canRemoveGame = (game) => {
-        return game.player1.id === storeAuth.userId
+        return game.player1.id === storeAuth.user.id
     }
 
     // Whether the current user can join a specific game from the lobby
     const canJoinGame = (game) => {
-        return storeAuth.user && game.player1.id !== storeAuth.userId
+        return storeAuth.user && game.player1.id !== storeAuth.user.id
     }
 
     return {

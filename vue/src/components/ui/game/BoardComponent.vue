@@ -10,40 +10,29 @@ const flippedCards = ref([]);
 const nJogadas = ref(0);
 const timer = ref(0);
 
+const props = defineProps({
+    game: {
+        type: Object,
+        required: true
+    }
+})
+
+const board = props.game.board;
+const flipped = props.game.flipped;
+
+const emits = defineEmits(['play']);
+
 const isGameWon = ref(false);
 
 const router = useRouter();
 const authStore = useAuthStore();
 
-const shuffle = (array) => {
-    let currentIndex = array.length, randomIndex;
-
-    while (currentIndex !== 0) {
-        randomIndex = Math.floor(Math.random() * currentIndex);
-        currentIndex--;
-
-        [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
-    }
-
-    return array;
-};
-
 const cartaVirada = (index) => {
-    if (flippedCards[index]) return;
-
-    flippedCards[index] = true;
-
-    if (flippedCards.filter((card) => card).length % 2 === 0) {
-        nJogadas.value++;
-        if (flippedCards.every((card) => card)) {
-            isGameWon.value = true;
-        }
-    }
+    emits('play', index);
 };
 
 onMounted(() => {
-    numbers.value = shuffle([...Array(8).keys()].map((i) => i + 1).concat([...Array(8).keys()].map((i) => i + 1)));
-    flippedCards.value = Array(16).fill(false);
+    flippedCards.value = props.game.flipped;
 
     setInterval(() => {
         if (!isGameWon.value) {
@@ -59,7 +48,7 @@ onMounted(() => {
         ${nJogadas} jogadas!` }}
     </h1>
     <div class="grid grid-cols-4 gap-4 border divide-y divide-x" :class="{ 'hidden': isGameWon }">
-        <CardComponent v-for="(number, index) in numbers" :number="number" :key="index" :isFlipped="flippedCards[index]"
-            @has-been-flipped="() => cartaVirada(index)" />
+        <CardComponent v-for="(number, index) in board" :number="number" :key="index" :isFlipped="flipped[index]"
+            @has-been-flipped="cartaVirada(index)" :game="props.game"/>
     </div>
 </template>

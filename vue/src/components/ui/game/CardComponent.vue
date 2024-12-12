@@ -21,6 +21,10 @@ const props = defineProps({
     isFlipped: {
         type: Boolean,
         default: false
+    },
+    game: {
+        type: Object,
+        required: false
     }
 })
 
@@ -45,6 +49,9 @@ const getText = computed(() => {
 })
 
 const flipCard = () => {
+    if(props.game && props.game.currentPlayer !== props.game.playerNumber) {
+        return
+    }
     if (flipped.value) {
         return
     }

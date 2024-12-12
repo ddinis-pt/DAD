@@ -1,128 +1,185 @@
 exports.createGameEngine = () => {
-    const initGame = (gameFromDB) => {
-        gameFromDB.gameStatus = null
-        // null -> game has not started yet 
-        // 0 -> game has started and running
-        // 1 -> player 1 is the winner
-        // 2 -> player 2 is the winner
-        // 3 -> draw
-        gameFromDB.currentPlayer = 1
-        gameFromDB.board = [0, 0, 0, 0, 0, 0, 0, 0, 0]
-        return gameFromDB
+  const initGame = (gameFromDB) => {
+    gameFromDB.gameStatus = null;
+    // null -> game has not started yet
+    // 0 -> game has started and running
+    // 1 -> player 1 is the winner
+    // 2 -> player 2 is the winner
+    // 3 -> draw
+    gameFromDB.currentPlayer = 1;
+    // Randomized numbers
+    // gameFromDB.board = Array.from({ length: 6 }, (_, i) => i + 1).flatMap(n => [n, n]).sort(() => Math.random() - 0.5);
+
+    // Static numbers for testing
+    gameFromDB.board = [1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6];
+    gameFromDB.flipped = Array.from({ length: 12 }, () => false);
+    gameFromDB.currentlyFlipped = [];
+    gameFromDB.pairsFound = 0;
+    gameFromDB.moves = 0;
+    gameFromDB.isGameWon = false;
+    return gameFromDB;
+  };
+
+  // ------------------------------------------------------
+  // Actions / Methods
+  // ------------------------------------------------------
+
+  // Flip the selected card
+  const flipCard = (game, index) => {
+    if (game.isGameWon || game.flipped[index]) {
+      return game;
     }
 
-    // ------------------------------------------------------
-    // Actions / Methods
-    // ------------------------------------------------------
+    game.flipped[index] = true;
+    game.currentlyFlipped.push(index);
 
-    // Check if there is a line (either horizontal, vertical or diagonal) with the same player
-    const hasFullLine = (game, playerNumber) =>
-        ((game.board[0] === playerNumber) && (game.board[1] === playerNumber) && (game.board[2] === playerNumber)) ||
-        ((game.board[3] === playerNumber) && (game.board[4] === playerNumber) && (game.board[5] === playerNumber)) ||
-        ((game.board[6] === playerNumber) && (game.board[7] === playerNumber) && (game.board[8] === playerNumber)) ||
-        ((game.board[0] === playerNumber) && (game.board[3] === playerNumber) && (game.board[6] === playerNumber)) ||
-        ((game.board[1] === playerNumber) && (game.board[4] === playerNumber) && (game.board[7] === playerNumber)) ||
-        ((game.board[2] === playerNumber) && (game.board[5] === playerNumber) && (game.board[8] === playerNumber)) ||
-        ((game.board[0] === playerNumber) && (game.board[4] === playerNumber) && (game.board[8] === playerNumber)) ||
-        ((game.board[2] === playerNumber) && (game.board[4] === playerNumber) && (game.board[6] === playerNumber))
+    if (game.currentlyFlipped.length === 2) {
+      const [index1, index2] = game.currentlyFlipped;
+      const card1 = game.board[index1];
+      const card2 = game.board[index2];
 
-
-    // Check if the board is complete and change the gameStatus accordingly
-    const changeGameStatus = (game) => {
-        if (hasFullLine(game, 1)) {
-            game.gameStatus = 1
-        } else if (hasFullLine(game, 2)) {
-            game.gameStatus = 2
-        } else if (isBoardComplete(game)) {
-            game.gameStatus = 3
-        } else {
-            game.gameStatus = 0
+      if (card1 === card2) {
+        game.pairsFound++;
+        if (game.pairsFound === game.board.length / 2) {
+          game.isGameWon = true;
         }
-    }
-    
-    // Check if the board is complete (no further plays are possible)
-    const isBoardComplete = (game) => game.board.findIndex(piece => piece === 0) < 0
-
-    // returns whether the game as ended or not
-    const gameEnded = (game) => game.gameStatus > 0
-
-
-    // Plays a specific piece of the game (defined by its index)
-    // Returns true if the game play is valid or an object with an error code and message otherwise
-    const play = (game, index, playerSocketId) => {
-        if ((playerSocketId != game.player1SocketId) && (playerSocketId != game.player2SocketId)){
-            return {
-                errorCode: 10,
-                errorMessage: 'You are not playing this game!'
-            }
-        }
-        if (gameEnded(game)) {
-            return {
-                errorCode: 11,
-                errorMessage: 'Game has already ended!'
-            }
-        }
-        if (((game.currentPlayer == 1) && (playerSocketId != game.player1SocketId))
-            ||
-            ((game.currentPlayer == 2) && (playerSocketId != game.player2SocketId))){
-            return {
-                errorCode: 12,
-                errorMessage: 'Invalid play: It is not your turn!'
-            }
-        }
-        if (game.board[index] !== 0) {
-            return {
-                errorCode: 13,
-                errorMessage: 'Invalid play: cell already occupied!'
-            }
-        }
-        game.board[index] = game.currentPlayer
-        game.currentPlayer = game.currentPlayer === 1 ? 2 : 1
-        changeGameStatus(game)
-        return true
+      } else {
+        setTimeout(() => {
+          game.flipped[index1] = false;
+          game.flipped[index2] = false;
+        }, 750);
+      }
+      game.currentlyFlipped = [];
+      game.moves++;
     }
 
-    // One of the players quits the game. The other one wins the game
-    const quit = (game, playerSocketId) => {
-        if ((playerSocketId != game.player1SocketId) && (playerSocketId != game.player2SocketId)){
-            return {
-                errorCode: 10,
-                errorMessage: 'You are not playing this game!'
-            }
+    return game;
+  };
+
+  // Show hint
+  const showHint = (game) => {
+    const unflippedPairs = [];
+
+    for (let i = 0; i < game.board.length; i++) {
+      if (!game.flipped[i]) {
+        for (let j = i + 1; j < game.board.length; j++) {
+          if (!game.flipped[j] && game.board[i] === game.board[j]) {
+            unflippedPairs.push([i, j]);
+          }
         }
-        if (gameEnded(game)) {
-            return {
-                errorCode: 11,
-                errorMessage: 'Game has already ended!'
-            }
-        }
-        game.gameStatus = playerSocketId == game.player1SocketId ? 2 : 1
-        game.status = 'ended'
-        return true
+      }
     }
 
-    // Check if socket can close the game (game must have ended and player must belong to game)
-    const close = (game, playerSocketId) => {
-        if ((playerSocketId != game.player1SocketId) && (playerSocketId != game.player2SocketId)){
-            return {
-                errorCode: 10,
-                errorMessage: 'You are not playing this game!'
-            }
-        }
-        if (!gameEnded(game)) {
-            return {
-                errorCode: 14,
-                errorMessage: 'Cannot close a game that has not ended!'
-            }
-        }
-        return true
+    if (unflippedPairs.length > 0) {
+      const [index1, index2] = unflippedPairs[0];
+      game.flipped[index1] = true;
+      game.flipped[index2] = true;
+      setTimeout(() => {
+        game.flipped[index1] = false;
+        game.flipped[index2] = false;
+      }, 750);
+    } else {
+      console.log('No unflipped pairs found.');
     }
-    
-    return {
-        initGame,
-        gameEnded,
-        play,
-        quit,
-        close
+
+    return game;
+  };
+
+  // Check if the board is complete and change the gameStatus accordingly
+  const changeGameStatus = (game) => {
+    // Change game status based on who won
+  };
+
+  // Check if the board is complete (no further plays are possible)
+  const isBoardComplete = (game) => {
+    // Check if all pairs are found
+  };
+
+  // returns whether the game as ended or not
+  const gameEnded = (game) => game.gameStatus > 0;
+
+  // Plays a specific piece of the game (defined by its index)
+  // Returns true if the game play is valid or an object with an error code and message otherwise
+  const play = (game, index, playerSocketId) => {
+    if (
+      playerSocketId != game.player1SocketId &&
+      playerSocketId != game.player2SocketId
+    ) {
+      return {
+        errorCode: 10,
+        errorMessage: "You are not playing this game!",
+      };
     }
-}
+    if (gameEnded(game)) {
+      return {
+        errorCode: 11,
+        errorMessage: "Game has already ended!",
+      };
+    }
+    if (
+      (game.currentPlayer == 1 && playerSocketId != game.player1SocketId) ||
+      (game.currentPlayer == 2 && playerSocketId != game.player2SocketId)
+    ) {
+      return {
+        errorCode: 12,
+        errorMessage: "Invalid play: It is not your turn!",
+      };
+    }
+
+    // Flip the selected card
+    flipCard(game, index);
+    game.currentPlayer = game.currentPlayer === 1 ? 2 : 1;
+    changeGameStatus(game);
+    return true;
+  };
+
+  // One of the players quits the game. The other one wins the game
+  const quit = (game, playerSocketId) => {
+    if (
+      playerSocketId != game.player1SocketId &&
+      playerSocketId != game.player2SocketId
+    ) {
+      return {
+        errorCode: 10,
+        errorMessage: "You are not playing this game!",
+      };
+    }
+    if (gameEnded(game)) {
+      return {
+        errorCode: 11,
+        errorMessage: "Game has already ended!",
+      };
+    }
+    game.gameStatus = playerSocketId == game.player1SocketId ? 2 : 1;
+    game.status = "ended";
+    return true;
+  };
+
+  // Check if socket can close the game (game must have ended and player must belong to game)
+  const close = (game, playerSocketId) => {
+    if (
+      playerSocketId != game.player1SocketId &&
+      playerSocketId != game.player2SocketId
+    ) {
+      return {
+        errorCode: 10,
+        errorMessage: "You are not playing this game!",
+      };
+    }
+    if (!gameEnded(game)) {
+      return {
+        errorCode: 14,
+        errorMessage: "Cannot close a game that has not ended!",
+      };
+    }
+    return true;
+  };
+
+  return {
+    initGame,
+    gameEnded,
+    play,
+    quit,
+    close,
+  };
+};
