@@ -234,6 +234,7 @@ io.on('connection', (socket) => {
     // load game state from the game data stored directly on the room object:
     const game = socket.adapter.rooms.get(roomName).game
     const quitResult = gameEngine.quit(game, socket.id)
+    console.log(quitResult)
     if (quitResult !== true) {
       if (callback) {
         callback(quitResult)

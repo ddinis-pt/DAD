@@ -51,6 +51,7 @@ exports.createGameEngine = () => {
       }
       game.currentlyFlipped = [];
       game.moves++;
+      changeGameStatus(game);
     }
 
     return game;
@@ -79,7 +80,7 @@ exports.createGameEngine = () => {
         game.flipped[index2] = false;
       }, 750);
     } else {
-      console.log('No unflipped pairs found.');
+      console.log("No unflipped pairs found.");
     }
 
     return game;
@@ -88,11 +89,13 @@ exports.createGameEngine = () => {
   // Check if the board is complete and change the gameStatus accordingly
   const changeGameStatus = (game) => {
     // Change game status based on who won
-  };
-
-  // Check if the board is complete (no further plays are possible)
-  const isBoardComplete = (game) => {
-    // Check if all pairs are found
+    if (game.pairsFound === game.board.length / 2) {
+      game.gameStatus = 3; //Draw
+    } else if (game.currentlyFlipped.length === 2) {
+      game.gameStatus = 0; //Game is running
+    } else if (game.currentlyFlipped.length === 0) {
+      game.gameStatus = game.currentPlayer === 1 ? 2 : 1;
+    }
   };
 
   // returns whether the game as ended or not
@@ -151,7 +154,7 @@ exports.createGameEngine = () => {
       };
     }
     game.gameStatus = playerSocketId == game.player1SocketId ? 2 : 1;
-    game.status = "ended";
+    game.status = "E";
     return true;
   };
 

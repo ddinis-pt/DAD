@@ -49,7 +49,9 @@ const getText = computed(() => {
 })
 
 const flipCard = () => {
-    if(props.game && props.game.currentPlayer !== props.game.playerNumber) {
+    console.log(props.game)
+    // check if the user can flip the card
+    if (props.game.currentPlayer !== props.game.currentPlayer) {
         return
     }
     if (flipped.value) {

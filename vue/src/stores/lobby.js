@@ -72,9 +72,6 @@ export const useLobbyStore = defineStore('lobby', () => {
                 status: 'PL',
                 began_at: format(new Date(), 'yyyy-MM-dd HH:mm:ss'),
                 board_id: 1,
-                custom: {
-                    player2: response.player2.id,
-                }
             })
             const newGameOnDB = APIresponse.data
             newGameOnDB.player1 = storeAuth.user.id

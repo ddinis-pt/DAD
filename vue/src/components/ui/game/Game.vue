@@ -79,12 +79,10 @@ const currentUserTurn = computed(() => {
 // })
 
 const statusGameMessage = computed(() => {
-    let figure = null;
     switch (props.game.gameStatus) {
         case null:
         case 0:
-            figure = props.game.currentPlayer === 1 ? '(cross)' : '(circle)'
-            return currentUserTurn.value ? 'Your turn ' + figure : 'Opponent turn ' + figure
+            return props.game.currentPlayer == storeAuth.user.id ? 'Your turn ' : 'Opponent turn '
         case 1:
         case 2:
             return storeGames.playerNumberOfCurrentUser(props.game) == props.game.gameStatus ? 'You won' : 'You lost'
