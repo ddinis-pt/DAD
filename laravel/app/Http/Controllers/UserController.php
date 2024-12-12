@@ -166,4 +166,20 @@ class UserController extends Controller
                 break;
         }
     }
+
+    public function winCoins(Request $request, int $value)
+    {
+        try {
+            $user = $request->user();
+            if (!$user) {
+                return response()->json(['message' => 'Error fetching the user'], 200);
+            }
+            $user->increment('brain_coins_balance', $value);
+            $user->save();
+            return response()->json(['message' => [`Balance increased to $user->brain_coins_balance`]], 200);
+        } catch (Error $e) {
+            return response()->json(['message' => 'Error' + $e], 500);
+        }
+    }
+
 }
