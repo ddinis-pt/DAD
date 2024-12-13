@@ -5,10 +5,15 @@ import { useErrorStore } from '@/stores/error';
 import Header from '@/components/ui/Header.vue'
 import Footer from '@/components/ui/Footer.vue';
 import Chat from '@/components/ui/chat/Chat.vue';
+import { onMounted } from 'vue';
 
 const router = useRouter()
 const errorStore = useErrorStore()
 const authStore = useAuthStore()
+
+onMounted(() => {
+  window.HSStaticMethods.autoInit();
+})
 </script>
 
 <template>
@@ -16,17 +21,13 @@ const authStore = useAuthStore()
   <div class="min-h-screen grid content-between bg-gray-800">
     <Header></Header>
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <div v-if="authStore.user" class="text-center flex justify-center items-center -mt-32">
-        <img @click="logout" class="inline-block size-[80px] rounded-full border-8 border-slate-800 mt-4"
-          :src="authStore.userPhotoUrl" alt="Avatar">
-        <h2 class="block text-2xl font-bold text-white">Hello, {{ authStore.userFirstLastName }}!</h2>
-      </div>
+      
       <div class="grid grid-cols-3 grid-rows-2">
         <!-- SinglePlayer -->
         <div id="hs-sign-out-alert-small-window" class="size-full overflow-x-hidden pb-14 px-12" role="dialog"
           tabindex="-1" aria-labelledby="hs-sign-out-alert-small-window-label">
           <div class="mt-7 opacity-100 duration-500 sm:max-w-xs sm:w-full m-3 sm:mx-auto">
-            <div class="relative flex flex-col shadow-2xl shadow-cyan-200 rounded-xl bg-white">
+            <div class="relative flex flex-col shadow-[0px_0px_14px_5px_#a5f3fc] rounded-xl bg-white">
               <div class="p-4 sm:p-10 text-center overflow-y-auto ">
                 <!-- Icon -->
                 <span
@@ -46,7 +47,7 @@ const authStore = useAuthStore()
                   Singleplayer
                 </h3>
                 <div class="mt-6 grid gap-y-2">
-                  <RouterLink :to="{name: 'modes'}">
+                  <RouterLink :to="{ name: 'modes' }">
                     <button type="button"
                       class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
                       Start
@@ -61,7 +62,7 @@ const authStore = useAuthStore()
         <div id="hs-sign-out-alert-small-window" class="size-full overflow-x-hidden pb-14 px-12" role="dialog"
           tabindex="-1" aria-labelledby="hs-sign-out-alert-small-window-label">
           <div class="mt-7 opacity-100 duration-500 sm:max-w-xs sm:w-full m-3 sm:mx-auto">
-            <div class="relative flex flex-col shadow-2xl shadow-cyan-200 rounded-xl bg-white">
+            <div class="relative flex flex-col shadow-[0px_0px_14px_5px_#a5f3fc] rounded-xl bg-white">
               <div class="p-4 sm:p-10 text-center overflow-y-auto ">
                 <!-- Icon -->
                 <span
@@ -84,7 +85,7 @@ const authStore = useAuthStore()
                   Multiplayer
                 </h3>
                 <div class="mt-6 grid gap-y-2">
-                  <RouterLink :to="{name: 'multiplayer'}">
+                  <RouterLink :to="{ name: 'multiplayer' }">
                     <button type="button"
                       class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
                       Find Lobby
@@ -99,7 +100,7 @@ const authStore = useAuthStore()
         <div id="hs-sign-out-alert-small-window" class="size-full overflow-x-hidden pb-14 px-12" role="dialog"
           tabindex="-1" aria-labelledby="hs-sign-out-alert-small-window-label">
           <div class="mt-7 opacity-100 duration-500 sm:max-w-xs sm:w-full m-3 sm:mx-auto">
-            <div class="relative flex flex-col shadow-2xl shadow-cyan-200 rounded-xl bg-white">
+            <div class="relative flex flex-col shadow-[0px_0px_14px_5px_#a5f3fc] rounded-xl bg-white">
               <div class="p-4 sm:p-10 text-center overflow-y-auto ">
                 <!-- Icon -->
                 <span
@@ -140,7 +141,7 @@ const authStore = useAuthStore()
         <div id="hs-sign-out-alert-small-window" class="size-full overflow-x-hidden pb-14 px-12" role="dialog"
           tabindex="-1" aria-labelledby="hs-sign-out-alert-small-window-label">
           <div class="mt-7 opacity-100 duration-500 sm:max-w-xs sm:w-full m-3 sm:mx-auto">
-            <div class="relative flex flex-col shadow-2xl shadow-cyan-200 rounded-xl bg-white">
+            <div class="relative flex flex-col shadow-[0px_0px_14px_5px_#a5f3fc] rounded-xl bg-white">
               <div class="p-4 sm:p-10 text-center overflow-y-auto ">
                 <!-- Icon -->
                 <span
@@ -186,7 +187,7 @@ const authStore = useAuthStore()
         <div id="hs-sign-out-alert-small-window" class="size-full overflow-x-hidden pb-14 px-12" role="dialog"
           tabindex="-1" aria-labelledby="hs-sign-out-alert-small-window-label">
           <div class="mt-7 opacity-100 duration-500 sm:max-w-xs sm:w-full m-3 sm:mx-auto">
-            <div class="relative flex flex-col shadow-2xl shadow-cyan-200 rounded-xl bg-white">
+            <div class="relative flex flex-col shadow-[0px_0px_14px_5px_#a5f3fc] rounded-xl bg-white">
               <div class="p-4 sm:p-10 text-center overflow-y-auto ">
                 <!-- Icon -->
                 <span
@@ -223,7 +224,7 @@ const authStore = useAuthStore()
         <div id="hs-sign-out-alert-small-window" class="size-full overflow-x-hidden pb-14 px-12" role="dialog"
           tabindex="-1" aria-labelledby="hs-sign-out-alert-small-window-label">
           <div class="mt-7 opacity-100 duration-500 sm:max-w-xs sm:w-full m-3 sm:mx-auto">
-            <div class="relative flex flex-col shadow-2xl shadow-cyan-200 rounded-xl bg-white">
+            <div class="relative flex flex-col shadow-[0px_0px_14px_5px_#a5f3fc] rounded-xl bg-white">
               <div class="p-4 sm:p-10 text-center overflow-y-auto ">
                 <!-- Icon -->
                 <span

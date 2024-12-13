@@ -173,7 +173,8 @@ class GameController extends Controller
     public function getTopTenByTimeGlobal()
     {
         return response()->json(Game::where('status', 'E')
-            ->where('type', 'S')
+            ->where('games.type', 'S')
+            ->join('users', 'games.created_user_id', '=', 'users.id')
             ->orderBy('total_time', 'asc')
             ->orderBy('total_turns_winner', 'asc')
             ->take(3)
@@ -183,7 +184,8 @@ class GameController extends Controller
     public function getTopTenByTurnsGlobal()
     {
         return response()->json(Game::where('status', 'E')
-            ->where('type', 'S')
+            ->where('games.type', 'S')
+            ->join('users', 'games.created_user_id', '=', 'users.id')
             ->orderBy('total_turns_winner', 'asc')
             ->orderBy('total_time', 'asc')
             ->take(3)
