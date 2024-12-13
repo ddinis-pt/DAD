@@ -17,6 +17,7 @@ class Game extends Model
         'total_time',
         'board_id',
         'total_turns_winner',
+        'custom',
     ];
 
     public $timestamps = true;

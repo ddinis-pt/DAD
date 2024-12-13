@@ -31,6 +31,7 @@ class SaveGameRequest extends FormRequest
             'total_time' => 'nullable|numeric|regex:/^\d+(\.\d{1,2})?$/',
             'board_id' => 'required|integer|in:1,2,3',
             'total_turns_winner' => 'nullable|integer',
+            'custom' => 'nullable|json',
         ];
     }
 }
