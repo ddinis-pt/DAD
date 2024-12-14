@@ -6,7 +6,7 @@ exports.createGameEngine = () => {
     // 1 -> player 1 is the winner
     // 2 -> player 2 is the winner
     // 3 -> draw
-    gameFromDB.currentPlayer = 1;
+    gameFromDB.currentPlayer = gameFromDB.created_user_id;
     // Randomized numbers
     // gameFromDB.board = Array.from({ length: 6 }, (_, i) => i + 1).flatMap(n => [n, n]).sort(() => Math.random() - 0.5);
 
@@ -26,7 +26,7 @@ exports.createGameEngine = () => {
 
   // Flip the selected card
   const flipCard = (game, index) => {
-    if (game.isGameWon || game.flipped[index]) {
+    if (game.isGameWon) {
       return game;
     }
 
@@ -51,9 +51,7 @@ exports.createGameEngine = () => {
       }
       game.currentlyFlipped = [];
       game.moves++;
-      changeGameStatus(game);
     }
-
     return game;
   };
 
@@ -94,7 +92,8 @@ exports.createGameEngine = () => {
     } else if (game.currentlyFlipped.length === 2) {
       game.gameStatus = 0; //Game is running
     } else if (game.currentlyFlipped.length === 0) {
-      game.gameStatus = game.currentPlayer === 1 ? 2 : 1;
+      game.gameStatus =
+        game.currentPlayer === game.player1 ? game.player2 : game.player1;
     }
   };
 
@@ -120,18 +119,25 @@ exports.createGameEngine = () => {
       };
     }
     if (
-      (game.currentPlayer == 1 && playerSocketId != game.player1SocketId) ||
-      (game.currentPlayer == 2 && playerSocketId != game.player2SocketId)
+      (game.currentPlayer == game.player1 &&
+        playerSocketId != game.player1SocketId) ||
+      (game.currentPlayer == game.player2 &&
+        playerSocketId != game.player2SocketId)
     ) {
       return {
         errorCode: 12,
         errorMessage: "Invalid play: It is not your turn!",
       };
     }
-
-    // Flip the selected card
+    if (game.flipped[index] === true) {
+      return {
+        errorCode: 13,
+        errorMessage: "Invalid play: card already flipped!",
+      };
+    }
     flipCard(game, index);
-    game.currentPlayer = game.currentPlayer === 1 ? 2 : 1;
+    game.currentPlayer =
+      game.currentPlayer === game.player1 ? game.player2 : game.player1;
     changeGameStatus(game);
     return true;
   };

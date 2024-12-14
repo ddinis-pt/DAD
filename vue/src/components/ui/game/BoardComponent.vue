@@ -5,8 +5,6 @@ import { useRouter } from 'vue-router';
 import CardComponent from './CardComponent.vue';
 import { useAuthStore } from '@/stores/auth';
 
-const numbers = ref([]);
-const flippedCards = ref([]);
 const nJogadas = ref(0);
 const timer = ref(0);
 
@@ -28,12 +26,13 @@ const router = useRouter();
 const authStore = useAuthStore();
 
 const cartaVirada = (index) => {
+    if(props.game.currentPlayer !== authStore.user.id) {
+        return;
+    }
     emits('play', index);
 };
 
 onMounted(() => {
-    flippedCards.value = props.game.flipped;
-
     setInterval(() => {
         if (!isGameWon.value) {
             timer.value++;
@@ -43,7 +42,7 @@ onMounted(() => {
 </script>
 <template>
     <div class="grid grid-cols-4 gap-4 border divide-y divide-x" :class="{ 'hidden': isGameWon }">
-        <CardComponent v-for="(number, index) in board" :number="number" :key="index" :isFlipped="flipped[index]"
-            @has-been-flipped="cartaVirada(index)" :game="props.game"/>
+        <CardComponent v-for="(number, index) in board" :number="number" :key="index" :index="index" :isFlipped="flipped[index]"
+            @has-been-flipped="cartaVirada" :game="props.game"/>
     </div>
 </template>

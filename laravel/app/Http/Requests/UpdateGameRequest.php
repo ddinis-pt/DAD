@@ -22,15 +22,11 @@ class UpdateGameRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'created_user_id' => 'required|integer|exists:users,id',
             'winner_user_id' => 'nullable|integer|exists:users,id',
-            'type' => 'nullable|string|in:S,M',
             'status' => 'required|string|in:PE,PL,E,I',
-            'began_at' => 'nullable|date',
             'ended_at' => 'required|date',
-            'total_time' => 'required|numeric|regex:/^\d+(\.\d{1,2})?$/',
-            'board_id' => 'nullable|integer|in:1,2,3',
-            'total_turns_winner' => 'required|integer',
+            'total_time' => 'nullable|numeric|regex:/^\d+(\.\d{1,2})?$/',
+            'total_turns_winner' => 'nullable|integer',
         ];
     }
 }

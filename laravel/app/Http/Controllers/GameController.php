@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\SaveGameRequest;
 use App\Http\Requests\UpdateGameRequest;
+use App\Http\Resources\GameResource;
 use Illuminate\Validation\ValidationException;
 use App\Models\Game;
 use Error;
@@ -31,8 +32,13 @@ class GameController extends Controller
 
     public function store(SaveGameRequest $request)
     {
-        $game = Game::create($request->validated());
-        return response()->json($game, 201);
+        $game = new Game();
+        $game->created_user_id = $request->validated()["created_user_id"];
+        $game->type = $request->validated()["type"];
+        $game->status = $request->validated()["status"];
+        $game->board_id = $request->validated()["board_id"];
+        $game->save();
+        return response()->json(new GameResource($game), 201);
     }
 
     public function updateStatus(UpdateGameRequest $request, Game $game)
@@ -85,8 +91,8 @@ class GameController extends Controller
                         $winner_user_id = $data["winner_user_id"];
                         if ($winner_user_id != null) {
                             if (
-                                $winner_user_id != $game->player1_id &&
-                                $winner_user_id != json_decode($data["custom"])->{"player2"}
+                                $winner_user_id != $game->player1 &&
+                                $winner_user_id != $game->player2
                             ) {
                                 throw ValidationException::withMessages([
                                     "winner_id" =>
@@ -98,12 +104,12 @@ class GameController extends Controller
                         }
                     }
                     $game->status = $newStatus;
-                    $game->winner_id = $winner_user_id;
+                    $game->winner_user_id = $winner_user_id;
                 } else {
                     $game->status = $newStatus;
                 }
                 break;
-            case "interrupted":
+            case "I":
                 throw ValidationException::withMessages([
                     "status" =>
                         "Cannot change game #" .
