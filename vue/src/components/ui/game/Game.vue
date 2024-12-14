@@ -11,6 +11,8 @@ import { computed, inject } from 'vue'
 import Board from '@/components/ui/game/BoardComponent.vue'
 import { useAuthStore } from '@/stores/auth'
 import { useGamesStore } from '@/stores/games'
+import Toaster from '@/components/ui/toast/Toaster.vue'
+import { nextTick } from 'vue';
 
 const storeGames = useGamesStore()
 const storeAuth = useAuthStore()
@@ -24,12 +26,6 @@ const props = defineProps({
 
 const alertDialog = inject('alertDialog')
 
-// const opponentName = computed(() => {
-//     return storeGames.playerNumberOfCurrentUser(props.game) === 1 ?
-//         storeAuth.getFirstLastName(JSON.parse(props.game.custom).player2) :
-//         storeAuth.getFirstLastName(props.game.created_user_id)
-// })
-
 const gameEnded = computed(() => {
     return props.game.gameStatus > 0
 })
@@ -40,43 +36,6 @@ const currentUserTurn = computed(() => {
     }
     return props.game.currentPlayer === storeGames.playerNumberOfCurrentUser(props.game)
 })
-
-// const cardBgColor = computed(() => {
-//     switch (props.game.gameStatus) {
-//         case null:
-//         case 0:
-//             return 'bg-white'
-//         case 1:
-//         case 2:
-//             return storeGames.playerNumberOfCurrentUser(props.game) == props.game.gameStatus ? 'bg-green-100' : 'bg-red-100'
-//         case 3:
-//             return 'bg-blue-100'
-//         default:
-//             return 'bg-slate-100'
-//     }
-// })
-
-// const statusMessageColor = computed(() => {
-//     switch (props.game.gameStatus) {
-//         case null:
-//         case 0:
-//             return currentUserTurn.value ? 'text-green-400' : 'text-slate-400'
-//         case 1:
-//         case 2:
-//             return storeGames.playerNumberOfCurrentUser(props.game) == props.game.gameStatus ? 'text-green-900' : 'text-red-900'
-//         case 3:
-//             return 'text-blue-900'
-//         default:
-//             return 'text-slate-800'
-//     }
-// })
-
-// const buttonClasses = computed(() => {
-//     if (gameEnded.value) {
-//         return 'bg-gray-700 text-gray-200 hover:text-gray-50'
-//     }
-//     return 'bg-gray-300 text-gray-700 hover:text-gray-200'
-// })
 
 const statusGameMessage = computed(() => {
     switch (props.game.gameStatus) {
@@ -89,11 +48,14 @@ const statusGameMessage = computed(() => {
         case 3:
             return 'Draw'
         default:
-            return 'Not started!'
+            return 'Not started!' + props.game.gameStatus
     }
 })
 
-const playPieceOfBoard = (idx) => {
+const playPieceOfBoard = async (idx) => {
+    if (props.game.currentPlayer !== storeAuth.user.id) {
+        return;
+    }
     storeGames.play(props.game, idx)
 }
 
@@ -115,6 +77,7 @@ const quit = () => {
 }
 </script>
 <template>
+    <Toaster />
     <Card class="relative grow mx-4 mt-8 pt-2 pb-4 px-1">
         <CardHeader class="pb-0">
             <Button @click="clickCardButton" class="absolute top-4 right-4">
@@ -127,8 +90,7 @@ const quit = () => {
             <CardTitle>#{{ game.id }}</CardTitle>
             <CardDescription>
                 <div class="text-base">
-                    <!-- <span class="font-bold">Opponent:</span> {{ opponentName }} -->
-                    {{ game.status == 'I' ? ' / Interrupted' : '' }}
+                    {{ game.status == 'I' ? 'Interrupted' : '' }}
                 </div>
             </CardDescription>
         </CardHeader>

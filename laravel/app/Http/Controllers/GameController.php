@@ -41,8 +41,9 @@ class GameController extends Controller
         return response()->json(new GameResource($game), 201);
     }
 
-    public function updateStatus(UpdateGameRequest $request, Game $game)
+    public function updateStatus(UpdateGameRequest $request, int $game_id)
     {
+        $game = Game::findOrFail($game_id);
         $data = $request->validated();
         $newStatus = $data["status"];
         // Only playing games can have their status changed (to ended or interrupted)
@@ -98,7 +99,7 @@ class GameController extends Controller
                                     "winner_id" =>
                                         "Cannot change game #" .
                                         $game->id .
-                                        " status from 'playing' to 'ended', because the winner is invalid!",
+                                        " status from 'playing' to 'ended', because the winner id is invalid!\nPlayer1 - " . $game->player1 . "\nPlayer2 - " . $game->player2 . "Game - " . $game . "Winner - " . $winner_user_id,
                                 ]);
                             }
                         }

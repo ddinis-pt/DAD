@@ -26,9 +26,6 @@ const router = useRouter();
 const authStore = useAuthStore();
 
 const cartaVirada = (index) => {
-    if(props.game.currentPlayer !== authStore.user.id) {
-        return;
-    }
     emits('play', index);
 };
 

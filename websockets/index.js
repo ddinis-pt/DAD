@@ -44,7 +44,7 @@ io.on('connection', (socket) => {
       util.getRoomGamesPlaying(socket).forEach(([roomName, room]) => {
         socket.leave(roomName)
         if (!gameEngine.gameEnded(room.game)) {
-          room.game.status = 'interrupted'
+          room.game.status = 'I'
           room.game.gameStatus = 3
           io.to(roomName).emit('gameInterrupted', room.game)
         }
@@ -98,7 +98,7 @@ io.on('connection', (socket) => {
     util.getRoomGamesPlaying(socket).forEach(([roomName, room]) => {
       socket.leave(roomName)
       if (!gameEngine.gameEnded(room.game)) {
-        room.game.status = 'interrupted'
+        room.game.status = 'I'
         room.game.gameStatus = 3
         io.to(roomName).emit('gameInterrupted', room.game)
       }

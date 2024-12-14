@@ -5,6 +5,8 @@ import { useErrorStore } from '@/stores/error'
 import { useAuthStore } from '@/stores/auth'
 import { useToast } from '@/components/ui/toast/use-toast'
 
+import { format } from 'date-fns';
+
 export const useGamesStore = defineStore('games', () => {
   const storeAuth = useAuthStore()
   const storeError = useErrorStore()
@@ -25,10 +27,10 @@ export const useGamesStore = defineStore('games', () => {
 
   const playerNumberOfCurrentUser = (game) => {
     if (game.player1 === storeAuth.userId) {
-      return 1
+      return game.player1
     }
     if (game.player2 === storeAuth.userId) {
-      return 2
+      return game.player2
     }
     return null
   }
@@ -109,16 +111,15 @@ export const useGamesStore = defineStore('games', () => {
   socket.on('gameEnded', async (game) => {
     updateGame(game)
     // Player that created the game is responsible for updating on the database
-    if (playerNumberOfCurrentUser(game) === 1) {
+    if (playerNumberOfCurrentUser(game) === game.created_user_id) {
       const APIresponse = await axios.patch('games/' + game.id, {
         status: 'E',
-        winner_user_id:
-          game.gameStatus === 1 ? game.player1 : game.gameStatus === 2 ? game.player2 : null,
-        ended_at: new Date().toISOString().slice(0, 19).replace('T', ' '),
+        winner_user_id: game.gameStatus === 1 ? game.player1 : game.gameStatus === 2 ? game.player2 : null,
+        ended_at: format(new Date(), 'yyyy-MM-dd HH:mm:ss'),    
         total_time: game.totalTime,
         total_turns_winner: game.totalTurnsWinner,
       })
-      const updatedGameOnDB = APIresponse.data.data
+      const updatedGameOnDB = APIresponse.data
       console.log('Game has ended and updated on the database: ', updatedGameOnDB)
     }
   })

@@ -15,6 +15,7 @@ exports.createGameEngine = () => {
     gameFromDB.flipped = Array.from({ length: 12 }, () => false);
     gameFromDB.currentlyFlipped = [];
     gameFromDB.pairsFound = 0;
+    gameFromDB.pairs = []
     gameFromDB.moves = 0;
     gameFromDB.isGameWon = false;
     return gameFromDB;
@@ -26,10 +27,6 @@ exports.createGameEngine = () => {
 
   // Flip the selected card
   const flipCard = (game, index) => {
-    if (game.isGameWon) {
-      return game;
-    }
-
     game.flipped[index] = true;
     game.currentlyFlipped.push(index);
 
@@ -40,17 +37,16 @@ exports.createGameEngine = () => {
 
       if (card1 === card2) {
         game.pairsFound++;
-        if (game.pairsFound === game.board.length / 2) {
-          game.isGameWon = true;
-        }
+        game.pairs.push([index1, index2]);
       } else {
         setTimeout(() => {
           game.flipped[index1] = false;
           game.flipped[index2] = false;
-        }, 750);
+        }, 1000);
       }
       game.currentlyFlipped = [];
       game.moves++;
+      changeGameStatus(game);
     }
     return game;
   };
@@ -88,12 +84,20 @@ exports.createGameEngine = () => {
   const changeGameStatus = (game) => {
     // Change game status based on who won
     if (game.pairsFound === game.board.length / 2) {
-      game.gameStatus = 3; //Draw
-    } else if (game.currentlyFlipped.length === 2) {
+      //game is finished but we need to see who won
+      if (game.currentPlayer === game.player1) {
+        game.gameStatus = 1;
+      } else if (game.currentPlayer === game.player2) {
+        game.gameStatus = 2;
+      } else {
+        game.gameStatus = 3;
+      }
+    } else if (game.currentlyFlipped.length === 2 || game.currentlyFlipped.length === 0) {
       game.gameStatus = 0; //Game is running
-    } else if (game.currentlyFlipped.length === 0) {
-      game.gameStatus =
+      game.currentPlayer =
         game.currentPlayer === game.player1 ? game.player2 : game.player1;
+    } else {
+      game.gameStatus = game.player1 === game.currentPlayer ? 1 : 2;
     }
   };
 
@@ -136,9 +140,6 @@ exports.createGameEngine = () => {
       };
     }
     flipCard(game, index);
-    game.currentPlayer =
-      game.currentPlayer === game.player1 ? game.player2 : game.player1;
-    changeGameStatus(game);
     return true;
   };
 
