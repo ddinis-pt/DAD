@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\GameController;
+use App\Http\Controllers\StatsController;
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/users/me', function (Request $request) {
@@ -30,6 +31,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/games', [GameController::class, 'store']);
     Route::patch('/games/{game}', [GameController::class, 'updateStatus']);
     Route::delete('/games/{game}', [GameController::class, 'destroy']);
+    Route::get('/stats/users/month', [StatsController::class, 'getUsersCountByMonth']);
 });
 
 //Auth
