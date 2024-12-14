@@ -16,6 +16,7 @@ import { useAuthStore } from '@/stores/auth'
 import MultiplayerArea from '@/components/ui/game/MultiplayerArea.vue'
 import Register from '@/components/auth/Register.vue'
 import DeleteAccount from '@/components/registered/DeleteAccount.vue'
+import Users from '@/components/admin/Users.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -74,6 +75,11 @@ const router = createRouter({
       path: '/settings',
       name: 'settings',
       component: Settings
+    },
+    {
+      path: '/users',
+      name: 'users',
+      component: Users,
     },
     {
       path: '/testers',

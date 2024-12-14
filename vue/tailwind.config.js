@@ -5,8 +5,8 @@ import colors from "tailwindcss/colors";
 
 /** @type {import('tailwindcss').Config} */
 export default {
-    darkMode: ["class"],
-    safelist: ["dark"],
+    darkMode: ["media"],
+    //safelist: ["dark"],
     prefix: "",
 
     content: [

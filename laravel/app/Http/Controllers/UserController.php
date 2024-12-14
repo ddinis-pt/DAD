@@ -18,6 +18,11 @@ class UserController extends Controller
         return response()->json(User::all(), 200);
     }
 
+    public function allUsers()
+    {
+        return response()->json(User::withTrashed()->get(), 200);
+    }
+
     public function show($id)
     {
         return response()->json(User::withTrashed()->findOrFail($id), 200);
@@ -52,6 +57,19 @@ class UserController extends Controller
         $user->tokens()->delete();
         DB::update('update users set brain_coins_balance = 0 where id = ?', [$id]);
         $user->delete();
+        return response()->json(null, 204);
+    }
+
+    public function block(Request $request, $id)
+    {
+        $user = User::find($id);
+        if ($request?->user()?->id != $id) {
+            return response()->json(['message' => 'Unauthorized'], 401);
+        }
+        if ($request?->user()?->id == $id && $request?->user()?->type == 'A') {
+            return response()->json(['message' => 'Forbidden'], 403);
+        }
+        DB::update('update users set blocked = 1 where id = ?', [$id]);
         return response()->json(null, 204);
     }
 
