@@ -31,7 +31,11 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/games', [GameController::class, 'store']);
     Route::patch('/games/{game}', [GameController::class, 'updateStatus']);
     Route::delete('/games/{game}', [GameController::class, 'destroy']);
+
+    
     Route::get('/stats/users/month', [StatsController::class, 'getUsersCountByMonth']);
+    Route::get('/stats/winners/top5', [StatsController::class, 'getTop5Winners']);
+    Route::get('/stats/purchases/week', [StatsController::class, 'totalPurchasesByWeek']);
 });
 
 //Auth

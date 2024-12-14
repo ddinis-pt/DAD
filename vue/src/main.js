@@ -6,6 +6,9 @@ import { io } from 'socket.io-client'
 import "preline/preline";
 import '@/assets/base.css'
 
+import 'primeicons/primeicons.css'
+import Chart from 'primevue/chart'
+
 import App from './App.vue'
 import router from './router'
 
