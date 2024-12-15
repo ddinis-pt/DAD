@@ -1,11 +1,14 @@
 <script setup>
 import Header from '@/components/ui/Header.vue';
-import { useAuthStore } from '@/stores/auth';
 import axios from 'axios';
 import { ref, onMounted } from 'vue';
 import Chart from 'primevue/chart';
 
-const authStore = useAuthStore();
+
+const numberOfPlayers = ref(0);
+const numberOfGames = ref(0);
+const numberOfGamesLastWeek = ref(0);
+const numberOfGamesLastMonth = ref(0);
 
 const data = ref(null); // Dados do gráfico
 const data2 = ref(null); // Dados do gráfico
@@ -92,8 +95,7 @@ onMounted(() => {
       console.log(error);
     });
 
-    axios
-    .get('stats/purchases/week')
+    axios.get('stats/purchases/week')
     .then(response => {
       response.data.forEach(element => {
         chartData2.labels.push(element.week);
@@ -119,24 +121,86 @@ onMounted(() => {
     .catch(error => {
       console.log(error);
     });
+
+    // Gets para non-authenticated users
+    axios.get('stats/users/total')
+    .then(response => {
+      numberOfPlayers.value = response.data;
+    })
+    .catch(error => {
+      console.log(error);
+    });
+
+    axios.get('stats/games/total')
+    .then(response => {
+      numberOfGames.value = response.data;
+    })
+    .catch(error => {
+      console.log(error);
+    });
+
+    axios.get('stats/games/lastWeek')
+    .then(response => {
+      numberOfGamesLastWeek.value = response.data;
+    })
+    .catch(error => {
+      console.log(error);
+    });
+
+    axios.get('stats/games/lastMonth')
+    .then(response => {
+      numberOfGamesLastMonth.value = response.data;
+    })
+    .catch(error => {
+      console.log(error);
+    });
+
+
 });
 </script>
 
 <template>
-  <div class="min-h-screen md:grid bg-gray-800">
+  <div class="min-h-screen bg-gray-800">
     <Header></Header>
-    <div class="flex">
-        <Chart 
+    <div class="flex flex-wrap justify-center gap-6 mt-20">
+      <!-- Caixa 1 -->
+      <div class="bg-white shadow-md rounded-lg p-4 text-center sm:h-24 md:h-30 lg:h-36 flex flex-col justify-center w-46">
+        <h2 class="text-md font-semibold text-gray-700 mb-1">Number of Players Registered</h2>
+        <p class="text-2xl font-bold text-blue-500">{{ numberOfPlayers }}</p>
+      </div>
+
+      <!-- Caixa 2 -->
+      <div class="bg-white shadow-md rounded-lg p-4 text-center sm:h-24 md:h-30 lg:h-36 flex flex-col justify-center w-46">
+        <h2 class="text-md font-semibold text-gray-700 mb-1">Total Games Played</h2>
+        <p class="text-2xl font-bold text-green-500">{{ numberOfGames }}</p>
+      </div>
+
+      <!-- Caixa 3 -->
+      <div class="bg-white shadow-md rounded-lg p-4 text-center sm:h-24 md:h-30 lg:h-36 flex flex-col justify-center w-46">
+        <h2 class="text-md font-semibold text-gray-700 mb-1">Games Played Last Week</h2>
+        <p class="text-2xl font-bold text-orange-500">{{ numberOfGamesLastWeek }}</p>
+      </div>
+
+      <!-- Caixa 4 -->
+      <div class="bg-white shadow-md rounded-lg p-4 text-center sm:h-24 md:h-30 lg:h-36 flex flex-col justify-center w-46">
+        <h2 class="text-md font-semibold text-gray-700 mb-1">Games Played Last Month</h2>
+        <p class="text-2xl font-bold text-red-500">{{ numberOfGamesLastMonth }}</p>
+      </div>
+    </div>
+
+    <div class="flex flex-wrap justify-center gap-4 mt-6">
+      <Chart 
         type="bar" 
         :data="data" 
         :chartOptions="chartOptions" 
-        class="w-full md:w-[30rem]" 
-        />
-        <Chart 
+        class="w-full md:w-[20rem]" 
+      />
+      <Chart 
         type="bar" 
         :data="data2" 
         :chartOptions="chartOptions" 
-        class="w-full md:w-[30rem]"/>
+        class="w-full md:w-[20rem]" 
+      />
     </div>
   </div>
 </template>

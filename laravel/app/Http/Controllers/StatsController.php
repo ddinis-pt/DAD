@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
+use App\Models\Game;
 
 class StatsController extends Controller
 {
@@ -46,5 +47,39 @@ class StatsController extends Controller
             ->get();
 
         return response()->json($purchases, 200);
+    }
+
+    public function numberOfPlayers() {
+        $players = User::All()
+            ->where('deleted_at', null)
+            ->count();
+        return response()->json($players, 200);
+    }
+
+    public function totalGames(){
+        $games = Game::where('status', 'E')
+            ->count();
+        return response()->json($games, 200);
+    }
+
+    public function gamesPlayedLastWeek()
+    {
+        $games = Game::where('status', 'E')
+            ->whereBetween('ended_at', [
+                now()->subWeek()->startOfWeek(),
+                now()->subWeek()->endOfWeek(),
+            ])
+            ->count();
+        return response()->json($games, 200);
+    }
+
+    public function gamesPlayedLastMonth(){
+        $games = Game::where('status', 'E')
+            ->whereBetween('ended_at', [
+                now()->subMonth()->startOfMonth(),
+                now()->subMonth()->endOfMonth(),
+            ])
+            ->count();
+        return response()->json($games, 200);
     }
 }
