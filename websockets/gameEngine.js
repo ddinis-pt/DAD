@@ -18,9 +18,12 @@ exports.createGameEngine = () => {
     gameFromDB.pairsByPlayer1 = 0;
     gameFromDB.pairsByPlayer2 = 0;
     gameFromDB.pairs = [];
-    gameFromDB.moves = 0;
+    gameFromDB.movesByPlayer1 = 0;
+    gameFromDB.movesByPlayer2 = 0;
     gameFromDB.isGameWon = false;
     gameFromDB.isFlipping = false;
+    gameFromDB.totalTime = 0;
+    gameFromDB.totalTurnsWinner = 0;
     return gameFromDB;
   };
 
@@ -61,7 +64,7 @@ exports.createGameEngine = () => {
         }, 750);
       }
 
-      game.moves++;
+      game.currentPlayer === game.player1 ? game.movesByPlayer1++ : game.movesByPlayer2++;
       changeGameStatus(game);
     }
     return game;
@@ -116,7 +119,7 @@ exports.createGameEngine = () => {
       game.currentPlayer =
         game.currentPlayer === game.player1 ? game.player2 : game.player1;
     } else {
-      game.gameStatus = game.player1 === game.currentPlayer ? 1 : 2;
+      game.gameStatus = game.player1 === game.currentPlayer ? 2 : 1;
     }
   };
 

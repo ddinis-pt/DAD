@@ -12,10 +12,11 @@ import Board from '@/components/ui/game/BoardComponent.vue'
 import { useAuthStore } from '@/stores/auth'
 import { useGamesStore } from '@/stores/games'
 import Toaster from '@/components/ui/toast/Toaster.vue'
-import { nextTick } from 'vue';
 
 const storeGames = useGamesStore()
 const storeAuth = useAuthStore()
+
+let intervalo = null;
 
 const props = defineProps({
     game: {
@@ -48,13 +49,18 @@ const statusGameMessage = computed(() => {
         case 3:
             return 'Draw'
         default:
-            return 'Not started!' + props.game.gameStatus
+            return 'Not started!'
     }
 })
 
 const playPieceOfBoard = async (idx) => {
     if (props.game.currentPlayer !== storeAuth.user.id) {
         return;
+    }
+    if (props.game.moves == 0 && props.game.currentlyFlipped.length == 0) {
+        intervalo = setInterval(() => {
+            props.game.totalTime++;
+        }, 1000);
     }
     storeGames.play(props.game, idx)
 }

@@ -110,14 +110,18 @@ export const useGamesStore = defineStore('games', () => {
 
   socket.on('gameEnded', async (game) => {
     updateGame(game)
+    fetchPlayingGames()
     // Player that created the game is responsible for updating on the database
     if (playerNumberOfCurrentUser(game) === game.created_user_id) {
+      const winner = game.gameStatus === 1 ? game.player1 : game.gameStatus === 2 ? game.player2 : null
       const APIresponse = await axios.patch('games/' + game.id, {
         status: 'E',
-        winner_user_id: game.gameStatus === 1 ? game.player1 : game.gameStatus === 2 ? game.player2 : null,
-        ended_at: format(new Date(), 'yyyy-MM-dd HH:mm:ss'),    
+        winner_user_id: winner,
+        ended_at: format(new Date(), 'yyyy-MM-dd HH:mm:ss'),
         total_time: game.totalTime,
-        total_turns_winner: game.totalTurnsWinner,
+        total_turns_winner: winner == game.player1 ? game.movesByPlayer1 : winner == game.player2 ? game.movesByPlayer2 : null,
+        player1: game.player1,
+        player2: game.player2,
       })
       const updatedGameOnDB = APIresponse.data
       console.log('Game has ended and updated on the database: ', updatedGameOnDB)
@@ -140,6 +144,7 @@ export const useGamesStore = defineStore('games', () => {
 
   socket.on('gameInterrupted', async (game) => {
     updateGame(game)
+    fetchPlayingGames()
     toast({
       title: 'Game Interruption',
       description: `Game #${game.id} was interrupted because your opponent has gone offline!`,
@@ -149,10 +154,10 @@ export const useGamesStore = defineStore('games', () => {
       status: 'I',
         winner_user_id:
           game.gameStatus === 1 ? game.player1 : game.gameStatus === 2 ? game.player2 : null,
-        ended_at: new Date().toISOString().slice(0, 19).replace('T', ' '),
+        ended_at: format(new Date(), 'yyyy-MM-dd HH:mm:ss'),
         total_time: game.totalTime,
     })
-    const updatedGameOnDB = APIresponse.data.data
+    const updatedGameOnDB = APIresponse.data
     console.log('Game was interrupted and updated on the database: ', updatedGameOnDB)
   })
 

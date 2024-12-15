@@ -27,6 +27,8 @@ class UpdateGameRequest extends FormRequest
             'ended_at' => 'required|date',
             'total_time' => 'nullable|numeric|regex:/^\d+(\.\d{1,2})?$/',
             'total_turns_winner' => 'nullable|integer',
+            'player1' => 'nullable|integer|exists:users,id',
+            'player2' => 'nullable|integer|exists:users,id',
         ];
     }
 }
