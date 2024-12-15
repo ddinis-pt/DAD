@@ -25,11 +25,15 @@ const props = defineProps({
     }
 })
 
+
+const flipped = ref(props.isFlipped)
+
 const ghost = ref(false)
 
 watch(() => props.game.pairs, (newValue) => {
+    // check if the card is in the pairs array
     newValue.forEach(element => {
-        if (element === props.index) {
+        if (element.includes(props.index)) {
             ghost.value = true
         }
     });
@@ -37,13 +41,15 @@ watch(() => props.game.pairs, (newValue) => {
 
 const emits = defineEmits(['has-been-flipped'])
 
-const flipped = ref(props.isFlipped)
 const number = ref(props.number)
 
 // watch on props.game flipped array
-watch(() => props.game.flipped, (newValue) => {
-    flipped.value = newValue[props.index]
-})
+watch(
+    () => props.game.flipped[props.index],
+    (newValue) => {
+        flipped.value = newValue;
+    }
+);
 
 const getImg = computed(() => {
     if (number.value > 6) {

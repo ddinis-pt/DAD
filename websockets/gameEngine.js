@@ -15,9 +15,12 @@ exports.createGameEngine = () => {
     gameFromDB.flipped = Array.from({ length: 12 }, () => false);
     gameFromDB.currentlyFlipped = [];
     gameFromDB.pairsFound = 0;
-    gameFromDB.pairs = []
+    gameFromDB.pairsByPlayer1 = 0;
+    gameFromDB.pairsByPlayer2 = 0;
+    gameFromDB.pairs = [];
     gameFromDB.moves = 0;
     gameFromDB.isGameWon = false;
+    gameFromDB.isFlipping = false;
     return gameFromDB;
   };
 
@@ -27,6 +30,11 @@ exports.createGameEngine = () => {
 
   // Flip the selected card
   const flipCard = (game, index) => {
+    // Prevent further flips if cards are flipping back
+    if (game.isFlipping || game.flipped[index]) {
+      return;
+    }
+
     game.flipped[index] = true;
     game.currentlyFlipped.push(index);
 
@@ -37,14 +45,22 @@ exports.createGameEngine = () => {
 
       if (card1 === card2) {
         game.pairsFound++;
+        game.currentPlayer === game.player1
+          ? game.pairsByPlayer1++
+          : game.pairsByPlayer2++;
         game.pairs.push([index1, index2]);
+        game.currentlyFlipped = []; // Clear immediately for matched pairs
       } else {
+        // Block interactions and flip back mismatched cards
+        game.isFlipping = true;
         setTimeout(() => {
           game.flipped[index1] = false;
           game.flipped[index2] = false;
-        }, 1000);
+          game.currentlyFlipped = []; // Clear after flipping back
+          game.isFlipping = false; // Allow interactions again
+        }, 750);
       }
-      game.currentlyFlipped = [];
+
       game.moves++;
       changeGameStatus(game);
     }
@@ -85,14 +101,17 @@ exports.createGameEngine = () => {
     // Change game status based on who won
     if (game.pairsFound === game.board.length / 2) {
       //game is finished but we need to see who won
-      if (game.currentPlayer === game.player1) {
+      if (game.pairsByPlayer1 > game.pairsByPlayer2) {
         game.gameStatus = 1;
-      } else if (game.currentPlayer === game.player2) {
+      } else if (game.pairsByPlayer1 < game.pairsByPlayer2) {
         game.gameStatus = 2;
       } else {
         game.gameStatus = 3;
       }
-    } else if (game.currentlyFlipped.length === 2 || game.currentlyFlipped.length === 0) {
+    } else if (
+      game.currentlyFlipped.length === 2 ||
+      game.currentlyFlipped.length === 0
+    ) {
       game.gameStatus = 0; //Game is running
       game.currentPlayer =
         game.currentPlayer === game.player1 ? game.player2 : game.player1;
