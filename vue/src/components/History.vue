@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen grid content-between bg-gray-800">
+  <div class="min-h-screen  bg-gray-800">
     <Header></Header>
     <main>
       <div class="flex flex-col space-y-4">
@@ -11,20 +11,20 @@
             No records to be shown, please choose a mode
           </h3>
         </div>
-        <div class="border-b-2 border-gray-200 dark:border-white text-black dark:text-white">
+        <div class="p-2 text-black dark:text-white">
           <nav class="-mb-0.5 flex flex-wrap gap-x-6 justify-center">
             <a
-              class="py-4 px-1 inline-flex items-center gap-2 border-b-2 border-transparent text-sm whitespace-nowrap focus:outline-none focus:border-gray-800 dark:focus:border-neutral-700 hover:border-gray-800 dark:hover:border-neutral-700 hover:cursor-pointer"
+              class="py-4 px-1 inline-flex items-center gap-2 border-b-2 border-transparent text-sm whitespace-nowrap hs-tab-active:border  focus:border-blue-500 dark:focus:border-blue-500 hover:text-blue-500 dark:hover:text-blue-500 hover:cursor-pointer"
               @click.prevent="changeMode(1)"
-              :class="{ 'text-blue-700 border-b border-blue-700': modeChosen === 'singleplayer' }"
+              :class="{ 'text-blue-500 border-b-2 !border-blue-500': modeChosen === 'singleplayer' }"
             >
               <i class="pi pi-user"></i>
               Singleplayer
             </a>
             <a
-              class="py-4 px-1 inline-flex items-center gap-2 border-b-2 border-transparent text-sm whitespace-nowrap focus:outline-none focus:border-gray-800 dark:focus:border-neutral-700 hover:border-gray-800 dark:hover:border-neutral-700 hover:cursor-pointer"
+              class="py-4 px-1 inline-flex items-center gap-2 border-b-2 border-transparent text-sm whitespace-nowrap  focus:border-blue-500 dark:focus:border-blue-500 neutral-700 hover:text-blue-500 dark:hover:text-blue-500 hover:cursor-pointer"
               @click.prevent="changeMode(2)"
-              :class="{ 'text-blue-700 border-b border-blue-700': modeChosen === 'multiplayer' }"
+              :class="{ 'text-blue-500 border-b !border-blue-500': modeChosen === 'multiplayer' }"
               aria-current="page"
             >
               <i class="pi pi-users"></i>
@@ -44,7 +44,8 @@
         paginator
         :loading="loading"
         removableSort
-        :rows="10"
+        :rows="5"
+        :rowsPerPageOptions="[5, 10, 15]"
         :globalFilterFields="['ended_at', 'board_id']"
         
       >
@@ -135,7 +136,8 @@
         paginator
         :loading="loading"
         removableSort
-        :rows="10"
+        :rows="5"
+        :rowsPerPageOptions="[5, 10, 15]"
         :globalFilterFields="['ended_at', 'board_id']"
         
       >
@@ -223,14 +225,7 @@
         </Column>
       </DataTable>
     </div>
-    <button
-      @click.prevent="goBack"
-      type="button"
-      class="py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none"
-    >
-      Go Back
-    </button>
-    <Footer></Footer>
+    
   </div>
 </template>
 <script setup>
@@ -317,10 +312,16 @@ const refresh = async () => {
   try {
     if (modeChosen.value === 'singleplayer') {
       const response = await axios.get('/games/singleplayer/' + user.id)
-      games.value = response.data
+      games.value = response.data.map((game) => {
+          game.ended_at = new Date(game.ended_at)
+          return game
+        })
     } else if (modeChosen.value === 'multiplayer') {
       const response = await axios.get('/games/multiplayer/' + user.id)
-      games.value = response.data
+      games.value = response.data.map((game) => {
+        game.ended_at = new Date(game.ended_at)
+        return game
+      })
     }
   } catch (error) {
     toast({
@@ -342,7 +343,10 @@ watch(modeChosen, async (newValue) => {
     await axios
       .get('/games/singleplayer/' + user.id)
       .then((response) => {
-        games.value = response.data
+        games.value = response.data.map((game) => {
+          game.ended_at = new Date(game.ended_at)
+          return game
+        })
       })
       .catch(() => {
         toast({
@@ -357,8 +361,11 @@ watch(modeChosen, async (newValue) => {
     await axios
       .get('/games/multiplayer/' + user.id)
       .then((response) => {
-        games.value = response.data
+        games.value = response.data.map((game) => {
+        game.ended_at = new Date(game.ended_at)
+        return game
       })
+    })
       .catch(() => {
         toast({
           description: 'An error occurred while fetching the Global LeaderBoard by Time data',
