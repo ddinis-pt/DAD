@@ -43,6 +43,7 @@ Route::get('/stats/users/total', [StatsController::class, 'numberOfPlayers']);
 Route::get('/stats/games/total', [StatsController::class, 'totalGames']);
 Route::get('/stats/games/lastWeek', [StatsController::class, 'gamesPlayedLastWeek']);
 Route::get('/stats/games/lastMonth', [StatsController::class, 'gamesPlayedLastMonth']);
+Route::get('/stats/games/total/status', [StatsController::class, 'totalGamesByStatus']);
 
 //Auth
 Route::post('/auth/login', [AuthController::class, "login"]);

@@ -49,9 +49,19 @@ class StatsController extends Controller
         return response()->json($purchases, 200);
     }
 
+    public function totalGamesByStatus(){
+        $games = Game::selectRaw('count(*) as count, status')
+            ->groupBy('status')
+            ->get();
+
+        return response()->json($games, 200);
+    }
+
+    
+
     public function numberOfPlayers() {
         $players = User::All()
-            ->where('deleted_at', null)
+            ->where('type','P')
             ->count();
         return response()->json($players, 200);
     }
