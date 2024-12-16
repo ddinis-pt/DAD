@@ -4,7 +4,7 @@
     <main>
       <div class="flex flex-col space-y-4">
         <div class="text-center">
-          <h2 class="block text-2xl font-bold text-black dark:text-white">Scoreboards</h2>
+          <h2 class="block text-2xl font-bold text-black dark:text-white">Game History</h2>
         </div>
         <div v-show="modeChosen === ''" class="text-center">
           <h3 class="block text-l font-bold text-black dark:text-white">
@@ -66,7 +66,6 @@
               ></Button>
             </div>
 
-            <span class="text-xl font-bold mx-auto">Game History</span>
 
             <Button
               type="button"
@@ -158,7 +157,6 @@
               ></Button>
             </div>
 
-            <span class="text-xl font-bold mx-auto">Game History</span>
 
             <Button
               type="button"
