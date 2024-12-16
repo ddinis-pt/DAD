@@ -64,38 +64,13 @@ exports.createGameEngine = () => {
         }, 750);
       }
 
-      game.currentPlayer === game.player1 ? game.movesByPlayer1++ : game.movesByPlayer2++;
+      game.currentPlayer === game.player1
+        ? game.movesByPlayer1++
+        : game.movesByPlayer2++;
+      changeGameStatus(game);
+    } else {
       changeGameStatus(game);
     }
-    return game;
-  };
-
-  // Show hint
-  const showHint = (game) => {
-    const unflippedPairs = [];
-
-    for (let i = 0; i < game.board.length; i++) {
-      if (!game.flipped[i]) {
-        for (let j = i + 1; j < game.board.length; j++) {
-          if (!game.flipped[j] && game.board[i] === game.board[j]) {
-            unflippedPairs.push([i, j]);
-          }
-        }
-      }
-    }
-
-    if (unflippedPairs.length > 0) {
-      const [index1, index2] = unflippedPairs[0];
-      game.flipped[index1] = true;
-      game.flipped[index2] = true;
-      setTimeout(() => {
-        game.flipped[index1] = false;
-        game.flipped[index2] = false;
-      }, 750);
-    } else {
-      console.log("No unflipped pairs found.");
-    }
-
     return game;
   };
 
@@ -112,14 +87,11 @@ exports.createGameEngine = () => {
         game.gameStatus = 3;
       }
     } else if (
-      game.currentlyFlipped.length === 2 ||
-      game.currentlyFlipped.length === 0
+      game.currentlyFlipped.length > 0
     ) {
       game.gameStatus = 0; //Game is running
       game.currentPlayer =
         game.currentPlayer === game.player1 ? game.player2 : game.player1;
-    } else {
-      game.gameStatus = game.player1 === game.currentPlayer ? 2 : 1;
     }
   };
 
@@ -182,8 +154,8 @@ exports.createGameEngine = () => {
         errorMessage: "Game has already ended!",
       };
     }
-    game.gameStatus = playerSocketId == game.player1SocketId ? 2 : 1;
-    game.status = "E";
+    game.winner_user_id = playerSocketId == game.player1SocketId ? game.player2 : game.player1;
+    game.gameStatus = playerSocketId == game.player1SocketId ? game.player2 : game.player1;
     return true;
   };
 

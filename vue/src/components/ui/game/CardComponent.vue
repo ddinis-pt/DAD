@@ -1,5 +1,5 @@
 <template>
-    <vue-flip v-show="!ghost" v-model="flipped" class="simple-test" height="150px" width="100px" transition="0.7s">
+    <vue-flip :class="{'opacity-0': ghost}" v-model="flipped" class="simple-test" height="150px" width="100px" transition="0.7s">
         <template v-slot:front>
             <img @click.prevent="flipCard" src="/src/assets/cards/semFace.png" alt="Carta Virada Para Baixo">
         </template>
@@ -30,14 +30,16 @@ const flipped = ref(props.isFlipped)
 
 const ghost = ref(false)
 
-watch(() => props.game.pairs, (newValue) => {
-    // check if the card is in the pairs array
-    newValue.forEach(element => {
-        if (element.includes(props.index)) {
-            ghost.value = true
-        }
-    });
-})
+if (props.game && Object.hasOwn(props.game, 'pairs')) {
+    watch(() => props.game.pairs, (newValue) => {
+        // check if the card is in the pairs array
+        newValue.forEach(element => {
+            if (element.includes(props.index)) {
+                ghost.value = true
+            }
+        });
+    })
+}
 
 const emits = defineEmits(['has-been-flipped'])
 

@@ -152,8 +152,7 @@ export const useGamesStore = defineStore('games', () => {
     })
     const APIresponse = await axios.patch('games/' + game.id, {
       status: 'I',
-        winner_user_id:
-          game.gameStatus === 1 ? game.player1 : game.gameStatus === 2 ? game.player2 : null,
+        winner_user_id: storeAuth.userId,
         ended_at: format(new Date(), 'yyyy-MM-dd HH:mm:ss'),
         total_time: game.totalTime,
     })

@@ -248,7 +248,6 @@ io.on('connection', (socket) => {
     if (gameEngine.gameEnded(game)) {
       io.to(roomName).emit('gameEnded', game)
     }
-    socket.leave(roomName)
     if (callback) {
       callback(game)
     }
@@ -260,6 +259,15 @@ io.on('connection', (socket) => {
     }
     const roomName = 'game_' + gameId
     // load game state from the game data stored directly on the room object:
+    if(!socket.adapter.rooms.get(roomName)) {
+      if (callback) {
+        callback({
+          errorCode: 6,
+          errorMessage: 'Game does not exist!'
+        })
+      }
+      return
+    }
     const game = socket.adapter.rooms.get(roomName).game
     const closeResult = gameEngine.close(game, socket.id)
     if (closeResult !== true) {
@@ -269,6 +277,9 @@ io.on('connection', (socket) => {
       return
     }
     socket.leave(roomName)
+    // get socket from player2SocketId
+    const player2Socket = io.sockets.sockets.get(game.player2SocketId)
+    player2Socket.leave(roomName)
     if (callback) {
       callback(true)
     }

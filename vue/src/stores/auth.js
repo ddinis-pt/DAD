@@ -205,6 +205,21 @@ export const useAuthStore = defineStore('auth', () => {
     return false
   }
 
+  const refreshUserData = async () => {
+    try {
+      const responseUser = await axios.get('/users/me')
+      user.value = responseUser.data
+      sessionStorage.setItem('user', JSON.stringify(user.value))
+    } catch (e) {
+      storeError.setErrorMessages(
+        e.response.data.message,
+        e.response.data.errors,
+        e.response.status,
+        'Error refreshing user data!'
+      )
+    }
+  }
+
   return {
     user,
     userId,
@@ -221,6 +236,7 @@ export const useAuthStore = defineStore('auth', () => {
     logout,
     restoreToken,
     getFirstLastName,
-    register
+    register,
+    refreshUserData
   }
 })
