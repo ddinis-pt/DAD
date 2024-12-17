@@ -10,11 +10,12 @@ const numberOfGames = ref(0);
 const numberOfGamesLastWeek = ref(0);
 const numberOfGamesLastMonth = ref(0);
 
-let chartDataDoughnut = null;
-let chartOptionsDoughnut = null;
+//let chartDataDoughnut = null;
+//let chartOptionsDoughnut = null;
 
 let data = null;
 let data2 = null;
+let data3 = null;
 const chartOptions = {
   responsive: true,
   plugins: {
@@ -37,18 +38,29 @@ const chartOptions = {
     }
   }
 };
-const setChartOptions = () => {
-    return {
+// const setChartOptions = () => {
+//     return {
+//       plugins: {
+//         legend: {
+//             labels: {
+//               cutout: '60%',
+//               color: '#FFF'
+//             }
+//         }
+//       }
+//     };
+// };
+const chartOptionsDoughnut = {
+      responsive: true,
       plugins: {
-        legend: {
-            labels: {
-              cutout: '60%',
-              color: '#FFF'
+              legend: {
+                  labels: {
+                    cutout: '60%',
+                    color: '#FFF'
+                  }
+              }
             }
-        }
-      }
     };
-};
 
 const setChartData = () => {
   let games = {
@@ -87,7 +99,6 @@ const setChartData = () => {
     .catch(error => {
       console.log(error);
     });
-    console.log(games)
     return games;
 };
 
@@ -119,6 +130,16 @@ onMounted(() => {
         data: [],
         backgroundColor: null,
         borderColor: '#ffffff'
+      }
+    ]
+  };
+  const chartDataDoughnut = {
+    labels: [],
+    datasets: [
+      {
+        data: [],
+        backgroundColor: ['#6b7280','#09b9d7','#f97316','#9a08f9'],
+        hoverBackgroundColor: ['#9ca3af','#22d3ee','#fb923c','#5c08a0']
       }
     ]
   };
@@ -180,8 +201,33 @@ onMounted(() => {
       console.log(error);
     });
 
-    chartDataDoughnut = setChartData();
-    chartOptionsDoughnut = setChartOptions();
+    axios.get('stats/games/total/status')
+    .then(response => {
+      response.data.forEach(element => {
+        var string = "";
+        switch(element.status) {
+          case "PE":
+            string = "Pending";
+            break;
+          case "PL":
+            string = 'In Progress';
+            break;
+          case "E":
+            string = 'Ended';
+            break;
+          case "I":
+            string = 'Interrupted';
+            break;
+        }
+        chartDataDoughnut.labels.push(string);
+        chartDataDoughnut.datasets[0].data.push(element.count);
+
+        data3 = chartDataDoughnut;
+      });
+    })
+
+    //chartDataDoughnut = setChartData();
+    //chartOptionsDoughnut = setChartOptions();
 
     // Gets para non-authenticated users
     axios.get('stats/users/total')
@@ -264,7 +310,7 @@ onMounted(() => {
 
       <Chart 
         type="doughnut" 
-        :data="chartDataDoughnut" 
+        :data="data3" 
         :chartOptions="chartOptionsDoughnut" 
         class="w-full md:w-[30rem]" />
 
