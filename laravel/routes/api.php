@@ -13,9 +13,11 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::post('/auth/logout', [AuthController::class, "logout"]);
     Route::post('/auth/refreshtoken', [AuthController::class, "refreshtoken"]);
+    Route::put('/users/{id}/update', [UserController::class, "updateByAdmin"]);
     Route::put('/users/{id}', [UserController::class, "update"]);
     Route::delete('/users/{id}', [UserController::class, "destroy"]);
     Route::put('/users/{id}/block', [UserController::class, "block"]);
+    Route::put('/users/{id}/unblock', [UserController::class, "unblock"]);
 
     Route::get('/spend/{value}', [UserController::class, "spendCoins"]);
     Route::post('/buy/', [UserController::class, "buyCoins"]);
@@ -31,6 +33,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/games', [GameController::class, 'store']);
     Route::patch('/games/{game}', [GameController::class, 'updateStatus']);
     Route::delete('/games/{game}', [GameController::class, 'destroy']);
+
+    
 });
 
 //Auth

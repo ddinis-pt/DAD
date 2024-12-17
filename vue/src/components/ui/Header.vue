@@ -29,6 +29,7 @@ onBeforeMount(() => {
 
 onMounted(() => {
     window.HSStaticMethods.autoInit();
+    authStore.refreshUserData();
 
 })
 </script>

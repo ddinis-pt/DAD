@@ -37,6 +37,7 @@ class UserController extends Controller
 
     public function update(UpdateUserRequest $request, $id)
     {
+        //return response()->json(['message' => $request?->user()?->id, 'id' => $id, 'type' => $request?->user()->type], 200);
         if ($request->user()->id != $id) {
             return response()->json(['message' => 'Unauthorized'], 401);
         }
@@ -44,6 +45,18 @@ class UserController extends Controller
         $user->update($request->validated());
         return response()->json($user);
     }
+
+    public function updateByAdmin(UpdateUserRequest $request, $id)
+    {
+        //return response()->json(['message' => $request?->user()], 200);
+        if ($request->user()->type != 'A' || $request->user()->id == $id) {
+            return response()->json(['message' => 'Unauthorized'], 401);
+        }
+        $user = User::find($id);
+        $user->update($request->validated());
+        return response()->json($user);
+    }
+
 
     public function destroy(Request $request, $id)
     {
@@ -63,13 +76,26 @@ class UserController extends Controller
     public function block(Request $request, $id)
     {
         $user = User::find($id);
-        if ($request?->user()?->id != $id) {
+        if ($request?->user()?->type != 'A') {
             return response()->json(['message' => 'Unauthorized'], 401);
         }
-        if ($request?->user()?->id == $id && $request?->user()?->type == 'A') {
+        if ($user == null) {
             return response()->json(['message' => 'Forbidden'], 403);
         }
         DB::update('update users set blocked = 1 where id = ?', [$id]);
+        return response()->json(null, 204);
+    }
+
+    public function unblock(Request $request, $id)
+    {
+        $user = User::find($id);
+        if ($request?->user()?->type != 'A') {
+            return response()->json(['message' => 'Unauthorized'], 401);
+        }
+        if ($user == null) {
+            return response()->json(['message' => 'Forbidden'], 403);
+        }
+        DB::update('update users set blocked = 0 where id = ?', [$id]);
         return response()->json(null, 204);
     }
 
