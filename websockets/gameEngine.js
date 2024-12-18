@@ -81,8 +81,10 @@ exports.createGameEngine = () => {
       //game is finished but we need to see who won
       if (game.pairsByPlayer1 > game.pairsByPlayer2) {
         game.gameStatus = 1;
+        game.winner_user_id = game.player1;
       } else if (game.pairsByPlayer1 < game.pairsByPlayer2) {
         game.gameStatus = 2;
+        game.winner_user_id = game.player2;
       } else {
         game.gameStatus = 3;
       }

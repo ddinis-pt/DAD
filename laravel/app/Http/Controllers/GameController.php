@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\SaveGameRequest;
 use App\Http\Requests\UpdateGameRequest;
+use App\Http\Requests\UpdateTimeRequest;
 use App\Http\Resources\GameResource;
 use Illuminate\Validation\ValidationException;
 use App\Models\Game;
@@ -205,5 +206,14 @@ class GameController extends Controller
             ->orderBy('total_time', 'asc')
             ->take(3)
             ->get(), 200);
+    }
+
+    public function updateTime(UpdateTimeRequest $request, int $game_id)
+    {
+        $game = Game::findOrFail($game_id);
+        $data = $request->validated();
+        $game->total_time = $data["total_time"];
+        $game->save();
+        return response()->json($game, 200);
     }
 }
