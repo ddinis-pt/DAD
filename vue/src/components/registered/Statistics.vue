@@ -3,12 +3,17 @@ import Header from '@/components/ui/Header.vue';
 import axios from 'axios';
 import { ref, onMounted } from 'vue';
 import Chart from 'primevue/chart';
+import DataTable from 'primevue/datatable';
+import Column from 'primevue/column';
 
 
 const numberOfPlayers = ref(0);
 const numberOfGames = ref(0);
 const numberOfGamesLastWeek = ref(0);
 const numberOfGamesLastMonth = ref(0);
+
+const top5Buyers = ref();
+const top5Spenders = ref();
 
 //let chartDataDoughnut = null;
 //let chartOptionsDoughnut = null;
@@ -102,11 +107,11 @@ const setChartData = () => {
     return games;
 };
 
-const generateHorizontalGradient = (ctx, chartArea) => {
+const generateHorizontalGradient = (ctx, chartArea, startingColor, endingColor) => {
   const { left, right } = chartArea;
   const gradient = ctx.createLinearGradient(left, 0, right, 0); // Gradiente horizontal
-  gradient.addColorStop(0, 'rgba(204, 204, 255, 0.3)'); // Azul claro no início
-  gradient.addColorStop(1, 'rgba(204, 204, 255, 1)'); // Azul forte no final
+  gradient.addColorStop(0, startingColor);
+  gradient.addColorStop(1, endingColor);
   return gradient;
 };
 
@@ -162,7 +167,7 @@ onMounted(() => {
               const chart = ctx.chart;
               const { ctx: canvasCtx, chartArea } = chart;
               if (!chartArea) return; // Aguarda a área do gráfico ser calculada
-              return generateHorizontalGradient(canvasCtx, chartArea);
+              return generateHorizontalGradient(canvasCtx, chartArea, 'rgba(31, 41, 55, 0.3)' , 'rgba(31, 41, 55, 1)');
             }
           }
         ]
@@ -177,7 +182,7 @@ onMounted(() => {
     axios.get('stats/purchases/week')
     .then(response => {
       response.data.forEach(element => {
-        chartData2.labels.push(element.week);
+        chartData2.labels.push(element.week+1);
         chartData2.datasets[0].data.push(element.count);
       });
 
@@ -191,7 +196,7 @@ onMounted(() => {
               const chart = ctx.chart;
               const { ctx: canvasCtx, chartArea } = chart;
               if (!chartArea) return; // Aguarda a área do gráfico ser calculada
-              return generateHorizontalGradient(canvasCtx, chartArea);
+              return generateHorizontalGradient(canvasCtx, chartArea, 'rgba(204, 204, 255, 0.6)' , 'rgba(204, 204, 255, 1)');
             }
           }
         ]
@@ -263,6 +268,18 @@ onMounted(() => {
     });
 
 
+    axios.get('stats/buyers/top5').then(response => {
+      top5Buyers.value = response.data;
+    }).catch(error => {
+      console.log(error);
+    });
+
+    axios.get('stats/spenders/top5').then(response => {
+      top5Spenders.value = response.data;
+    }).catch(error => {
+      console.log(error);
+    })
+
 });
 </script>
 
@@ -295,26 +312,69 @@ onMounted(() => {
     </div>
 
     <div class="flex flex-wrap justify-center gap-4 mt-6">
-      <Chart 
-        type="bar" 
-        :data="data" 
-        :chartOptions="chartOptions" 
-        class="w-full md:w-[20rem]" 
-      />
-      <Chart 
-        type="bar" 
-        :data="data2" 
-        :chartOptions="chartOptions" 
-        class="w-full md:w-[20rem]" 
-      />
-
+      <div class="bg-white shadow-md rounded-lg p-4 text-center lg:h-full flex flex-col justify-center w-46">
+        <h2 class="text-md font-bold text-black mb-2">Unique Users this year</h2>
+        <Chart 
+          type="bar" 
+          :data="data" 
+          :chartOptions="chartOptions" 
+          class="w-full md:w-[20rem]" 
+        />
+      </div>
+      <div class="bg-white shadow-md rounded-lg p-4 text-center lg:h-full flex flex-col justify-center w-46">
+        <h2 class="text-md font-bold text-black mb-2">Purchases this year by week</h2>
+        <Chart 
+          type="bar" 
+          :data="data2" 
+          :chartOptions="chartOptions" 
+          class="w-full md:w-[20rem]"
+        />
+      </div>  
+    </div>
+    <div class="flex flex-wrap justify-center gap-4 mt-6">
+      <!-- Tabela top 5 users que mais dinheiro gastaram em brain_coins -->
+      <div class="bg-white shadow-md rounded-lg p-4 text-center flex flex-col justify-center w-full max-w-sm">
+        <h2 class="text-md font-bold text-black mb-4">Top 5 Buyers</h2>
+        <table class="table-auto w-full text-sm border-collapse">
+          <thead>
+            <tr class="bg-gray-100 text-gray-700">
+              <th class="px-3 py-1 border-r border-gray-300 text-left">Name</th>
+              <th class="px-3 py-1 text-right">Total Bought</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="buyer in top5Buyers" :key="buyer.name" class="odd:bg-white even:bg-gray-50">
+              <td class="px-3 py-1 border-r border-gray-300 text-left text-gray-600">{{ buyer.name }}</td>
+              <td class="px-3 py-1 text-right text-gray-600">{{ buyer.total_bought }}€</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- Tabela top 5 users que mais gastaram brain_coins-->
+      <div class="bg-white shadow-md rounded-lg p-4 text-center flex flex-col justify-center w-full max-w-sm">
+        <h2 class="text-md font-bold text-black mb-4">Top 5 Spenders</h2>
+        <table class="table-auto w-full text-sm border-collapse">
+          <thead>
+            <tr class="bg-gray-100 text-gray-700">
+              <th class="px-3 py-1 border-r border-gray-300 text-left">Name</th>
+              <th class="px-3 py-1 text-right">Total Spent (brain coins)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="spender in top5Spenders" :key="spender.name" class="odd:bg-white even:bg-gray-50">
+              <td class="px-3 py-1 border-r border-gray-300 text-left text-gray-600">{{ spender.name }}</td>
+              <td class="px-3 py-1 text-right text-gray-600">{{ parseInt(spender.total_spent) * -1.0}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="flex justify-center gap-4 mt-6">
       <Chart 
         type="doughnut" 
         :data="data3" 
         :chartOptions="chartOptionsDoughnut" 
-        class="w-full md:w-[30rem]" />
-
-      
+        class="w-full md:w-[20rem]" />
     </div>
   </div>
 </template>

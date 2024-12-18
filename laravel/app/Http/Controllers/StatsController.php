@@ -36,10 +36,38 @@ class StatsController extends Controller
         return response()->json($users, 200);
     }
 
+    public function getTop5Buyers()
+    {
+        $users = DB::table('transactions')
+            ->join('users', 'transactions.user_id', '=', 'users.id')
+            ->select('users.name as name', DB::raw('SUM(transactions.euros) as total_bought'))
+            ->where('transactions.type', 'P')
+            ->where('brain_coins', '>' , 0)
+            ->groupBy('transactions.user_id', 'users.nickname')
+            ->orderBy('total_bought', 'desc')
+            ->limit(5)
+            ->get();
+        return response()->json($users, 200);
+    }
+
+    public function getTop5Spenders(){
+        $users = DB::table('transactions')
+            ->join('users', 'transactions.user_id', '=', 'users.id')
+            ->select('users.name', DB::raw('SUM(transactions.brain_coins) as total_spent'))
+            ->where('transactions.type', 'I')
+            ->where('brain_coins', '<', 0)
+            ->groupBy('transactions.user_id', 'users.nickname')
+            ->orderBy('total_spent', 'asc')
+            ->limit(5)
+            ->get();
+        return response()->json($users, 200);
+    }
+
     public function totalPurchasesByWeek(){
         $purchases = DB::table('transactions')
             ->selectRaw('count(*) as count, WEEK(transaction_datetime) as week, YEAR(transaction_datetime) as year')
             ->whereRaw('YEAR(transaction_datetime) = YEAR(SYSDATE())')
+            ->where('type', 'P')
             ->groupBy('week')
             ->groupBy('year')
             ->orderBy('year','asc')

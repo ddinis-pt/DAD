@@ -38,6 +38,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/stats/purchases/week', [StatsController::class, 'totalPurchasesByWeek']);
 });
 
+Route::get('/stats/buyers/top5', [StatsController::class, 'getTop5Buyers']);
+Route::get('/stats/spenders/top5', [StatsController::class, 'getTop5Spenders']);
 //Stats for all users
 Route::get('/stats/users/total', [StatsController::class, 'numberOfPlayers']);
 Route::get('/stats/games/total', [StatsController::class, 'totalGames']);
