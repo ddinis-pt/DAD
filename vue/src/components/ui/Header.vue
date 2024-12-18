@@ -9,8 +9,10 @@ const back = () => {
 }
 
 const logout = async () => {
-    await authStore.logout()
-    router.push({ name: 'login' })
+    let result = await authStore.logout(authStore.user)
+    if(result) {
+        router.push({ name: 'login' })
+    }
 }
 
 onMounted(() => {

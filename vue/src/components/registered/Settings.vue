@@ -135,6 +135,9 @@ const photo = ref('')
 const authStore = useAuthStore()
 const router = useRouter()
 
+
+const userPhoto = authStore.userPhotoUrl
+
 if (authStore.user === null) {
     router.push({ name: 'login' })
 }
@@ -165,6 +168,9 @@ const submit = async () => {
                 })
                 return;
             });
+    } else {
+        // separate the values using / and get the last value
+        foto = userPhoto.split('/').pop();
     }
     await axios.put(`/users/${authStore.user.id}`, {
         email: email.value,

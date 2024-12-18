@@ -48,14 +48,21 @@ exports.createGameEngine = () => {
 
       if (card1 === card2) {
         game.pairsFound++;
-        game.currentPlayer === game.player1
-          ? game.pairsByPlayer1++
-          : game.pairsByPlayer2++;
         game.pairs.push([index1, index2]);
+        if (game.currentPlayer === game.player1) {
+          game.pairsByPlayer1++;
+        } else {
+          game.pairsByPlayer2++;
+        }
         game.currentlyFlipped = []; // Clear immediately for matched pairs
+        if(game.pairsFound === game.board.length / 2) {
+          game.isGameWon = true;
+          changeGameStatus(game);
+        }
       } else {
         // Block interactions and flip back mismatched cards
         game.isFlipping = true;
+        changeGameStatus(game);
         setTimeout(() => {
           game.flipped[index1] = false;
           game.flipped[index2] = false;
@@ -63,13 +70,6 @@ exports.createGameEngine = () => {
           game.isFlipping = false; // Allow interactions again
         }, 750);
       }
-
-      game.currentPlayer === game.player1
-        ? game.movesByPlayer1++
-        : game.movesByPlayer2++;
-      changeGameStatus(game);
-    } else {
-      changeGameStatus(game);
     }
     return game;
   };
@@ -77,7 +77,7 @@ exports.createGameEngine = () => {
   // Check if the board is complete and change the gameStatus accordingly
   const changeGameStatus = (game) => {
     // Change game status based on who won
-    if (game.pairsFound === game.board.length / 2) {
+    if (game.isGameWon) {
       //game is finished but we need to see who won
       if (game.pairsByPlayer1 > game.pairsByPlayer2) {
         game.gameStatus = 1;
@@ -86,9 +86,7 @@ exports.createGameEngine = () => {
       } else {
         game.gameStatus = 3;
       }
-    } else if (
-      game.currentlyFlipped.length > 0
-    ) {
+    } else if (game.currentlyFlipped.length > 0) {
       game.gameStatus = 0; //Game is running
       game.currentPlayer =
         game.currentPlayer === game.player1 ? game.player2 : game.player1;
@@ -154,8 +152,15 @@ exports.createGameEngine = () => {
         errorMessage: "Game has already ended!",
       };
     }
-    game.winner_user_id = playerSocketId == game.player1SocketId ? game.player2 : game.player1;
-    game.gameStatus = playerSocketId == game.player1SocketId ? game.player2 : game.player1;
+    game.winner_user_id =
+      playerSocketId == game.player1SocketId ? game.player2 : game.player1;
+    game.gameStatus =
+      playerSocketId == game.player1SocketId ? 2 : 1;
+    console.log("Game ended. Winner is: ", 
+      playerSocketId == game.player1SocketId ? game.player2 : game.player1
+    );
+    console.log("Game Status: ", game.gameStatus);
+    game.isGameWon = true;
     return true;
   };
 

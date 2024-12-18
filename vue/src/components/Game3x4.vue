@@ -46,6 +46,7 @@ watch(nParesEncontrados, async (n) => {
                 status: 'E',
                 began_at: format(startedAt, 'yyyy-MM-dd HH:mm:ss'),
                 ended_at: format(new Date(), 'yyyy-MM-dd HH:mm:ss'),
+                //total time should have the tenths of seconds
                 total_time: timer.value,
                 board_id: 1,
                 total_turns_winner: nJogadas.value,
@@ -137,7 +138,7 @@ const showHint = () => {
                     </div>
                 </RouterLink>
                 <div id="time" class="justify-center">
-                    <p class="font-semibold text-lg  text-gray-900">{{ ('0' + horas).slice(-2) + ':' + ('0' +
+                    <p class="font-semibold text-lg  dark:text-white text-gray-900">{{ ('0' + horas).slice(-2) + ':' + ('0' +
                         minutos).slice(-2) + ':' + ('0' + segundos).slice(-2) }}</p>
                 </div>
                 <div @click="showHint" id="hint" class="justify-center">

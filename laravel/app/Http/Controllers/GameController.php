@@ -8,8 +8,6 @@ use App\Http\Requests\UpdateGameRequest;
 use App\Http\Resources\GameResource;
 use Illuminate\Validation\ValidationException;
 use App\Models\Game;
-use Error;
-use Illuminate\Support\Facades\DB;
 
 class GameController extends Controller
 {

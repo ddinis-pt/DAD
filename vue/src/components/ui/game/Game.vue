@@ -45,7 +45,7 @@ const statusGameMessage = computed(() => {
             return currentUserTurn.value ? 'Your turn' : 'Opponent turn'
         case 1:
         case 2:
-            return storeGames.playerNumberOfCurrentUser(props.game) == props.game.gameStatus ? 'You won' : 'You lost'
+            return storeGames.playerNumberOfCurrentUser(props.game) == props.game.winner_user_id ? 'You won' : 'You lost'
         case 3:
             return 'Draw'
         default:

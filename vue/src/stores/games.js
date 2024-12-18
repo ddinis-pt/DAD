@@ -139,6 +139,7 @@ export const useGamesStore = defineStore('games', () => {
         description: `${payload.userQuit.name} has quitted game #${payload.game.id}, giving you the win!`
       })
     }
+    payload.game.gameStatus = payload.game.player1 === storeAuth.userId ? 2 : 1
     updateGame(payload.game)
   })
 
