@@ -333,7 +333,7 @@ onMounted(() => {
     </div>
     <div class="flex flex-wrap justify-center gap-4 mt-6">
       <!-- Tabela top 5 users que mais dinheiro gastaram em brain_coins -->
-      <div class="bg-white shadow-md rounded-lg p-4 text-center flex flex-col justify-center w-full max-w-sm">
+      <div class="bg-white shadow-md rounded-lg p-4 text-center flex flex-col justify-top w-full max-w-sm">
         <h2 class="text-md font-bold text-black mb-4">Top 5 Buyers</h2>
         <table class="table-auto w-full text-sm border-collapse">
           <thead>

@@ -84,8 +84,18 @@ class StatsController extends Controller
 
         return response()->json($games, 200);
     }
-
-    
+ 
+    public function getGlobalScoreboard(){
+        $games = Db::table('games')
+            ->join('users', 'transactions.user_id', '=', 'users.id')
+            ->where('status', 'E')
+            ->where('type', 'M')
+            ->groupBy('winner_user_id')
+            ->orderBy('count','desc')
+            ->limit(10)
+            ->get();
+        return response()->json($users, 200);
+    }
 
     public function numberOfPlayers() {
         $players = User::All()
