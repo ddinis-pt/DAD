@@ -36,6 +36,20 @@ class StatsController extends Controller
         return response()->json($users, 200);
     }
 
+    public function getTop5Loosers()
+    {
+        $users = DB::table('multiplayer_games_played')
+            ->join('users', 'multiplayer_games_played.user_id', '=', 'users.id')
+            ->select('users.nickname as name', DB::raw('COUNT(*) as total_defeats'))
+            ->whereNotNull('multiplayer_games_played.user_id')
+            ->where('multiplayer_games_played.player_won', 0)
+            ->groupBy('users.nickname')
+            ->orderBy('total_defeats', 'desc')
+            ->limit(5)
+            ->get();
+        return response()->json($users, 200);
+    }
+
     public function getTop5Buyers()
     {
         $users = DB::table('transactions')

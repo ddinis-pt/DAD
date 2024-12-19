@@ -15,6 +15,8 @@ const numberOfGamesLastMonth = ref(0);
 const top5Buyers = ref();
 const top5Spenders = ref();
 
+const modeChosen = ref('users');
+
 //let chartDataDoughnut = null;
 //let chartOptionsDoughnut = null;
 
@@ -114,6 +116,14 @@ const generateHorizontalGradient = (ctx, chartArea, startingColor, endingColor) 
   gradient.addColorStop(1, endingColor);
   return gradient;
 };
+
+const changeMode = (mode) => {
+  if (mode == 1) {
+    modeChosen.value = 'users'
+  } else if (mode == 2) {
+    modeChosen.value = 'games'
+  }
+}
 
 onMounted(() => {
   const chartData = {
@@ -278,103 +288,215 @@ onMounted(() => {
       top5Spenders.value = response.data;
     }).catch(error => {
       console.log(error);
-    })
-
+    });
 });
 </script>
 
 <template>
   <div class="min-h-screen bg-gray-800">
     <Header></Header>
-    <div class="flex flex-wrap justify-center gap-6 mt-20">
+    <nav class="-mb-0.5 flex flex-wrap gap-x-6 justify-center">
+            <a
+              class="py-4 px-1 inline-flex items-center gap-2 border-b-2 border-transparent text-sm whitespace-nowrap hs-tab-active:border  focus:border-blue-500 dark:focus:border-blue-500 hover:text-blue-500 dark:hover:text-blue-500 hover:cursor-pointer"
+              @click.prevent="changeMode(1)"
+              :class="{ 'text-blue-500 border-b-2 !border-blue-500': modeChosen === 'users' }"
+            >
+              <i class="pi pi-user"></i>
+              Users
+            </a>
+            <a
+              class="py-4 px-1 inline-flex items-center gap-2 border-b-2 border-transparent text-sm whitespace-nowrap  focus:border-blue-500 dark:focus:border-blue-500 neutral-700 hover:text-blue-500 dark:hover:text-blue-500 hover:cursor-pointer"
+              @click.prevent="changeMode(2)"
+              :class="{ 'text-blue-500 border-b !border-blue-500': modeChosen === 'games' }"
+              aria-current="page"
+            >
+              <i class="pi pi-trophy"></i>
+              Games
+            </a>
+    </nav>
+    <div v-if="modeChosen === 'users'">
+      <div class="flex flex-wrap justify-center gap-6 mt-20">
 
-      <div class="bg-white shadow-md rounded-lg p-4 text-center sm:h-24 md:h-30 lg:h-36 flex flex-col justify-center w-46">
-        <h2 class="text-md font-semibold text-gray-700 mb-1">Number of Players Registered</h2>
-        <p class="text-2xl font-bold text-blue-500">{{ numberOfPlayers }}</p>
+        <div class="bg-white shadow-md rounded-lg p-4 text-center sm:h-24 md:h-30 lg:h-36 flex flex-col justify-center w-46">
+          <h2 class="text-md font-semibold text-gray-700 mb-1">Number of Players Registered</h2>
+          <p class="text-2xl font-bold text-blue-500">{{ numberOfPlayers }}</p>
+        </div>
+
+        <div class="bg-white shadow-md rounded-lg p-4 text-center sm:h-24 md:h-30 lg:h-36 flex flex-col justify-center w-46">
+          <h2 class="text-md font-semibold text-gray-700 mb-1">Total Games Played</h2>
+          <p class="text-2xl font-bold text-green-500">{{ numberOfGames }}</p>
+        </div>
+        
+        <div class="bg-white shadow-md rounded-lg p-4 text-center sm:h-24 md:h-30 lg:h-36 flex flex-col justify-center w-46">
+          <h2 class="text-md font-semibold text-gray-700 mb-1">Games Played Last Month</h2>
+          <p class="text-2xl font-bold text-red-500">{{ numberOfGamesLastMonth }}</p>
+        </div>
+        
+
+        <div class="bg-white shadow-md rounded-lg p-4 text-center sm:h-24 md:h-30 lg:h-36 flex flex-col justify-center w-46">
+          <h2 class="text-md font-semibold text-gray-700 mb-1">Games Played Last Week</h2>
+          <p class="text-2xl font-bold text-orange-500">{{ numberOfGamesLastWeek }}</p>
+        </div>
+
       </div>
 
-      <div class="bg-white shadow-md rounded-lg p-4 text-center sm:h-24 md:h-30 lg:h-36 flex flex-col justify-center w-46">
-        <h2 class="text-md font-semibold text-gray-700 mb-1">Total Games Played</h2>
-        <p class="text-2xl font-bold text-green-500">{{ numberOfGames }}</p>
+      <div class="flex flex-wrap justify-center gap-4 mt-6">
+        <div class="bg-white shadow-md rounded-lg p-4 text-center lg:h-full flex flex-col justify-center w-46">
+          <h2 class="text-md font-bold text-black mb-2">Unique Users this year</h2>
+          <Chart 
+            type="bar" 
+            :data="data" 
+            :chartOptions="chartOptions" 
+            class="w-full md:w-[20rem]" 
+          />
+        </div>
+        <div class="bg-white shadow-md rounded-lg p-4 text-center lg:h-full flex flex-col justify-center w-46">
+          <h2 class="text-md font-bold text-black mb-2">Purchases this year by week</h2>
+          <Chart 
+            type="bar" 
+            :data="data2" 
+            :chartOptions="chartOptions" 
+            class="w-full md:w-[20rem]"
+          />
+        </div>  
       </div>
-      
-      <div class="bg-white shadow-md rounded-lg p-4 text-center sm:h-24 md:h-30 lg:h-36 flex flex-col justify-center w-46">
-        <h2 class="text-md font-semibold text-gray-700 mb-1">Games Played Last Month</h2>
-        <p class="text-2xl font-bold text-red-500">{{ numberOfGamesLastMonth }}</p>
+      <div class="flex flex-wrap justify-center gap-4 mt-6">
+        <!-- Tabela top 5 users que mais dinheiro gastaram em brain_coins -->
+        <div class="bg-white shadow-md rounded-lg p-4 text-center flex flex-col justify-top w-full max-w-sm">
+          <h2 class="text-md font-bold text-black mb-4">Top 5 Buyers</h2>
+          <table class="table-auto w-full text-sm border-collapse">
+            <thead>
+              <tr class="bg-gray-100 text-gray-700">
+                <th class="px-3 py-1 border-r border-gray-300 text-left">Name</th>
+                <th class="px-3 py-1 text-right">Total Bought</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="buyer in top5Buyers" :key="buyer.name" class="odd:bg-white even:bg-gray-50">
+                <td class="px-3 py-1 border-r border-gray-300 text-left text-gray-600">{{ buyer.name }}</td>
+                <td class="px-3 py-1 text-right text-gray-600">{{ buyer.total_bought }}€</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <!-- Tabela top 5 users que mais gastaram brain_coins-->
+        <div class="bg-white shadow-md rounded-lg p-4 text-center flex flex-col justify-center w-full max-w-sm">
+          <h2 class="text-md font-bold text-black mb-4">Top 5 Spenders</h2>
+          <table class="table-auto w-full text-sm border-collapse">
+            <thead>
+              <tr class="bg-gray-100 text-gray-700">
+                <th class="px-3 py-1 border-r border-gray-300 text-left">Name</th>
+                <th class="px-3 py-1 text-right">Total Spent (brain coins)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="spender in top5Spenders" :key="spender.name" class="odd:bg-white even:bg-gray-50">
+                <td class="px-3 py-1 border-r border-gray-300 text-left text-gray-600">{{ spender.name }}</td>
+                <td class="px-3 py-1 text-right text-gray-600">{{ parseInt(spender.total_spent) * -1.0}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
-      
-
-      <div class="bg-white shadow-md rounded-lg p-4 text-center sm:h-24 md:h-30 lg:h-36 flex flex-col justify-center w-46">
-        <h2 class="text-md font-semibold text-gray-700 mb-1">Games Played Last Week</h2>
-        <p class="text-2xl font-bold text-orange-500">{{ numberOfGamesLastWeek }}</p>
-      </div>
-
-    </div>
-
-    <div class="flex flex-wrap justify-center gap-4 mt-6">
-      <div class="bg-white shadow-md rounded-lg p-4 text-center lg:h-full flex flex-col justify-center w-46">
-        <h2 class="text-md font-bold text-black mb-2">Unique Users this year</h2>
+      <div class="flex justify-center gap-4 mt-6">
         <Chart 
-          type="bar" 
-          :data="data" 
-          :chartOptions="chartOptions" 
-          class="w-full md:w-[20rem]" 
-        />
+          type="doughnut" 
+          :data="data3" 
+          :chartOptions="chartOptionsDoughnut" 
+          class="w-full md:w-[20rem]" />
       </div>
-      <div class="bg-white shadow-md rounded-lg p-4 text-center lg:h-full flex flex-col justify-center w-46">
-        <h2 class="text-md font-bold text-black mb-2">Purchases this year by week</h2>
+    </div>
+    <div v-if="modeChosen === 'games'">
+      <div class="flex flex-wrap justify-center gap-6 mt-20">
+
+        <div class="bg-white shadow-md rounded-lg p-4 text-center sm:h-24 md:h-30 lg:h-36 flex flex-col justify-center w-46">
+          <h2 class="text-md font-semibold text-gray-700 mb-1">Number of Players Registered</h2>
+          <p class="text-2xl font-bold text-blue-500">{{ numberOfPlayers }}</p>
+        </div>
+
+        <div class="bg-white shadow-md rounded-lg p-4 text-center sm:h-24 md:h-30 lg:h-36 flex flex-col justify-center w-46">
+          <h2 class="text-md font-semibold text-gray-700 mb-1">Total Games Played</h2>
+          <p class="text-2xl font-bold text-green-500">{{ numberOfGames }}</p>
+        </div>
+        
+        <div class="bg-white shadow-md rounded-lg p-4 text-center sm:h-24 md:h-30 lg:h-36 flex flex-col justify-center w-46">
+          <h2 class="text-md font-semibold text-gray-700 mb-1">Games Played Last Month</h2>
+          <p class="text-2xl font-bold text-red-500">{{ numberOfGamesLastMonth }}</p>
+        </div>
+        
+
+        <div class="bg-white shadow-md rounded-lg p-4 text-center sm:h-24 md:h-30 lg:h-36 flex flex-col justify-center w-46">
+          <h2 class="text-md font-semibold text-gray-700 mb-1">Games Played Last Week</h2>
+          <p class="text-2xl font-bold text-orange-500">{{ numberOfGamesLastWeek }}</p>
+        </div>
+
+      </div>
+
+      <div class="flex flex-wrap justify-center gap-4 mt-6">
+        <div class="bg-white shadow-md rounded-lg p-4 text-center lg:h-full flex flex-col justify-center w-46">
+          <h2 class="text-md font-bold text-black mb-2">Unique Users this year</h2>
+          <Chart 
+            type="bar" 
+            :data="data" 
+            :chartOptions="chartOptions" 
+            class="w-full md:w-[20rem]" 
+          />
+        </div>
+        <div class="bg-white shadow-md rounded-lg p-4 text-center lg:h-full flex flex-col justify-center w-46">
+          <h2 class="text-md font-bold text-black mb-2">Purchases this year by week</h2>
+          <Chart 
+            type="bar" 
+            :data="data2" 
+            :chartOptions="chartOptions" 
+            class="w-full md:w-[20rem]"
+          />
+        </div>  
+      </div>
+      <div class="flex flex-wrap justify-center gap-4 mt-6">
+        <!-- Tabela top 5 users que mais dinheiro gastaram em brain_coins -->
+        <div class="bg-white shadow-md rounded-lg p-4 text-center flex flex-col justify-top w-full max-w-sm">
+          <h2 class="text-md font-bold text-black mb-4">Top 5 Buyers</h2>
+          <table class="table-auto w-full text-sm border-collapse">
+            <thead>
+              <tr class="bg-gray-100 text-gray-700">
+                <th class="px-3 py-1 border-r border-gray-300 text-left">Name</th>
+                <th class="px-3 py-1 text-right">Total Bought</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="buyer in top5Buyers" :key="buyer.name" class="odd:bg-white even:bg-gray-50">
+                <td class="px-3 py-1 border-r border-gray-300 text-left text-gray-600">{{ buyer.name }}</td>
+                <td class="px-3 py-1 text-right text-gray-600">{{ buyer.total_bought }}€</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <!-- Tabela top 5 users que mais gastaram brain_coins-->
+        <div class="bg-white shadow-md rounded-lg p-4 text-center flex flex-col justify-center w-full max-w-sm">
+          <h2 class="text-md font-bold text-black mb-4">Top 5 Spenders</h2>
+          <table class="table-auto w-full text-sm border-collapse">
+            <thead>
+              <tr class="bg-gray-100 text-gray-700">
+                <th class="px-3 py-1 border-r border-gray-300 text-left">Name</th>
+                <th class="px-3 py-1 text-right">Total Spent (brain coins)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="spender in top5Spenders" :key="spender.name" class="odd:bg-white even:bg-gray-50">
+                <td class="px-3 py-1 border-r border-gray-300 text-left text-gray-600">{{ spender.name }}</td>
+                <td class="px-3 py-1 text-right text-gray-600">{{ parseInt(spender.total_spent) * -1.0}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="flex justify-center gap-4 mt-6">
         <Chart 
-          type="bar" 
-          :data="data2" 
-          :chartOptions="chartOptions" 
-          class="w-full md:w-[20rem]"
-        />
-      </div>  
-    </div>
-    <div class="flex flex-wrap justify-center gap-4 mt-6">
-      <!-- Tabela top 5 users que mais dinheiro gastaram em brain_coins -->
-      <div class="bg-white shadow-md rounded-lg p-4 text-center flex flex-col justify-top w-full max-w-sm">
-        <h2 class="text-md font-bold text-black mb-4">Top 5 Buyers</h2>
-        <table class="table-auto w-full text-sm border-collapse">
-          <thead>
-            <tr class="bg-gray-100 text-gray-700">
-              <th class="px-3 py-1 border-r border-gray-300 text-left">Name</th>
-              <th class="px-3 py-1 text-right">Total Bought</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="buyer in top5Buyers" :key="buyer.name" class="odd:bg-white even:bg-gray-50">
-              <td class="px-3 py-1 border-r border-gray-300 text-left text-gray-600">{{ buyer.name }}</td>
-              <td class="px-3 py-1 text-right text-gray-600">{{ buyer.total_bought }}€</td>
-            </tr>
-          </tbody>
-        </table>
+          type="doughnut" 
+          :data="data3" 
+          :chartOptions="chartOptionsDoughnut" 
+          class="w-full md:w-[20rem]" />
       </div>
-      <!-- Tabela top 5 users que mais gastaram brain_coins-->
-      <div class="bg-white shadow-md rounded-lg p-4 text-center flex flex-col justify-center w-full max-w-sm">
-        <h2 class="text-md font-bold text-black mb-4">Top 5 Spenders</h2>
-        <table class="table-auto w-full text-sm border-collapse">
-          <thead>
-            <tr class="bg-gray-100 text-gray-700">
-              <th class="px-3 py-1 border-r border-gray-300 text-left">Name</th>
-              <th class="px-3 py-1 text-right">Total Spent (brain coins)</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="spender in top5Spenders" :key="spender.name" class="odd:bg-white even:bg-gray-50">
-              <td class="px-3 py-1 border-r border-gray-300 text-left text-gray-600">{{ spender.name }}</td>
-              <td class="px-3 py-1 text-right text-gray-600">{{ parseInt(spender.total_spent) * -1.0}}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-    <div class="flex justify-center gap-4 mt-6">
-      <Chart 
-        type="doughnut" 
-        :data="data3" 
-        :chartOptions="chartOptionsDoughnut" 
-        class="w-full md:w-[20rem]" />
     </div>
   </div>
 </template>
