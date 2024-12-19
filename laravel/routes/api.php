@@ -24,7 +24,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/leaderboard/turns', [GameController::class, "getTopTenByTurns"]);
 
     Route::get('/games/singleplayer/{id}', [GameController::class, "getAllSingleGamesByUser"]);
-
+    Route::get('/games/multiplayer/{id}', [GameController::class, "getMultiplayerGamesByUser"]);
+    Route::get('/games/winner/{id}', [GameController::class, "getWinnerName"]);
     Route::get('/games', [GameController::class, 'index']);
     Route::get('/games/{game}', [GameController::class, 'show']);
     Route::post('/games', [GameController::class, 'store']);
@@ -42,7 +43,7 @@ Route::get('/users', [UserController::class, "index"]);
 Route::get('/users/{id}', [UserController::class, "show"]);
 
 //Games
-Route::get('/games/user/{userId}', [GameController::class, "getAllGamesByUser"]);
+
 
 
 Route::get('/leaderboard/time/global', [GameController::class, "getTopTenByTimeGlobal"]);
