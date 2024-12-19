@@ -150,10 +150,11 @@ class GameController extends Controller
         return response()->json(Game::where('type', 'M')->get(), 200);
     }
 
-    public function getAllGamesByUser($userId)
+    public function getMultiplayerGamesByUser($userId)
     {
         return response()->json(Game::where('created_user_id', $userId)
-            ->where('type', 'S')
+            ->where('games.type', 'M')
+           ->join('users', 'games.winner_user_id', '=', 'users.id')
             ->orderBy('ended_at', 'desc')
             ->get(), 200);
     }
@@ -163,6 +164,13 @@ class GameController extends Controller
         return response()->json(Game::where('created_user_id', $userId)
             ->where('type', 'S')
             ->orderBy('ended_at', 'desc')
+            ->get(), 200);
+    }
+    public function getWinnerName($userId)
+    {
+        return response()->json(Game::where('winner_user_id', $userId)
+            ->join('users', 'games.winner_user_id', '=', 'users.id')
+            ->select('users.name')
             ->get(), 200);
     }
 
