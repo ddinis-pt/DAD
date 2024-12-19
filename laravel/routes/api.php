@@ -27,10 +27,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/games/multiplayer/{id}', [GameController::class, "getMultiplayerGamesByUser"]);
     Route::get('/games/winner/{id}', [GameController::class, "getWinnerName"]);
     Route::get('/games', [GameController::class, 'index']);
-    Route::get('/games/{game}', [GameController::class, 'show']);
+    Route::get('/games/{id}', [GameController::class, 'show']);
     Route::post('/games', [GameController::class, 'store']);
-    Route::patch('/games/{game}', [GameController::class, 'updateStatus']);
-    Route::delete('/games/{game}', [GameController::class, 'destroy']);
+    Route::put('/games/{game_id}', [GameController::class, 'updateStatus']);
+    // Route::delete('/games/{game}', [GameController::class, 'destroy']);
 });
 
 //Auth

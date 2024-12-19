@@ -101,7 +101,7 @@
 #47 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #48 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #49 {main}
-"} 
+"}
 [2024-11-15 12:10:23] local.ERROR: No application encryption key has been specified. {"exception":"[object] (Illuminate\\Encryption\\MissingAppKeyException(code: 0): No application encryption key has been specified. at /var/www/html/vendor/laravel/framework/src/Illuminate/Encryption/EncryptionServiceProvider.php:83)
 [stacktrace]
 #0 /var/www/html/vendor/laravel/framework/src/Illuminate/Support/helpers.php(380): Illuminate\\Encryption\\EncryptionServiceProvider->Illuminate\\Encryption\\{closure}()
@@ -151,7 +151,7 @@
 #44 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #45 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #46 {main}
-"} 
+"}
 [2024-11-15 12:10:24] local.ERROR: No application encryption key has been specified. {"exception":"[object] (Illuminate\\Encryption\\MissingAppKeyException(code: 0): No application encryption key has been specified. at /var/www/html/vendor/laravel/framework/src/Illuminate/Encryption/EncryptionServiceProvider.php:83)
 [stacktrace]
 #0 /var/www/html/vendor/laravel/framework/src/Illuminate/Support/helpers.php(380): Illuminate\\Encryption\\EncryptionServiceProvider->Illuminate\\Encryption\\{closure}()
@@ -176,7 +176,7 @@
 #19 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #20 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #21 {main}
-"} 
+"}
 [2024-11-15 12:11:48] local.ERROR: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'laravel.sessions' doesn't exist (Connection: mysql, SQL: select * from `sessions` where `id` = O1QNTjrsggcCeSqRERTt9dUmYrPXeYTJs3mAisJI limit 1) {"exception":"[object] (Illuminate\\Database\\QueryException(code: 42S02): SQLSTATE[42S02]: Base table or view not found: 1146 Table 'laravel.sessions' doesn't exist (Connection: mysql, SQL: select * from `sessions` where `id` = O1QNTjrsggcCeSqRERTt9dUmYrPXeYTJs3mAisJI limit 1) at /var/www/html/vendor/laravel/framework/src/Illuminate/Database/Connection.php:825)
 [stacktrace]
 #0 /var/www/html/vendor/laravel/framework/src/Illuminate/Database/Connection.php(779): Illuminate\\Database\\Connection->runQueryCallback()
@@ -288,7 +288,7 @@
 #51 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #52 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #53 {main}
-"} 
+"}
 [2024-11-15 12:12:30] local.ERROR: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'laravel.personal_access_tokens' doesn't exist (Connection: mysql, SQL: delete from `personal_access_tokens` where `expires_at` < 2024-11-15 10:12:30) {"exception":"[object] (Illuminate\\Database\\QueryException(code: 42S02): SQLSTATE[42S02]: Base table or view not found: 1146 Table 'laravel.personal_access_tokens' doesn't exist (Connection: mysql, SQL: delete from `personal_access_tokens` where `expires_at` < 2024-11-15 10:12:30) at /var/www/html/vendor/laravel/framework/src/Illuminate/Database/Connection.php:825)
 [stacktrace]
 #0 /var/www/html/vendor/laravel/framework/src/Illuminate/Database/Connection.php(779): Illuminate\\Database\\Connection->runQueryCallback()
@@ -392,7 +392,7 @@
 #47 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #48 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #49 {main}
-"} 
+"}
 [2024-11-19 18:52:50] local.ERROR: Symfony\Component\HttpFoundation\Response::setContent(): Argument #1 ($content) must be of type ?string, stdClass given, called in /var/www/html/vendor/laravel/framework/src/Illuminate/Http/Response.php on line 73 {"exception":"[object] (TypeError(code: 0): Symfony\\Component\\HttpFoundation\\Response::setContent(): Argument #1 ($content) must be of type ?string, stdClass given, called in /var/www/html/vendor/laravel/framework/src/Illuminate/Http/Response.php on line 73 at /var/www/html/vendor/symfony/http-foundation/Response.php:418)
 [stacktrace]
 #0 /var/www/html/vendor/laravel/framework/src/Illuminate/Http/Response.php(73): Symfony\\Component\\HttpFoundation\\Response->setContent()
@@ -442,7 +442,7 @@
 #44 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #45 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #46 {main}
-"} 
+"}
 [2024-11-19 18:52:56] local.ERROR: Symfony\Component\HttpFoundation\Response::setContent(): Argument #1 ($content) must be of type ?string, stdClass given, called in /var/www/html/vendor/laravel/framework/src/Illuminate/Http/Response.php on line 73 {"exception":"[object] (TypeError(code: 0): Symfony\\Component\\HttpFoundation\\Response::setContent(): Argument #1 ($content) must be of type ?string, stdClass given, called in /var/www/html/vendor/laravel/framework/src/Illuminate/Http/Response.php on line 73 at /var/www/html/vendor/symfony/http-foundation/Response.php:418)
 [stacktrace]
 #0 /var/www/html/vendor/laravel/framework/src/Illuminate/Http/Response.php(73): Symfony\\Component\\HttpFoundation\\Response->setContent()
@@ -492,7 +492,7 @@
 #44 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #45 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #46 {main}
-"} 
+"}
 [2024-11-19 18:53:06] local.ERROR: Symfony\Component\HttpFoundation\Response::setContent(): Argument #1 ($content) must be of type ?string, stdClass given, called in /var/www/html/vendor/laravel/framework/src/Illuminate/Http/Response.php on line 73 {"exception":"[object] (TypeError(code: 0): Symfony\\Component\\HttpFoundation\\Response::setContent(): Argument #1 ($content) must be of type ?string, stdClass given, called in /var/www/html/vendor/laravel/framework/src/Illuminate/Http/Response.php on line 73 at /var/www/html/vendor/symfony/http-foundation/Response.php:418)
 [stacktrace]
 #0 /var/www/html/vendor/laravel/framework/src/Illuminate/Http/Response.php(73): Symfony\\Component\\HttpFoundation\\Response->setContent()
@@ -542,7 +542,7 @@
 #44 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #45 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #46 {main}
-"} 
+"}
 [2024-11-30 10:08:42] local.ERROR: App\Http\Controllers\AuthController::revokeCurrentToken(): Argument #1 ($user) must be of type App\Models\User, null given, called in /var/www/html/app/Http/Controllers/AuthController.php on line 42 {"exception":"[object] (TypeError(code: 0): App\\Http\\Controllers\\AuthController::revokeCurrentToken(): Argument #1 ($user) must be of type App\\Models\\User, null given, called in /var/www/html/app/Http/Controllers/AuthController.php on line 42 at /var/www/html/app/Http/Controllers/AuthController.php:22)
 [stacktrace]
 #0 /var/www/html/app/Http/Controllers/AuthController.php(42): App\\Http\\Controllers\\AuthController->revokeCurrentToken()
@@ -588,7 +588,7 @@
 #40 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #41 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #42 {main}
-"} 
+"}
 [2024-11-30 12:19:52] local.ERROR: App\Http\Controllers\AuthController::revokeCurrentToken(): Argument #1 ($user) must be of type App\Models\User, null given, called in /var/www/html/app/Http/Controllers/AuthController.php on line 42 {"exception":"[object] (TypeError(code: 0): App\\Http\\Controllers\\AuthController::revokeCurrentToken(): Argument #1 ($user) must be of type App\\Models\\User, null given, called in /var/www/html/app/Http/Controllers/AuthController.php on line 42 at /var/www/html/app/Http/Controllers/AuthController.php:22)
 [stacktrace]
 #0 /var/www/html/app/Http/Controllers/AuthController.php(42): App\\Http\\Controllers\\AuthController->revokeCurrentToken()
@@ -634,7 +634,7 @@
 #40 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #41 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #42 {main}
-"} 
+"}
 [2024-11-30 12:20:46] local.ERROR: App\Http\Controllers\AuthController::revokeCurrentToken(): Argument #1 ($user) must be of type App\Models\User, null given, called in /var/www/html/app/Http/Controllers/AuthController.php on line 42 {"exception":"[object] (TypeError(code: 0): App\\Http\\Controllers\\AuthController::revokeCurrentToken(): Argument #1 ($user) must be of type App\\Models\\User, null given, called in /var/www/html/app/Http/Controllers/AuthController.php on line 42 at /var/www/html/app/Http/Controllers/AuthController.php:22)
 [stacktrace]
 #0 /var/www/html/app/Http/Controllers/AuthController.php(42): App\\Http\\Controllers\\AuthController->revokeCurrentToken()
@@ -680,7 +680,7 @@
 #40 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #41 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #42 {main}
-"} 
+"}
 [2024-11-30 12:21:07] local.ERROR: App\Http\Controllers\AuthController::revokeCurrentToken(): Argument #1 ($user) must be of type App\Models\User, null given, called in /var/www/html/app/Http/Controllers/AuthController.php on line 42 {"exception":"[object] (TypeError(code: 0): App\\Http\\Controllers\\AuthController::revokeCurrentToken(): Argument #1 ($user) must be of type App\\Models\\User, null given, called in /var/www/html/app/Http/Controllers/AuthController.php on line 42 at /var/www/html/app/Http/Controllers/AuthController.php:22)
 [stacktrace]
 #0 /var/www/html/app/Http/Controllers/AuthController.php(42): App\\Http\\Controllers\\AuthController->revokeCurrentToken()
@@ -726,7 +726,7 @@
 #40 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #41 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #42 {main}
-"} 
+"}
 [2024-11-30 12:22:23] local.ERROR: App\Http\Controllers\AuthController::revokeCurrentToken(): Argument #1 ($user) must be of type App\Models\User, null given, called in /var/www/html/app/Http/Controllers/AuthController.php on line 42 {"exception":"[object] (TypeError(code: 0): App\\Http\\Controllers\\AuthController::revokeCurrentToken(): Argument #1 ($user) must be of type App\\Models\\User, null given, called in /var/www/html/app/Http/Controllers/AuthController.php on line 42 at /var/www/html/app/Http/Controllers/AuthController.php:22)
 [stacktrace]
 #0 /var/www/html/app/Http/Controllers/AuthController.php(42): App\\Http\\Controllers\\AuthController->revokeCurrentToken()
@@ -772,7 +772,7 @@
 #40 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #41 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #42 {main}
-"} 
+"}
 [2024-11-30 12:38:44] local.ERROR: App\Http\Controllers\AuthController::revokeCurrentToken(): Argument #1 ($user) must be of type App\Models\User, null given, called in /var/www/html/app/Http/Controllers/AuthController.php on line 42 {"exception":"[object] (TypeError(code: 0): App\\Http\\Controllers\\AuthController::revokeCurrentToken(): Argument #1 ($user) must be of type App\\Models\\User, null given, called in /var/www/html/app/Http/Controllers/AuthController.php on line 42 at /var/www/html/app/Http/Controllers/AuthController.php:22)
 [stacktrace]
 #0 /var/www/html/app/Http/Controllers/AuthController.php(42): App\\Http\\Controllers\\AuthController->revokeCurrentToken()
@@ -818,7 +818,7 @@
 #40 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #41 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #42 {main}
-"} 
+"}
 [2024-11-30 12:50:01] local.ERROR: App\Http\Controllers\AuthController::revokeCurrentToken(): Argument #1 ($user) must be of type App\Models\User, null given, called in /var/www/html/app/Http/Controllers/AuthController.php on line 42 {"exception":"[object] (TypeError(code: 0): App\\Http\\Controllers\\AuthController::revokeCurrentToken(): Argument #1 ($user) must be of type App\\Models\\User, null given, called in /var/www/html/app/Http/Controllers/AuthController.php on line 42 at /var/www/html/app/Http/Controllers/AuthController.php:22)
 [stacktrace]
 #0 /var/www/html/app/Http/Controllers/AuthController.php(42): App\\Http\\Controllers\\AuthController->revokeCurrentToken()
@@ -864,7 +864,7 @@
 #40 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #41 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #42 {main}
-"} 
+"}
 [2024-11-30 12:52:08] local.ERROR: App\Http\Controllers\AuthController::revokeCurrentToken(): Argument #1 ($user) must be of type App\Models\User, null given, called in /var/www/html/app/Http/Controllers/AuthController.php on line 42 {"exception":"[object] (TypeError(code: 0): App\\Http\\Controllers\\AuthController::revokeCurrentToken(): Argument #1 ($user) must be of type App\\Models\\User, null given, called in /var/www/html/app/Http/Controllers/AuthController.php on line 42 at /var/www/html/app/Http/Controllers/AuthController.php:22)
 [stacktrace]
 #0 /var/www/html/app/Http/Controllers/AuthController.php(42): App\\Http\\Controllers\\AuthController->revokeCurrentToken()
@@ -910,7 +910,7 @@
 #40 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #41 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #42 {main}
-"} 
+"}
 [2024-11-30 12:56:52] local.ERROR: SQLSTATE[22007]: Invalid datetime format: 1292 Incorrect datetime value: '2024-11-30T12:56:45.469Z' for column 'began_at' at row 1 (Connection: mysql, SQL: insert into `games` (`created_user_id`, `type`, `status`, `began_at`, `ended_at`, `total_time`, `board_id`) values (153, S, E, 2024-11-30T12:56:45.469Z, 2024-11-30T12:56:52.052Z, 2, 1)) {"exception":"[object] (Illuminate\\Database\\QueryException(code: 22007): SQLSTATE[22007]: Invalid datetime format: 1292 Incorrect datetime value: '2024-11-30T12:56:45.469Z' for column 'began_at' at row 1 (Connection: mysql, SQL: insert into `games` (`created_user_id`, `type`, `status`, `began_at`, `ended_at`, `total_time`, `board_id`) values (153, S, E, 2024-11-30T12:56:45.469Z, 2024-11-30T12:56:52.052Z, 2, 1)) at /var/www/html/vendor/laravel/framework/src/Illuminate/Database/Connection.php:825)
 [stacktrace]
 #0 /var/www/html/vendor/laravel/framework/src/Illuminate/Database/Connection.php(779): Illuminate\\Database\\Connection->runQueryCallback()
@@ -1012,7 +1012,7 @@
 #46 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #47 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #48 {main}
-"} 
+"}
 [2024-11-30 12:58:26] local.ERROR: Method Illuminate\Validation\Validator::validateDatetime does not exist. {"exception":"[object] (BadMethodCallException(code: 0): Method Illuminate\\Validation\\Validator::validateDatetime does not exist. at /var/www/html/vendor/laravel/framework/src/Illuminate/Validation/Validator.php:1638)
 [stacktrace]
 #0 /var/www/html/vendor/laravel/framework/src/Illuminate/Validation/Validator.php(664): Illuminate\\Validation\\Validator->__call()
@@ -1073,7 +1073,7 @@
 #55 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #56 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #57 {main}
-"} 
+"}
 [2024-11-30 13:00:42] local.ERROR: Method Illuminate\Validation\Validator::validateDatetime does not exist. {"exception":"[object] (BadMethodCallException(code: 0): Method Illuminate\\Validation\\Validator::validateDatetime does not exist. at /var/www/html/vendor/laravel/framework/src/Illuminate/Validation/Validator.php:1638)
 [stacktrace]
 #0 /var/www/html/vendor/laravel/framework/src/Illuminate/Validation/Validator.php(664): Illuminate\\Validation\\Validator->__call()
@@ -1134,7 +1134,7 @@
 #55 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #56 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #57 {main}
-"} 
+"}
 [2024-11-30 15:45:38] local.ERROR: Method Illuminate\Validation\Validator::validateDatetime does not exist. {"exception":"[object] (BadMethodCallException(code: 0): Method Illuminate\\Validation\\Validator::validateDatetime does not exist. at /var/www/html/vendor/laravel/framework/src/Illuminate/Validation/Validator.php:1638)
 [stacktrace]
 #0 /var/www/html/vendor/laravel/framework/src/Illuminate/Validation/Validator.php(664): Illuminate\\Validation\\Validator->__call()
@@ -1195,7 +1195,7 @@
 #55 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #56 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #57 {main}
-"} 
+"}
 [2024-11-30 15:45:40] local.ERROR: App\Http\Controllers\AuthController::revokeCurrentToken(): Argument #1 ($user) must be of type App\Models\User, null given, called in /var/www/html/app/Http/Controllers/AuthController.php on line 42 {"exception":"[object] (TypeError(code: 0): App\\Http\\Controllers\\AuthController::revokeCurrentToken(): Argument #1 ($user) must be of type App\\Models\\User, null given, called in /var/www/html/app/Http/Controllers/AuthController.php on line 42 at /var/www/html/app/Http/Controllers/AuthController.php:22)
 [stacktrace]
 #0 /var/www/html/app/Http/Controllers/AuthController.php(42): App\\Http\\Controllers\\AuthController->revokeCurrentToken()
@@ -1241,7 +1241,7 @@
 #40 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #41 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #42 {main}
-"} 
+"}
 [2024-12-01 08:04:28] local.ERROR: Method Illuminate\Validation\Validator::validateDatetime does not exist. {"exception":"[object] (BadMethodCallException(code: 0): Method Illuminate\\Validation\\Validator::validateDatetime does not exist. at /var/www/html/vendor/laravel/framework/src/Illuminate/Validation/Validator.php:1638)
 [stacktrace]
 #0 /var/www/html/vendor/laravel/framework/src/Illuminate/Validation/Validator.php(664): Illuminate\\Validation\\Validator->__call()
@@ -1302,7 +1302,7 @@
 #55 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #56 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #57 {main}
-"} 
+"}
 [2024-12-01 08:13:57] local.ERROR: Method Illuminate\Validation\Validator::validateDatetime does not exist. {"exception":"[object] (BadMethodCallException(code: 0): Method Illuminate\\Validation\\Validator::validateDatetime does not exist. at /var/www/html/vendor/laravel/framework/src/Illuminate/Validation/Validator.php:1638)
 [stacktrace]
 #0 /var/www/html/vendor/laravel/framework/src/Illuminate/Validation/Validator.php(664): Illuminate\\Validation\\Validator->__call()
@@ -1363,7 +1363,7 @@
 #55 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #56 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #57 {main}
-"} 
+"}
 [2024-12-01 08:16:43] local.ERROR: App\Http\Controllers\AuthController::revokeCurrentToken(): Argument #1 ($user) must be of type App\Models\User, null given, called in /var/www/html/app/Http/Controllers/AuthController.php on line 42 {"exception":"[object] (TypeError(code: 0): App\\Http\\Controllers\\AuthController::revokeCurrentToken(): Argument #1 ($user) must be of type App\\Models\\User, null given, called in /var/www/html/app/Http/Controllers/AuthController.php on line 42 at /var/www/html/app/Http/Controllers/AuthController.php:22)
 [stacktrace]
 #0 /var/www/html/app/Http/Controllers/AuthController.php(42): App\\Http\\Controllers\\AuthController->revokeCurrentToken()
@@ -1409,7 +1409,7 @@
 #40 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #41 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #42 {main}
-"} 
+"}
 [2024-12-01 08:17:28] local.ERROR: Method Illuminate\Validation\Validator::validateDatetime does not exist. {"exception":"[object] (BadMethodCallException(code: 0): Method Illuminate\\Validation\\Validator::validateDatetime does not exist. at /var/www/html/vendor/laravel/framework/src/Illuminate/Validation/Validator.php:1638)
 [stacktrace]
 #0 /var/www/html/vendor/laravel/framework/src/Illuminate/Validation/Validator.php(664): Illuminate\\Validation\\Validator->__call()
@@ -1470,12 +1470,12 @@
 #55 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #56 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #57 {main}
-"} 
-[2024-12-01 08:18:42] local.INFO: Validated data: {"created_user_id":353,"type":"S","status":"E","began_at":"2024-12-01T08:18:37.921Z","ended_at":"2024-12-01T08:18:42.488Z","total_time":3,"board_id":1} 
-[2024-12-01 08:18:42] local.ERROR: Error storing game: {"error":"SQLSTATE[22007]: Invalid datetime format: 1292 Incorrect datetime value: '2024-12-01T08:18:37.921Z' for column 'began_at' at row 1 (Connection: mysql, SQL: insert into `games` (`created_user_id`, `type`, `status`, `began_at`, `ended_at`, `total_time`, `board_id`) values (353, S, E, 2024-12-01T08:18:37.921Z, 2024-12-01T08:18:42.488Z, 3, 1))"} 
-[2024-12-01 08:20:18] local.INFO: Validated data: {"created_user_id":353,"type":"S","status":"E","began_at":"2024-12-01T08:20:14.431Z","ended_at":"2024-12-01T08:20:18.603Z","total_time":3,"board_id":1} 
-[2024-12-01 08:20:18] local.ERROR: Error storing game: {"error":"SQLSTATE[22007]: Invalid datetime format: 1292 Incorrect datetime value: '2024-12-01T08:20:14.431Z' for column 'began_at' at row 1 (Connection: mysql, SQL: insert into `games` (`created_user_id`, `type`, `status`, `began_at`, `ended_at`, `total_time`, `board_id`) values (353, S, E, 2024-12-01T08:20:14.431Z, 2024-12-01T08:20:18.603Z, 3, 1))"} 
-[2024-12-01 08:20:52] local.INFO: Validated data: {"created_user_id":353,"type":"S","status":"E","began_at":"2024-12-01 08:20:47","ended_at":"2024-12-01 08:20:52","total_time":3,"board_id":1} 
+"}
+[2024-12-01 08:18:42] local.INFO: Validated data: {"created_user_id":353,"type":"S","status":"E","began_at":"2024-12-01T08:18:37.921Z","ended_at":"2024-12-01T08:18:42.488Z","total_time":3,"board_id":1}
+[2024-12-01 08:18:42] local.ERROR: Error storing game: {"error":"SQLSTATE[22007]: Invalid datetime format: 1292 Incorrect datetime value: '2024-12-01T08:18:37.921Z' for column 'began_at' at row 1 (Connection: mysql, SQL: insert into `games` (`created_user_id`, `type`, `status`, `began_at`, `ended_at`, `total_time`, `board_id`) values (353, S, E, 2024-12-01T08:18:37.921Z, 2024-12-01T08:18:42.488Z, 3, 1))"}
+[2024-12-01 08:20:18] local.INFO: Validated data: {"created_user_id":353,"type":"S","status":"E","began_at":"2024-12-01T08:20:14.431Z","ended_at":"2024-12-01T08:20:18.603Z","total_time":3,"board_id":1}
+[2024-12-01 08:20:18] local.ERROR: Error storing game: {"error":"SQLSTATE[22007]: Invalid datetime format: 1292 Incorrect datetime value: '2024-12-01T08:20:14.431Z' for column 'began_at' at row 1 (Connection: mysql, SQL: insert into `games` (`created_user_id`, `type`, `status`, `began_at`, `ended_at`, `total_time`, `board_id`) values (353, S, E, 2024-12-01T08:20:14.431Z, 2024-12-01T08:20:18.603Z, 3, 1))"}
+[2024-12-01 08:20:52] local.INFO: Validated data: {"created_user_id":353,"type":"S","status":"E","began_at":"2024-12-01 08:20:47","ended_at":"2024-12-01 08:20:52","total_time":3,"board_id":1}
 [2024-12-01 08:23:45] local.ERROR: App\Http\Controllers\AuthController::revokeCurrentToken(): Argument #1 ($user) must be of type App\Models\User, null given, called in /var/www/html/app/Http/Controllers/AuthController.php on line 42 {"exception":"[object] (TypeError(code: 0): App\\Http\\Controllers\\AuthController::revokeCurrentToken(): Argument #1 ($user) must be of type App\\Models\\User, null given, called in /var/www/html/app/Http/Controllers/AuthController.php on line 42 at /var/www/html/app/Http/Controllers/AuthController.php:22)
 [stacktrace]
 #0 /var/www/html/app/Http/Controllers/AuthController.php(42): App\\Http\\Controllers\\AuthController->revokeCurrentToken()
@@ -1521,8 +1521,8 @@
 #40 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #41 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #42 {main}
-"} 
-[2024-12-01 08:24:00] local.INFO: Validated data: {"created_user_id":259,"type":"S","status":"E","began_at":"2024-12-01 08:23:54","ended_at":"2024-12-01 08:24:00","total_time":4,"board_id":1} 
+"}
+[2024-12-01 08:24:00] local.INFO: Validated data: {"created_user_id":259,"type":"S","status":"E","began_at":"2024-12-01 08:23:54","ended_at":"2024-12-01 08:24:00","total_time":4,"board_id":1}
 [2024-12-01 08:47:02] local.ERROR: App\Http\Controllers\AuthController::revokeCurrentToken(): Argument #1 ($user) must be of type App\Models\User, null given, called in /var/www/html/app/Http/Controllers/AuthController.php on line 42 {"exception":"[object] (TypeError(code: 0): App\\Http\\Controllers\\AuthController::revokeCurrentToken(): Argument #1 ($user) must be of type App\\Models\\User, null given, called in /var/www/html/app/Http/Controllers/AuthController.php on line 42 at /var/www/html/app/Http/Controllers/AuthController.php:22)
 [stacktrace]
 #0 /var/www/html/app/Http/Controllers/AuthController.php(42): App\\Http\\Controllers\\AuthController->revokeCurrentToken()
@@ -1568,7 +1568,7 @@
 #40 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #41 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #42 {main}
-"} 
+"}
 [2024-12-01 08:48:34] local.ERROR: App\Http\Controllers\AuthController::revokeCurrentToken(): Argument #1 ($user) must be of type App\Models\User, null given, called in /var/www/html/app/Http/Controllers/AuthController.php on line 42 {"exception":"[object] (TypeError(code: 0): App\\Http\\Controllers\\AuthController::revokeCurrentToken(): Argument #1 ($user) must be of type App\\Models\\User, null given, called in /var/www/html/app/Http/Controllers/AuthController.php on line 42 at /var/www/html/app/Http/Controllers/AuthController.php:22)
 [stacktrace]
 #0 /var/www/html/app/Http/Controllers/AuthController.php(42): App\\Http\\Controllers\\AuthController->revokeCurrentToken()
@@ -1614,7 +1614,7 @@
 #40 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #41 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #42 {main}
-"} 
+"}
 [2024-12-01 08:48:41] local.ERROR: App\Http\Controllers\AuthController::revokeCurrentToken(): Argument #1 ($user) must be of type App\Models\User, null given, called in /var/www/html/app/Http/Controllers/AuthController.php on line 42 {"exception":"[object] (TypeError(code: 0): App\\Http\\Controllers\\AuthController::revokeCurrentToken(): Argument #1 ($user) must be of type App\\Models\\User, null given, called in /var/www/html/app/Http/Controllers/AuthController.php on line 42 at /var/www/html/app/Http/Controllers/AuthController.php:22)
 [stacktrace]
 #0 /var/www/html/app/Http/Controllers/AuthController.php(42): App\\Http\\Controllers\\AuthController->revokeCurrentToken()
@@ -1660,7 +1660,7 @@
 #40 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #41 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #42 {main}
-"} 
+"}
 [2024-12-01 08:58:59] local.ERROR: App\Http\Controllers\AuthController::revokeCurrentToken(): Argument #1 ($user) must be of type App\Models\User, null given, called in /var/www/html/app/Http/Controllers/AuthController.php on line 42 {"exception":"[object] (TypeError(code: 0): App\\Http\\Controllers\\AuthController::revokeCurrentToken(): Argument #1 ($user) must be of type App\\Models\\User, null given, called in /var/www/html/app/Http/Controllers/AuthController.php on line 42 at /var/www/html/app/Http/Controllers/AuthController.php:22)
 [stacktrace]
 #0 /var/www/html/app/Http/Controllers/AuthController.php(42): App\\Http\\Controllers\\AuthController->revokeCurrentToken()
@@ -1706,7 +1706,7 @@
 #40 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #41 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #42 {main}
-"} 
+"}
 [2024-12-01 09:18:02] local.ERROR: App\Http\Controllers\AuthController::revokeCurrentToken(): Argument #1 ($user) must be of type App\Models\User, null given, called in /var/www/html/app/Http/Controllers/AuthController.php on line 42 {"exception":"[object] (TypeError(code: 0): App\\Http\\Controllers\\AuthController::revokeCurrentToken(): Argument #1 ($user) must be of type App\\Models\\User, null given, called in /var/www/html/app/Http/Controllers/AuthController.php on line 42 at /var/www/html/app/Http/Controllers/AuthController.php:22)
 [stacktrace]
 #0 /var/www/html/app/Http/Controllers/AuthController.php(42): App\\Http\\Controllers\\AuthController->revokeCurrentToken()
@@ -1752,7 +1752,7 @@
 #40 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #41 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #42 {main}
-"} 
+"}
 [2024-12-01 09:25:05] local.ERROR: Call to undefined method Illuminate\Database\Eloquent\Builder::andWhere() {"exception":"[object] (BadMethodCallException(code: 0): Call to undefined method Illuminate\\Database\\Eloquent\\Builder::andWhere() at /var/www/html/vendor/laravel/framework/src/Illuminate/Support/Traits/ForwardsCalls.php:67)
 [stacktrace]
 #0 /var/www/html/vendor/laravel/framework/src/Illuminate/Support/Traits/ForwardsCalls.php(36): Illuminate\\Database\\Eloquent\\Builder::throwBadMethodCallException()
@@ -1800,7 +1800,7 @@
 #42 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #43 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #44 {main}
-"} 
+"}
 [2024-12-02 18:03:54] local.ERROR: Class "App\Http\Requests\UpdateRequest" does not exist {"exception":"[object] (ReflectionException(code: -1): Class \"App\\Http\\Requests\\UpdateRequest\" does not exist at /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/ResolvesRouteDependencies.php:88)
 [stacktrace]
 #0 /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/ResolvesRouteDependencies.php(88): ReflectionClass->__construct()
@@ -1849,7 +1849,7 @@
 #43 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #44 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #45 {main}
-"} 
+"}
 [2024-12-02 18:04:11] local.ERROR: Class "App\Http\Controllers\UpdateRequest" does not exist {"exception":"[object] (ReflectionException(code: -1): Class \"App\\Http\\Controllers\\UpdateRequest\" does not exist at /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/ResolvesRouteDependencies.php:88)
 [stacktrace]
 #0 /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/ResolvesRouteDependencies.php(88): ReflectionClass->__construct()
@@ -1898,7 +1898,7 @@
 #43 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #44 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #45 {main}
-"} 
+"}
 [2024-12-02 18:04:47] local.ERROR: Method Illuminate\Validation\Validator::validateNullale does not exist. {"exception":"[object] (BadMethodCallException(code: 0): Method Illuminate\\Validation\\Validator::validateNullale does not exist. at /var/www/html/vendor/laravel/framework/src/Illuminate/Validation/Validator.php:1638)
 [stacktrace]
 #0 /var/www/html/vendor/laravel/framework/src/Illuminate/Validation/Validator.php(664): Illuminate\\Validation\\Validator->__call()
@@ -1959,7 +1959,7 @@
 #55 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #56 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #57 {main}
-"} 
+"}
 [2024-12-02 18:16:01] local.ERROR: Call to undefined method App\Http\Controllers\UserController::destroy() {"exception":"[object] (Error(code: 0): Call to undefined method App\\Http\\Controllers\\UserController::destroy() at /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/ControllerDispatcher.php:46)
 [stacktrace]
 #0 /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/Route.php(264): Illuminate\\Routing\\ControllerDispatcher->dispatch()
@@ -2003,7 +2003,7 @@
 #38 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #39 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #40 {main}
-"} 
+"}
 [2024-12-02 18:21:40] local.ERROR: Class "App\Http\Controllers\UpdateUserRequest" does not exist {"userId":507,"exception":"[object] (ReflectionException(code: -1): Class \"App\\Http\\Controllers\\UpdateUserRequest\" does not exist at /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/ResolvesRouteDependencies.php:88)
 [stacktrace]
 #0 /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/ResolvesRouteDependencies.php(88): ReflectionClass->__construct()
@@ -2054,7 +2054,7 @@
 #45 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #46 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #47 {main}
-"} 
+"}
 [2024-12-02 18:27:21] local.ERROR: Attempt to read property "id" on null {"exception":"[object] (ErrorException(code: 0): Attempt to read property \"id\" on null at /var/www/html/app/Http/Controllers/UserController.php:35)
 [stacktrace]
 #0 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(256): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError()
@@ -2101,7 +2101,7 @@
 #41 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #42 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #43 {main}
-"} 
+"}
 [2024-12-02 18:34:53] local.ERROR: Attempt to read property "id" on null {"exception":"[object] (ErrorException(code: 0): Attempt to read property \"id\" on null at /var/www/html/app/Http/Controllers/UserController.php:36)
 [stacktrace]
 #0 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(256): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError()
@@ -2148,7 +2148,7 @@
 #41 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #42 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #43 {main}
-"} 
+"}
 [2024-12-02 18:36:10] local.ERROR: Attempt to read property "id" on null {"exception":"[object] (ErrorException(code: 0): Attempt to read property \"id\" on null at /var/www/html/app/Http/Controllers/UserController.php:36)
 [stacktrace]
 #0 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(256): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError()
@@ -2195,7 +2195,7 @@
 #41 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #42 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #43 {main}
-"} 
+"}
 [2024-12-02 18:36:10] local.ERROR: Attempt to read property "id" on null {"exception":"[object] (ErrorException(code: 0): Attempt to read property \"id\" on null at /var/www/html/app/Http/Controllers/UserController.php:36)
 [stacktrace]
 #0 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(256): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError()
@@ -2242,7 +2242,7 @@
 #41 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #42 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #43 {main}
-"} 
+"}
 [2024-12-02 18:36:11] local.ERROR: Attempt to read property "id" on null {"exception":"[object] (ErrorException(code: 0): Attempt to read property \"id\" on null at /var/www/html/app/Http/Controllers/UserController.php:36)
 [stacktrace]
 #0 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(256): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError()
@@ -2289,7 +2289,7 @@
 #41 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #42 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #43 {main}
-"} 
+"}
 [2024-12-02 18:38:41] local.ERROR: Attempt to read property "id" on null {"exception":"[object] (ErrorException(code: 0): Attempt to read property \"id\" on null at /var/www/html/app/Http/Controllers/UserController.php:36)
 [stacktrace]
 #0 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(256): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError()
@@ -2336,7 +2336,7 @@
 #41 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #42 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #43 {main}
-"} 
+"}
 [2024-12-02 18:38:42] local.ERROR: Attempt to read property "id" on null {"exception":"[object] (ErrorException(code: 0): Attempt to read property \"id\" on null at /var/www/html/app/Http/Controllers/UserController.php:36)
 [stacktrace]
 #0 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(256): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError()
@@ -2383,7 +2383,7 @@
 #41 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #42 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #43 {main}
-"} 
+"}
 [2024-12-02 18:38:42] local.ERROR: Attempt to read property "id" on null {"exception":"[object] (ErrorException(code: 0): Attempt to read property \"id\" on null at /var/www/html/app/Http/Controllers/UserController.php:36)
 [stacktrace]
 #0 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(256): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError()
@@ -2430,7 +2430,7 @@
 #41 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #42 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #43 {main}
-"} 
+"}
 [2024-12-02 18:38:42] local.ERROR: Attempt to read property "id" on null {"exception":"[object] (ErrorException(code: 0): Attempt to read property \"id\" on null at /var/www/html/app/Http/Controllers/UserController.php:36)
 [stacktrace]
 #0 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(256): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError()
@@ -2477,7 +2477,7 @@
 #41 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #42 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #43 {main}
-"} 
+"}
 [2024-12-02 18:38:42] local.ERROR: Attempt to read property "id" on null {"exception":"[object] (ErrorException(code: 0): Attempt to read property \"id\" on null at /var/www/html/app/Http/Controllers/UserController.php:36)
 [stacktrace]
 #0 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(256): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError()
@@ -2524,7 +2524,7 @@
 #41 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #42 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #43 {main}
-"} 
+"}
 [2024-12-02 18:38:44] local.ERROR: Attempt to read property "id" on null {"exception":"[object] (ErrorException(code: 0): Attempt to read property \"id\" on null at /var/www/html/app/Http/Controllers/UserController.php:36)
 [stacktrace]
 #0 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(256): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError()
@@ -2571,7 +2571,7 @@
 #41 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #42 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #43 {main}
-"} 
+"}
 [2024-12-02 18:38:45] local.ERROR: Attempt to read property "id" on null {"exception":"[object] (ErrorException(code: 0): Attempt to read property \"id\" on null at /var/www/html/app/Http/Controllers/UserController.php:36)
 [stacktrace]
 #0 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(256): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError()
@@ -2618,7 +2618,7 @@
 #41 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #42 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #43 {main}
-"} 
+"}
 [2024-12-02 18:38:45] local.ERROR: Attempt to read property "id" on null {"exception":"[object] (ErrorException(code: 0): Attempt to read property \"id\" on null at /var/www/html/app/Http/Controllers/UserController.php:36)
 [stacktrace]
 #0 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(256): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError()
@@ -2665,7 +2665,7 @@
 #41 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #42 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #43 {main}
-"} 
+"}
 [2024-12-02 18:38:45] local.ERROR: Attempt to read property "id" on null {"exception":"[object] (ErrorException(code: 0): Attempt to read property \"id\" on null at /var/www/html/app/Http/Controllers/UserController.php:36)
 [stacktrace]
 #0 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(256): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError()
@@ -2712,7 +2712,7 @@
 #41 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #42 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #43 {main}
-"} 
+"}
 [2024-12-02 18:38:45] local.ERROR: Attempt to read property "id" on null {"exception":"[object] (ErrorException(code: 0): Attempt to read property \"id\" on null at /var/www/html/app/Http/Controllers/UserController.php:36)
 [stacktrace]
 #0 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(256): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError()
@@ -2759,7 +2759,7 @@
 #41 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #42 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #43 {main}
-"} 
+"}
 [2024-12-02 18:38:46] local.ERROR: Attempt to read property "id" on null {"exception":"[object] (ErrorException(code: 0): Attempt to read property \"id\" on null at /var/www/html/app/Http/Controllers/UserController.php:36)
 [stacktrace]
 #0 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(256): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError()
@@ -2806,7 +2806,7 @@
 #41 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #42 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #43 {main}
-"} 
+"}
 [2024-12-02 18:38:46] local.ERROR: Attempt to read property "id" on null {"exception":"[object] (ErrorException(code: 0): Attempt to read property \"id\" on null at /var/www/html/app/Http/Controllers/UserController.php:36)
 [stacktrace]
 #0 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(256): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError()
@@ -2853,7 +2853,7 @@
 #41 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #42 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #43 {main}
-"} 
+"}
 [2024-12-02 18:38:46] local.ERROR: Attempt to read property "id" on null {"exception":"[object] (ErrorException(code: 0): Attempt to read property \"id\" on null at /var/www/html/app/Http/Controllers/UserController.php:36)
 [stacktrace]
 #0 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(256): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError()
@@ -2900,7 +2900,7 @@
 #41 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #42 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #43 {main}
-"} 
+"}
 [2024-12-02 18:38:46] local.ERROR: Attempt to read property "id" on null {"exception":"[object] (ErrorException(code: 0): Attempt to read property \"id\" on null at /var/www/html/app/Http/Controllers/UserController.php:36)
 [stacktrace]
 #0 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(256): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError()
@@ -2947,7 +2947,7 @@
 #41 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #42 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #43 {main}
-"} 
+"}
 [2024-12-02 18:38:46] local.ERROR: Attempt to read property "id" on null {"exception":"[object] (ErrorException(code: 0): Attempt to read property \"id\" on null at /var/www/html/app/Http/Controllers/UserController.php:36)
 [stacktrace]
 #0 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(256): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError()
@@ -2994,7 +2994,7 @@
 #41 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #42 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #43 {main}
-"} 
+"}
 [2024-12-02 18:38:46] local.ERROR: Attempt to read property "id" on null {"exception":"[object] (ErrorException(code: 0): Attempt to read property \"id\" on null at /var/www/html/app/Http/Controllers/UserController.php:36)
 [stacktrace]
 #0 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(256): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError()
@@ -3041,7 +3041,7 @@
 #41 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #42 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #43 {main}
-"} 
+"}
 [2024-12-02 18:38:46] local.ERROR: Attempt to read property "id" on null {"exception":"[object] (ErrorException(code: 0): Attempt to read property \"id\" on null at /var/www/html/app/Http/Controllers/UserController.php:36)
 [stacktrace]
 #0 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(256): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError()
@@ -3088,7 +3088,7 @@
 #41 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #42 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #43 {main}
-"} 
+"}
 [2024-12-02 18:38:47] local.ERROR: Attempt to read property "id" on null {"exception":"[object] (ErrorException(code: 0): Attempt to read property \"id\" on null at /var/www/html/app/Http/Controllers/UserController.php:36)
 [stacktrace]
 #0 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(256): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError()
@@ -3135,7 +3135,7 @@
 #41 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #42 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #43 {main}
-"} 
+"}
 [2024-12-02 18:38:47] local.ERROR: Attempt to read property "id" on null {"exception":"[object] (ErrorException(code: 0): Attempt to read property \"id\" on null at /var/www/html/app/Http/Controllers/UserController.php:36)
 [stacktrace]
 #0 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(256): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError()
@@ -3182,7 +3182,7 @@
 #41 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #42 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #43 {main}
-"} 
+"}
 [2024-12-02 18:38:47] local.ERROR: Attempt to read property "id" on null {"exception":"[object] (ErrorException(code: 0): Attempt to read property \"id\" on null at /var/www/html/app/Http/Controllers/UserController.php:36)
 [stacktrace]
 #0 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(256): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError()
@@ -3229,7 +3229,7 @@
 #41 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #42 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #43 {main}
-"} 
+"}
 [2024-12-02 18:38:47] local.ERROR: Attempt to read property "id" on null {"exception":"[object] (ErrorException(code: 0): Attempt to read property \"id\" on null at /var/www/html/app/Http/Controllers/UserController.php:36)
 [stacktrace]
 #0 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(256): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError()
@@ -3276,7 +3276,7 @@
 #41 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #42 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #43 {main}
-"} 
+"}
 [2024-12-02 18:38:47] local.ERROR: Attempt to read property "id" on null {"exception":"[object] (ErrorException(code: 0): Attempt to read property \"id\" on null at /var/www/html/app/Http/Controllers/UserController.php:36)
 [stacktrace]
 #0 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(256): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError()
@@ -3323,7 +3323,7 @@
 #41 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #42 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #43 {main}
-"} 
+"}
 [2024-12-02 18:38:47] local.ERROR: Attempt to read property "id" on null {"exception":"[object] (ErrorException(code: 0): Attempt to read property \"id\" on null at /var/www/html/app/Http/Controllers/UserController.php:36)
 [stacktrace]
 #0 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(256): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError()
@@ -3370,7 +3370,7 @@
 #41 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #42 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #43 {main}
-"} 
+"}
 [2024-12-04 14:28:29] local.ERROR: SQLSTATE[22007]: Invalid datetime format: 1292 Incorrect datetime value: '2024-12-04T14:28:24.301Z' for column 'began_at' at row 1 (Connection: mysql, SQL: insert into `games` (`created_user_id`, `type`, `status`, `began_at`, `ended_at`, `total_time`, `board_id`, `updated_at`, `created_at`) values (28, S, E, 2024-12-04T14:28:24.301Z, 2024-12-04T14:28:29.693Z, 4, 1, 2024-12-04 14:28:29, 2024-12-04 14:28:29)) {"exception":"[object] (Illuminate\\Database\\QueryException(code: 22007): SQLSTATE[22007]: Invalid datetime format: 1292 Incorrect datetime value: '2024-12-04T14:28:24.301Z' for column 'began_at' at row 1 (Connection: mysql, SQL: insert into `games` (`created_user_id`, `type`, `status`, `began_at`, `ended_at`, `total_time`, `board_id`, `updated_at`, `created_at`) values (28, S, E, 2024-12-04T14:28:24.301Z, 2024-12-04T14:28:29.693Z, 4, 1, 2024-12-04 14:28:29, 2024-12-04 14:28:29)) at /var/www/html/vendor/laravel/framework/src/Illuminate/Database/Connection.php:825)
 [stacktrace]
 #0 /var/www/html/vendor/laravel/framework/src/Illuminate/Database/Connection.php(779): Illuminate\\Database\\Connection->runQueryCallback()
@@ -3492,7 +3492,7 @@
 #56 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #57 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #58 {main}
-"} 
+"}
 [2024-12-04 14:43:32] local.ERROR: Unsupported operand types: string + int {"userId":28,"exception":"[object] (TypeError(code: 0): Unsupported operand types: string + int at /var/www/html/app/Http/Controllers/GameController.php:53)
 [stacktrace]
 #0 /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/ControllerDispatcher.php(46): App\\Http\\Controllers\\GameController->beginSinglePlayerGame()
@@ -3539,7 +3539,7 @@
 #41 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #42 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #43 {main}
-"} 
+"}
 [2024-12-04 14:43:58] local.ERROR: Unsupported operand types: string + int {"userId":28,"exception":"[object] (TypeError(code: 0): Unsupported operand types: string + int at /var/www/html/app/Http/Controllers/GameController.php:53)
 [stacktrace]
 #0 /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/ControllerDispatcher.php(46): App\\Http\\Controllers\\GameController->beginSinglePlayerGame()
@@ -3586,7 +3586,7 @@
 #41 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #42 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #43 {main}
-"} 
+"}
 [2024-12-04 14:44:13] local.ERROR: Unsupported operand types: string + int {"userId":28,"exception":"[object] (TypeError(code: 0): Unsupported operand types: string + int at /var/www/html/app/Http/Controllers/GameController.php:53)
 [stacktrace]
 #0 /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/ControllerDispatcher.php(46): App\\Http\\Controllers\\GameController->beginSinglePlayerGame()
@@ -3633,7 +3633,7 @@
 #41 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #42 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #43 {main}
-"} 
+"}
 [2024-12-04 14:44:17] local.ERROR: Unsupported operand types: string + int {"userId":28,"exception":"[object] (TypeError(code: 0): Unsupported operand types: string + int at /var/www/html/app/Http/Controllers/GameController.php:53)
 [stacktrace]
 #0 /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/ControllerDispatcher.php(46): App\\Http\\Controllers\\GameController->beginSinglePlayerGame()
@@ -3680,7 +3680,7 @@
 #41 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #42 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #43 {main}
-"} 
+"}
 [2024-12-04 14:44:22] local.ERROR: Unsupported operand types: string + int {"userId":28,"exception":"[object] (TypeError(code: 0): Unsupported operand types: string + int at /var/www/html/app/Http/Controllers/GameController.php:53)
 [stacktrace]
 #0 /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/ControllerDispatcher.php(46): App\\Http\\Controllers\\GameController->beginSinglePlayerGame()
@@ -3727,7 +3727,7 @@
 #41 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #42 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #43 {main}
-"} 
+"}
 [2024-12-04 14:44:55] local.ERROR: Unsupported operand types: string + int {"userId":28,"exception":"[object] (TypeError(code: 0): Unsupported operand types: string + int at /var/www/html/app/Http/Controllers/GameController.php:53)
 [stacktrace]
 #0 /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/ControllerDispatcher.php(46): App\\Http\\Controllers\\GameController->beginSinglePlayerGame()
@@ -3774,7 +3774,7 @@
 #41 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #42 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #43 {main}
-"} 
+"}
 [2024-12-04 14:45:02] local.ERROR: Unsupported operand types: string + int {"userId":28,"exception":"[object] (TypeError(code: 0): Unsupported operand types: string + int at /var/www/html/app/Http/Controllers/GameController.php:53)
 [stacktrace]
 #0 /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/ControllerDispatcher.php(46): App\\Http\\Controllers\\GameController->beginSinglePlayerGame()
@@ -3821,7 +3821,7 @@
 #41 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #42 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #43 {main}
-"} 
+"}
 [2024-12-04 14:45:03] local.ERROR: Unsupported operand types: string + int {"userId":28,"exception":"[object] (TypeError(code: 0): Unsupported operand types: string + int at /var/www/html/app/Http/Controllers/GameController.php:53)
 [stacktrace]
 #0 /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/ControllerDispatcher.php(46): App\\Http\\Controllers\\GameController->beginSinglePlayerGame()
@@ -3868,7 +3868,7 @@
 #41 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #42 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #43 {main}
-"} 
+"}
 [2024-12-04 14:45:05] local.ERROR: Unsupported operand types: string + int {"userId":28,"exception":"[object] (TypeError(code: 0): Unsupported operand types: string + int at /var/www/html/app/Http/Controllers/GameController.php:53)
 [stacktrace]
 #0 /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/ControllerDispatcher.php(46): App\\Http\\Controllers\\GameController->beginSinglePlayerGame()
@@ -3915,7 +3915,7 @@
 #41 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #42 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #43 {main}
-"} 
+"}
 [2024-12-04 14:45:14] local.ERROR: Unsupported operand types: string + int {"userId":28,"exception":"[object] (TypeError(code: 0): Unsupported operand types: string + int at /var/www/html/app/Http/Controllers/GameController.php:53)
 [stacktrace]
 #0 /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/ControllerDispatcher.php(46): App\\Http\\Controllers\\GameController->beginSinglePlayerGame()
@@ -3962,7 +3962,7 @@
 #41 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #42 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #43 {main}
-"} 
+"}
 [2024-12-04 14:45:21] local.ERROR: Unsupported operand types: string + int {"userId":28,"exception":"[object] (TypeError(code: 0): Unsupported operand types: string + int at /var/www/html/app/Http/Controllers/GameController.php:53)
 [stacktrace]
 #0 /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/ControllerDispatcher.php(46): App\\Http\\Controllers\\GameController->beginSinglePlayerGame()
@@ -4009,7 +4009,7 @@
 #41 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #42 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #43 {main}
-"} 
+"}
 [2024-12-04 14:46:50] local.ERROR: Unsupported operand types: string + int {"userId":28,"exception":"[object] (TypeError(code: 0): Unsupported operand types: string + int at /var/www/html/app/Http/Controllers/GameController.php:54)
 [stacktrace]
 #0 /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/ControllerDispatcher.php(46): App\\Http\\Controllers\\GameController->beginSinglePlayerGame()
@@ -4056,7 +4056,7 @@
 #41 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #42 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #43 {main}
-"} 
+"}
 [2024-12-04 14:48:47] local.ERROR: Unsupported operand types: string + int {"userId":28,"exception":"[object] (TypeError(code: 0): Unsupported operand types: string + int at /var/www/html/app/Http/Controllers/GameController.php:54)
 [stacktrace]
 #0 /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/ControllerDispatcher.php(46): App\\Http\\Controllers\\GameController->beginSinglePlayerGame()
@@ -4103,7 +4103,7 @@
 #41 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #42 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #43 {main}
-"} 
+"}
 [2024-12-04 14:49:32] local.ERROR: Unsupported operand types: string + TypeError {"userId":28,"exception":"[object] (TypeError(code: 0): Unsupported operand types: string + TypeError at /var/www/html/app/Http/Controllers/GameController.php:58)
 [stacktrace]
 #0 /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/ControllerDispatcher.php(46): App\\Http\\Controllers\\GameController->beginSinglePlayerGame()
@@ -4150,7 +4150,7 @@
 #41 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #42 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #43 {main}
-"} 
+"}
 [2024-12-04 15:04:01] local.ERROR: SQLSTATE[22007]: Invalid datetime format: 1292 Incorrect datetime value: '2024-12-04T15:03:51.149Z' for column 'began_at' at row 1 (Connection: mysql, SQL: insert into `games` (`created_user_id`, `type`, `status`, `began_at`, `ended_at`, `total_time`, `board_id`, `updated_at`, `created_at`) values (28, S, E, 2024-12-04T15:03:51.149Z, 2024-12-04T15:04:01.286Z, 7, 1, 2024-12-04 15:04:01, 2024-12-04 15:04:01)) {"exception":"[object] (Illuminate\\Database\\QueryException(code: 22007): SQLSTATE[22007]: Invalid datetime format: 1292 Incorrect datetime value: '2024-12-04T15:03:51.149Z' for column 'began_at' at row 1 (Connection: mysql, SQL: insert into `games` (`created_user_id`, `type`, `status`, `began_at`, `ended_at`, `total_time`, `board_id`, `updated_at`, `created_at`) values (28, S, E, 2024-12-04T15:03:51.149Z, 2024-12-04T15:04:01.286Z, 7, 1, 2024-12-04 15:04:01, 2024-12-04 15:04:01)) at /var/www/html/vendor/laravel/framework/src/Illuminate/Database/Connection.php:825)
 [stacktrace]
 #0 /var/www/html/vendor/laravel/framework/src/Illuminate/Database/Connection.php(779): Illuminate\\Database\\Connection->runQueryCallback()
@@ -4272,7 +4272,7 @@
 #56 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #57 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #58 {main}
-"} 
+"}
 [2024-12-04 15:12:00] local.ERROR: syntax error, unexpected end of file {"exception":"[object] (ParseError(code: 0): syntax error, unexpected end of file at /home/rikylemos/DAD/projetoDAD/laravel/routes/api.php:37)
 [stacktrace]
 #0 /home/rikylemos/DAD/projetoDAD/laravel/vendor/laravel/framework/src/Illuminate/Routing/Router.php(513): Illuminate\\Routing\\RouteFileRegistrar->register()
@@ -4302,7 +4302,7 @@
 #24 /home/rikylemos/DAD/projetoDAD/laravel/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(195): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
 #25 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle()
 #26 {main}
-"} 
+"}
 [2024-12-04 15:17:59] local.ERROR: Call to undefined method App\Http\Controllers\GameController::beginSinglePlayerGame() {"userId":28,"exception":"[object] (Error(code: 0): Call to undefined method App\\Http\\Controllers\\GameController::beginSinglePlayerGame() at /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/ControllerDispatcher.php:46)
 [stacktrace]
 #0 /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/Route.php(264): Illuminate\\Routing\\ControllerDispatcher->dispatch()
@@ -4348,7 +4348,7 @@
 #40 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #41 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #42 {main}
-"} 
+"}
 [2024-12-04 15:18:45] local.ERROR: Call to undefined method App\Http\Controllers\GameController::beginSinglePlayerGame() {"userId":28,"exception":"[object] (Error(code: 0): Call to undefined method App\\Http\\Controllers\\GameController::beginSinglePlayerGame() at /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/ControllerDispatcher.php:46)
 [stacktrace]
 #0 /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/Route.php(264): Illuminate\\Routing\\ControllerDispatcher->dispatch()
@@ -4394,7 +4394,7 @@
 #40 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #41 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #42 {main}
-"} 
+"}
 [2024-12-04 15:19:27] local.ERROR: Call to undefined method App\Http\Controllers\GameController::beginSinglePlayerGame() {"userId":28,"exception":"[object] (Error(code: 0): Call to undefined method App\\Http\\Controllers\\GameController::beginSinglePlayerGame() at /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/ControllerDispatcher.php:46)
 [stacktrace]
 #0 /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/Route.php(264): Illuminate\\Routing\\ControllerDispatcher->dispatch()
@@ -4440,7 +4440,7 @@
 #40 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #41 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #42 {main}
-"} 
+"}
 [2024-12-07 14:41:15] local.ERROR: App\Http\Controllers\AuthController::revokeCurrentToken(): Argument #1 ($user) must be of type App\Models\User, null given, called in /var/www/html/app/Http/Controllers/AuthController.php on line 56 {"exception":"[object] (TypeError(code: 0): App\\Http\\Controllers\\AuthController::revokeCurrentToken(): Argument #1 ($user) must be of type App\\Models\\User, null given, called in /var/www/html/app/Http/Controllers/AuthController.php on line 56 at /var/www/html/app/Http/Controllers/AuthController.php:25)
 [stacktrace]
 #0 /var/www/html/app/Http/Controllers/AuthController.php(56): App\\Http\\Controllers\\AuthController->revokeCurrentToken()
@@ -4486,7 +4486,7 @@
 #40 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #41 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #42 {main}
-"} 
+"}
 [2024-12-07 15:25:24] local.ERROR: SQLSTATE[22007]: Invalid datetime format: 1292 Incorrect datetime value: '2024-12-07T15:25:18.176Z' for column 'began_at' at row 1 (Connection: mysql, SQL: insert into `games` (`created_user_id`, `type`, `status`, `began_at`, `ended_at`, `total_time`, `board_id`, `updated_at`, `created_at`) values (215, S, E, 2024-12-07T15:25:18.176Z, 2024-12-07T15:25:24.002Z, 5, 1, 2024-12-07 15:25:24, 2024-12-07 15:25:24)) {"exception":"[object] (Illuminate\\Database\\QueryException(code: 22007): SQLSTATE[22007]: Invalid datetime format: 1292 Incorrect datetime value: '2024-12-07T15:25:18.176Z' for column 'began_at' at row 1 (Connection: mysql, SQL: insert into `games` (`created_user_id`, `type`, `status`, `began_at`, `ended_at`, `total_time`, `board_id`, `updated_at`, `created_at`) values (215, S, E, 2024-12-07T15:25:18.176Z, 2024-12-07T15:25:24.002Z, 5, 1, 2024-12-07 15:25:24, 2024-12-07 15:25:24)) at /var/www/html/vendor/laravel/framework/src/Illuminate/Database/Connection.php:825)
 [stacktrace]
 #0 /var/www/html/vendor/laravel/framework/src/Illuminate/Database/Connection.php(779): Illuminate\\Database\\Connection->runQueryCallback()
@@ -4608,7 +4608,7 @@
 #56 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #57 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #58 {main}
-"} 
+"}
 [2024-12-07 15:28:13] local.ERROR: SQLSTATE[22007]: Invalid datetime format: 1292 Incorrect datetime value: '2024-12-07T15:28:09.215Z' for column 'began_at' at row 1 (Connection: mysql, SQL: insert into `games` (`created_user_id`, `type`, `status`, `began_at`, `ended_at`, `total_time`, `board_id`, `updated_at`, `created_at`) values (215, S, E, 2024-12-07T15:28:09.215Z, 2024-12-07T15:28:13.894Z, 3, 1, 2024-12-07 15:28:13, 2024-12-07 15:28:13)) {"exception":"[object] (Illuminate\\Database\\QueryException(code: 22007): SQLSTATE[22007]: Invalid datetime format: 1292 Incorrect datetime value: '2024-12-07T15:28:09.215Z' for column 'began_at' at row 1 (Connection: mysql, SQL: insert into `games` (`created_user_id`, `type`, `status`, `began_at`, `ended_at`, `total_time`, `board_id`, `updated_at`, `created_at`) values (215, S, E, 2024-12-07T15:28:09.215Z, 2024-12-07T15:28:13.894Z, 3, 1, 2024-12-07 15:28:13, 2024-12-07 15:28:13)) at /var/www/html/vendor/laravel/framework/src/Illuminate/Database/Connection.php:825)
 [stacktrace]
 #0 /var/www/html/vendor/laravel/framework/src/Illuminate/Database/Connection.php(779): Illuminate\\Database\\Connection->runQueryCallback()
@@ -4730,7 +4730,7 @@
 #56 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #57 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #58 {main}
-"} 
+"}
 [2024-12-07 15:29:50] local.ERROR: SQLSTATE[22007]: Invalid datetime format: 1292 Incorrect datetime value: '2024-12-07T15:29:43.791Z' for column 'began_at' at row 1 (Connection: mysql, SQL: insert into `games` (`created_user_id`, `type`, `status`, `began_at`, `ended_at`, `total_time`, `board_id`, `updated_at`, `created_at`) values (215, S, E, 2024-12-07T15:29:43.791Z, 2024-12-07T15:29:49.963Z, 5, 1, 2024-12-07 15:29:50, 2024-12-07 15:29:50)) {"exception":"[object] (Illuminate\\Database\\QueryException(code: 22007): SQLSTATE[22007]: Invalid datetime format: 1292 Incorrect datetime value: '2024-12-07T15:29:43.791Z' for column 'began_at' at row 1 (Connection: mysql, SQL: insert into `games` (`created_user_id`, `type`, `status`, `began_at`, `ended_at`, `total_time`, `board_id`, `updated_at`, `created_at`) values (215, S, E, 2024-12-07T15:29:43.791Z, 2024-12-07T15:29:49.963Z, 5, 1, 2024-12-07 15:29:50, 2024-12-07 15:29:50)) at /var/www/html/vendor/laravel/framework/src/Illuminate/Database/Connection.php:825)
 [stacktrace]
 #0 /var/www/html/vendor/laravel/framework/src/Illuminate/Database/Connection.php(779): Illuminate\\Database\\Connection->runQueryCallback()
@@ -4852,7 +4852,7 @@
 #56 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #57 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #58 {main}
-"} 
+"}
 [2024-12-09 15:22:38] local.ERROR: preg_match(): No ending delimiter '^' found {"userId":7,"exception":"[object] (ErrorException(code: 0): preg_match(): No ending delimiter '^' found at /var/www/html/app/Http/Controllers/UserController.php:73)
 [stacktrace]
 #0 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(281): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError()
@@ -4902,7 +4902,7 @@
 #44 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #45 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #46 {main}
-"} 
+"}
 [2024-12-09 16:15:13] local.ERROR: Cannot access offset of type string on string {"userId":7,"exception":"[object] (TypeError(code: 0): Cannot access offset of type string on string at /var/www/html/app/Http/Controllers/UserController.php:80)
 [stacktrace]
 #0 /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/ControllerDispatcher.php(46): App\\Http\\Controllers\\UserController->buyCoins()
@@ -4949,7 +4949,7 @@
 #41 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #42 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #43 {main}
-"} 
+"}
 [2024-12-09 16:15:44] local.ERROR: Cannot access offset of type string on string {"userId":7,"exception":"[object] (TypeError(code: 0): Cannot access offset of type string on string at /var/www/html/app/Http/Controllers/UserController.php:80)
 [stacktrace]
 #0 /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/ControllerDispatcher.php(46): App\\Http\\Controllers\\UserController->buyCoins()
@@ -4996,7 +4996,7 @@
 #41 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #42 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #43 {main}
-"} 
+"}
 [2024-12-09 16:16:06] local.ERROR: Cannot access offset of type string on string {"userId":7,"exception":"[object] (TypeError(code: 0): Cannot access offset of type string on string at /var/www/html/app/Http/Controllers/UserController.php:80)
 [stacktrace]
 #0 /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/ControllerDispatcher.php(46): App\\Http\\Controllers\\UserController->buyCoins()
@@ -5043,7 +5043,7 @@
 #41 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #42 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #43 {main}
-"} 
+"}
 [2024-12-09 16:16:21] local.ERROR: Cannot access offset of type string on string {"userId":7,"exception":"[object] (TypeError(code: 0): Cannot access offset of type string on string at /var/www/html/app/Http/Controllers/UserController.php:80)
 [stacktrace]
 #0 /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/ControllerDispatcher.php(46): App\\Http\\Controllers\\UserController->buyCoins()
@@ -5090,7 +5090,7 @@
 #41 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #42 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #43 {main}
-"} 
+"}
 [2024-12-09 16:16:41] local.ERROR: Cannot access offset of type string on string {"userId":7,"exception":"[object] (TypeError(code: 0): Cannot access offset of type string on string at /var/www/html/app/Http/Controllers/UserController.php:80)
 [stacktrace]
 #0 /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/ControllerDispatcher.php(46): App\\Http\\Controllers\\UserController->buyCoins()
@@ -5137,7 +5137,7 @@
 #41 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #42 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #43 {main}
-"} 
+"}
 [2024-12-09 17:21:07] local.ERROR: Call to a member function store() on null {"exception":"[object] (Error(code: 0): Call to a member function store() on null at /var/www/html/app/Http/Controllers/AuthController.php:72)
 [stacktrace]
 #0 /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/ControllerDispatcher.php(46): App\\Http\\Controllers\\AuthController->register()
@@ -5182,7 +5182,7 @@
 #39 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #40 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #41 {main}
-"} 
+"}
 [2024-12-09 17:21:20] local.ERROR: Call to a member function store() on null {"exception":"[object] (Error(code: 0): Call to a member function store() on null at /var/www/html/app/Http/Controllers/AuthController.php:72)
 [stacktrace]
 #0 /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/ControllerDispatcher.php(46): App\\Http\\Controllers\\AuthController->register()
@@ -5227,7 +5227,7 @@
 #39 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #40 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #41 {main}
-"} 
+"}
 [2024-12-09 17:38:26] local.ERROR: Call to a member function store() on null {"exception":"[object] (Error(code: 0): Call to a member function store() on null at /var/www/html/app/Http/Controllers/UserController.php:27)
 [stacktrace]
 #0 /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/ControllerDispatcher.php(46): App\\Http\\Controllers\\UserController->getImagePath()
@@ -5272,7 +5272,7 @@
 #39 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #40 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #41 {main}
-"} 
+"}
 [2024-12-09 20:12:21] local.ERROR: SQLSTATE[23000]: Integrity constraint violation: 1048 Column 'password' cannot be null (Connection: mysql, SQL: update `users` set `name` = Márioz Marques, `email` = mario@mail.pt, `password` = ?, `nickname` = mario_marques, `users`.`updated_at` = 2024-12-09 20:12:21 where `id` = 7) {"userId":7,"exception":"[object] (Illuminate\\Database\\QueryException(code: 23000): SQLSTATE[23000]: Integrity constraint violation: 1048 Column 'password' cannot be null (Connection: mysql, SQL: update `users` set `name` = Márioz Marques, `email` = mario@mail.pt, `password` = ?, `nickname` = mario_marques, `users`.`updated_at` = 2024-12-09 20:12:21 where `id` = 7) at /var/www/html/vendor/laravel/framework/src/Illuminate/Database/Connection.php:825)
 [stacktrace]
 #0 /var/www/html/vendor/laravel/framework/src/Illuminate/Database/Connection.php(779): Illuminate\\Database\\Connection->runQueryCallback()
@@ -5386,7 +5386,7 @@
 #52 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #53 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #54 {main}
-"} 
+"}
 [2024-12-09 20:17:40] local.ERROR: SQLSTATE[23000]: Integrity constraint violation: 1048 Column 'password' cannot be null (Connection: mysql, SQL: update `users` set `email` = mario@mail.pt, `password` = ?, `nickname` = mario_marques, `users`.`updated_at` = 2024-12-09 20:17:40 where `id` = 7) {"userId":7,"exception":"[object] (Illuminate\\Database\\QueryException(code: 23000): SQLSTATE[23000]: Integrity constraint violation: 1048 Column 'password' cannot be null (Connection: mysql, SQL: update `users` set `email` = mario@mail.pt, `password` = ?, `nickname` = mario_marques, `users`.`updated_at` = 2024-12-09 20:17:40 where `id` = 7) at /var/www/html/vendor/laravel/framework/src/Illuminate/Database/Connection.php:825)
 [stacktrace]
 #0 /var/www/html/vendor/laravel/framework/src/Illuminate/Database/Connection.php(779): Illuminate\\Database\\Connection->runQueryCallback()
@@ -5500,7 +5500,7 @@
 #52 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #53 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #54 {main}
-"} 
+"}
 [2024-12-09 20:26:45] local.ERROR: syntax error, unexpected token "{" {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"{\" at /var/www/html/app/Http/Controllers/UserController.php:45)
 [stacktrace]
 #0 /var/www/html/vendor/composer/ClassLoader.php(427): Composer\\Autoload\\{closure}()
@@ -5537,7 +5537,7 @@
 #31 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #32 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #33 {main}
-"} 
+"}
 [2024-12-09 20:37:09] local.ERROR: Method Illuminate\Validation\Validator::validateString,7 does not exist. {"userId":7,"exception":"[object] (BadMethodCallException(code: 0): Method Illuminate\\Validation\\Validator::validateString,7 does not exist. at /var/www/html/vendor/laravel/framework/src/Illuminate/Validation/Validator.php:1638)
 [stacktrace]
 #0 /var/www/html/vendor/laravel/framework/src/Illuminate/Validation/Validator.php(664): Illuminate\\Validation\\Validator->__call()
@@ -5600,7 +5600,7 @@
 #57 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #58 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #59 {main}
-"} 
+"}
 [2024-12-11 20:25:25] local.ERROR: Class "App\Http\Requests\UpdateGameRequest" does not exist {"userId":7,"exception":"[object] (ReflectionException(code: -1): Class \"App\\Http\\Requests\\UpdateGameRequest\" does not exist at /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/ResolvesRouteDependencies.php:88)
 [stacktrace]
 #0 /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/ResolvesRouteDependencies.php(88): ReflectionClass->__construct()
@@ -5651,7 +5651,7 @@
 #45 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #46 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #47 {main}
-"} 
+"}
 [2024-12-11 20:29:44] local.ERROR: Class "App\Http\Requests\UpdateGameRequest" does not exist {"userId":7,"exception":"[object] (ReflectionException(code: -1): Class \"App\\Http\\Requests\\UpdateGameRequest\" does not exist at /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/ResolvesRouteDependencies.php:88)
 [stacktrace]
 #0 /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/ResolvesRouteDependencies.php(88): ReflectionClass->__construct()
@@ -5702,7 +5702,7 @@
 #45 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #46 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #47 {main}
-"} 
+"}
 [2024-12-11 20:30:45] local.ERROR: Class "App\Http\Requests\UpdateGameRequest" does not exist {"userId":1,"exception":"[object] (ReflectionException(code: -1): Class \"App\\Http\\Requests\\UpdateGameRequest\" does not exist at /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/ResolvesRouteDependencies.php:88)
 [stacktrace]
 #0 /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/ResolvesRouteDependencies.php(88): ReflectionClass->__construct()
@@ -5753,7 +5753,7 @@
 #45 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #46 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #47 {main}
-"} 
+"}
 [2024-12-12 13:45:46] local.ERROR: Class "App\Http\Requests\UpdateGameRequest" does not exist {"userId":7,"exception":"[object] (ReflectionException(code: -1): Class \"App\\Http\\Requests\\UpdateGameRequest\" does not exist at /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/ResolvesRouteDependencies.php:88)
 [stacktrace]
 #0 /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/ResolvesRouteDependencies.php(88): ReflectionClass->__construct()
@@ -5804,7 +5804,7 @@
 #45 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #46 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #47 {main}
-"} 
+"}
 [2024-12-14 23:56:35] local.ERROR: SQLSTATE[23000]: Integrity constraint violation: 1052 Column 'type' in where clause is ambiguous (Connection: mysql, SQL: select `users`.`nickname` from `games` inner join `users` on `games`.`winner_user_id` = `users`.`id` where `created_user_id` = 9 and `type` = M order by `ended_at` desc) {"userId":9,"exception":"[object] (Illuminate\\Database\\QueryException(code: 23000): SQLSTATE[23000]: Integrity constraint violation: 1052 Column 'type' in where clause is ambiguous (Connection: mysql, SQL: select `users`.`nickname` from `games` inner join `users` on `games`.`winner_user_id` = `users`.`id` where `created_user_id` = 9 and `type` = M order by `ended_at` desc) at /var/www/html/vendor/laravel/framework/src/Illuminate/Database/Connection.php:825)
 [stacktrace]
 #0 /var/www/html/vendor/laravel/framework/src/Illuminate/Database/Connection.php(779): Illuminate\\Database\\Connection->runQueryCallback()
@@ -5918,7 +5918,7 @@
 #52 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #53 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #54 {main}
-"} 
+"}
 [2024-12-14 23:56:50] local.ERROR: SQLSTATE[23000]: Integrity constraint violation: 1052 Column 'type' in where clause is ambiguous (Connection: mysql, SQL: select * from `games` inner join `users` on `games`.`winner_user_id` = `users`.`id` where `created_user_id` = 9 and `type` = M order by `ended_at` desc) {"userId":9,"exception":"[object] (Illuminate\\Database\\QueryException(code: 23000): SQLSTATE[23000]: Integrity constraint violation: 1052 Column 'type' in where clause is ambiguous (Connection: mysql, SQL: select * from `games` inner join `users` on `games`.`winner_user_id` = `users`.`id` where `created_user_id` = 9 and `type` = M order by `ended_at` desc) at /var/www/html/vendor/laravel/framework/src/Illuminate/Database/Connection.php:825)
 [stacktrace]
 #0 /var/www/html/vendor/laravel/framework/src/Illuminate/Database/Connection.php(779): Illuminate\\Database\\Connection->runQueryCallback()
@@ -6032,7 +6032,7 @@
 #52 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #53 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #54 {main}
-"} 
+"}
 [2024-12-14 23:57:04] local.ERROR: SQLSTATE[23000]: Integrity constraint violation: 1052 Column 'type' in where clause is ambiguous (Connection: mysql, SQL: select * from `games` inner join `users` on `games`.`winner_user_id` = `users`.`id` where `created_user_id` = 9 and `type` = M order by `ended_at` desc) {"userId":9,"exception":"[object] (Illuminate\\Database\\QueryException(code: 23000): SQLSTATE[23000]: Integrity constraint violation: 1052 Column 'type' in where clause is ambiguous (Connection: mysql, SQL: select * from `games` inner join `users` on `games`.`winner_user_id` = `users`.`id` where `created_user_id` = 9 and `type` = M order by `ended_at` desc) at /var/www/html/vendor/laravel/framework/src/Illuminate/Database/Connection.php:825)
 [stacktrace]
 #0 /var/www/html/vendor/laravel/framework/src/Illuminate/Database/Connection.php(779): Illuminate\\Database\\Connection->runQueryCallback()
@@ -6146,7 +6146,7 @@
 #52 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #53 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #54 {main}
-"} 
+"}
 [2024-12-14 23:58:43] local.ERROR: SQLSTATE[23000]: Integrity constraint violation: 1052 Column 'type' in where clause is ambiguous (Connection: mysql, SQL: select * from `games` inner join `users` on `game`.`winner_user_id` = `users`.`id` where `created_user_id` = 9 and `type` = M order by `ended_at` desc) {"userId":9,"exception":"[object] (Illuminate\\Database\\QueryException(code: 23000): SQLSTATE[23000]: Integrity constraint violation: 1052 Column 'type' in where clause is ambiguous (Connection: mysql, SQL: select * from `games` inner join `users` on `game`.`winner_user_id` = `users`.`id` where `created_user_id` = 9 and `type` = M order by `ended_at` desc) at /var/www/html/vendor/laravel/framework/src/Illuminate/Database/Connection.php:825)
 [stacktrace]
 #0 /var/www/html/vendor/laravel/framework/src/Illuminate/Database/Connection.php(779): Illuminate\\Database\\Connection->runQueryCallback()
@@ -6260,7 +6260,7 @@
 #52 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #53 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #54 {main}
-"} 
+"}
 [2024-12-14 23:59:02] local.ERROR: SQLSTATE[23000]: Integrity constraint violation: 1052 Column 'type' in where clause is ambiguous (Connection: mysql, SQL: select * from `games` inner join `users` on `game`.`winner_user_id` = `users`.`id` where `created_user_id` = 9 and `type` = M order by `ended_at` desc) {"userId":9,"exception":"[object] (Illuminate\\Database\\QueryException(code: 23000): SQLSTATE[23000]: Integrity constraint violation: 1052 Column 'type' in where clause is ambiguous (Connection: mysql, SQL: select * from `games` inner join `users` on `game`.`winner_user_id` = `users`.`id` where `created_user_id` = 9 and `type` = M order by `ended_at` desc) at /var/www/html/vendor/laravel/framework/src/Illuminate/Database/Connection.php:825)
 [stacktrace]
 #0 /var/www/html/vendor/laravel/framework/src/Illuminate/Database/Connection.php(779): Illuminate\\Database\\Connection->runQueryCallback()
@@ -6374,7 +6374,7 @@
 #52 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #53 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #54 {main}
-"} 
+"}
 [2024-12-15 00:03:42] local.ERROR: SQLSTATE[23000]: Integrity constraint violation: 1052 Column 'type' in where clause is ambiguous (Connection: mysql, SQL: select * from `games` inner join `users` on `game`.`winner_user_id` = `users`.`id` where `created_user_id` = 9 and `type` = M order by `ended_at` desc) {"userId":9,"exception":"[object] (Illuminate\\Database\\QueryException(code: 23000): SQLSTATE[23000]: Integrity constraint violation: 1052 Column 'type' in where clause is ambiguous (Connection: mysql, SQL: select * from `games` inner join `users` on `game`.`winner_user_id` = `users`.`id` where `created_user_id` = 9 and `type` = M order by `ended_at` desc) at /var/www/html/vendor/laravel/framework/src/Illuminate/Database/Connection.php:825)
 [stacktrace]
 #0 /var/www/html/vendor/laravel/framework/src/Illuminate/Database/Connection.php(779): Illuminate\\Database\\Connection->runQueryCallback()
@@ -6488,7 +6488,7 @@
 #52 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #53 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #54 {main}
-"} 
+"}
 [2024-12-15 00:04:18] local.ERROR: SQLSTATE[23000]: Integrity constraint violation: 1052 Column 'type' in where clause is ambiguous (Connection: mysql, SQL: select * from `games` inner join `users` on `game`.`winner_user_id` = `users`.`id` where `created_user_id` = 9 and `type` = M order by `ended_at` desc) {"userId":9,"exception":"[object] (Illuminate\\Database\\QueryException(code: 23000): SQLSTATE[23000]: Integrity constraint violation: 1052 Column 'type' in where clause is ambiguous (Connection: mysql, SQL: select * from `games` inner join `users` on `game`.`winner_user_id` = `users`.`id` where `created_user_id` = 9 and `type` = M order by `ended_at` desc) at /var/www/html/vendor/laravel/framework/src/Illuminate/Database/Connection.php:825)
 [stacktrace]
 #0 /var/www/html/vendor/laravel/framework/src/Illuminate/Database/Connection.php(779): Illuminate\\Database\\Connection->runQueryCallback()
@@ -6602,7 +6602,7 @@
 #52 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #53 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #54 {main}
-"} 
+"}
 [2024-12-15 00:04:22] local.ERROR: SQLSTATE[23000]: Integrity constraint violation: 1052 Column 'type' in where clause is ambiguous (Connection: mysql, SQL: select * from `games` inner join `users` on `game`.`winner_user_id` = `users`.`id` where `created_user_id` = 9 and `type` = M order by `ended_at` desc) {"userId":9,"exception":"[object] (Illuminate\\Database\\QueryException(code: 23000): SQLSTATE[23000]: Integrity constraint violation: 1052 Column 'type' in where clause is ambiguous (Connection: mysql, SQL: select * from `games` inner join `users` on `game`.`winner_user_id` = `users`.`id` where `created_user_id` = 9 and `type` = M order by `ended_at` desc) at /var/www/html/vendor/laravel/framework/src/Illuminate/Database/Connection.php:825)
 [stacktrace]
 #0 /var/www/html/vendor/laravel/framework/src/Illuminate/Database/Connection.php(779): Illuminate\\Database\\Connection->runQueryCallback()
@@ -6716,7 +6716,7 @@
 #52 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #53 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #54 {main}
-"} 
+"}
 [2024-12-15 00:04:24] local.ERROR: SQLSTATE[23000]: Integrity constraint violation: 1052 Column 'type' in where clause is ambiguous (Connection: mysql, SQL: select * from `games` inner join `users` on `game`.`winner_user_id` = `users`.`id` where `created_user_id` = 9 and `type` = M order by `ended_at` desc) {"userId":9,"exception":"[object] (Illuminate\\Database\\QueryException(code: 23000): SQLSTATE[23000]: Integrity constraint violation: 1052 Column 'type' in where clause is ambiguous (Connection: mysql, SQL: select * from `games` inner join `users` on `game`.`winner_user_id` = `users`.`id` where `created_user_id` = 9 and `type` = M order by `ended_at` desc) at /var/www/html/vendor/laravel/framework/src/Illuminate/Database/Connection.php:825)
 [stacktrace]
 #0 /var/www/html/vendor/laravel/framework/src/Illuminate/Database/Connection.php(779): Illuminate\\Database\\Connection->runQueryCallback()
@@ -6830,7 +6830,7 @@
 #52 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #53 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #54 {main}
-"} 
+"}
 [2024-12-15 00:04:25] local.ERROR: SQLSTATE[23000]: Integrity constraint violation: 1052 Column 'type' in where clause is ambiguous (Connection: mysql, SQL: select * from `games` inner join `users` on `game`.`winner_user_id` = `users`.`id` where `created_user_id` = 9 and `type` = M order by `ended_at` desc) {"userId":9,"exception":"[object] (Illuminate\\Database\\QueryException(code: 23000): SQLSTATE[23000]: Integrity constraint violation: 1052 Column 'type' in where clause is ambiguous (Connection: mysql, SQL: select * from `games` inner join `users` on `game`.`winner_user_id` = `users`.`id` where `created_user_id` = 9 and `type` = M order by `ended_at` desc) at /var/www/html/vendor/laravel/framework/src/Illuminate/Database/Connection.php:825)
 [stacktrace]
 #0 /var/www/html/vendor/laravel/framework/src/Illuminate/Database/Connection.php(779): Illuminate\\Database\\Connection->runQueryCallback()
@@ -6944,7 +6944,7 @@
 #52 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #53 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #54 {main}
-"} 
+"}
 [2024-12-15 00:04:25] local.ERROR: SQLSTATE[23000]: Integrity constraint violation: 1052 Column 'type' in where clause is ambiguous (Connection: mysql, SQL: select * from `games` inner join `users` on `game`.`winner_user_id` = `users`.`id` where `created_user_id` = 9 and `type` = M order by `ended_at` desc) {"userId":9,"exception":"[object] (Illuminate\\Database\\QueryException(code: 23000): SQLSTATE[23000]: Integrity constraint violation: 1052 Column 'type' in where clause is ambiguous (Connection: mysql, SQL: select * from `games` inner join `users` on `game`.`winner_user_id` = `users`.`id` where `created_user_id` = 9 and `type` = M order by `ended_at` desc) at /var/www/html/vendor/laravel/framework/src/Illuminate/Database/Connection.php:825)
 [stacktrace]
 #0 /var/www/html/vendor/laravel/framework/src/Illuminate/Database/Connection.php(779): Illuminate\\Database\\Connection->runQueryCallback()
@@ -7058,7 +7058,7 @@
 #52 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #53 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #54 {main}
-"} 
+"}
 [2024-12-15 00:04:29] local.ERROR: SQLSTATE[23000]: Integrity constraint violation: 1052 Column 'type' in where clause is ambiguous (Connection: mysql, SQL: select * from `games` inner join `users` on `game`.`winner_user_id` = `users`.`id` where `created_user_id` = 9 and `type` = M order by `ended_at` desc) {"userId":9,"exception":"[object] (Illuminate\\Database\\QueryException(code: 23000): SQLSTATE[23000]: Integrity constraint violation: 1052 Column 'type' in where clause is ambiguous (Connection: mysql, SQL: select * from `games` inner join `users` on `game`.`winner_user_id` = `users`.`id` where `created_user_id` = 9 and `type` = M order by `ended_at` desc) at /var/www/html/vendor/laravel/framework/src/Illuminate/Database/Connection.php:825)
 [stacktrace]
 #0 /var/www/html/vendor/laravel/framework/src/Illuminate/Database/Connection.php(779): Illuminate\\Database\\Connection->runQueryCallback()
@@ -7172,7 +7172,7 @@
 #52 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #53 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #54 {main}
-"} 
+"}
 [2024-12-15 00:04:30] local.ERROR: SQLSTATE[23000]: Integrity constraint violation: 1052 Column 'type' in where clause is ambiguous (Connection: mysql, SQL: select * from `games` inner join `users` on `game`.`winner_user_id` = `users`.`id` where `created_user_id` = 9 and `type` = M order by `ended_at` desc) {"userId":9,"exception":"[object] (Illuminate\\Database\\QueryException(code: 23000): SQLSTATE[23000]: Integrity constraint violation: 1052 Column 'type' in where clause is ambiguous (Connection: mysql, SQL: select * from `games` inner join `users` on `game`.`winner_user_id` = `users`.`id` where `created_user_id` = 9 and `type` = M order by `ended_at` desc) at /var/www/html/vendor/laravel/framework/src/Illuminate/Database/Connection.php:825)
 [stacktrace]
 #0 /var/www/html/vendor/laravel/framework/src/Illuminate/Database/Connection.php(779): Illuminate\\Database\\Connection->runQueryCallback()
@@ -7286,7 +7286,7 @@
 #52 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #53 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #54 {main}
-"} 
+"}
 [2024-12-15 00:04:34] local.ERROR: SQLSTATE[23000]: Integrity constraint violation: 1052 Column 'type' in where clause is ambiguous (Connection: mysql, SQL: select * from `games` inner join `users` on `game`.`winner_user_id` = `users`.`id` where `created_user_id` = 9 and `type` = M order by `ended_at` desc) {"userId":9,"exception":"[object] (Illuminate\\Database\\QueryException(code: 23000): SQLSTATE[23000]: Integrity constraint violation: 1052 Column 'type' in where clause is ambiguous (Connection: mysql, SQL: select * from `games` inner join `users` on `game`.`winner_user_id` = `users`.`id` where `created_user_id` = 9 and `type` = M order by `ended_at` desc) at /var/www/html/vendor/laravel/framework/src/Illuminate/Database/Connection.php:825)
 [stacktrace]
 #0 /var/www/html/vendor/laravel/framework/src/Illuminate/Database/Connection.php(779): Illuminate\\Database\\Connection->runQueryCallback()
@@ -7400,7 +7400,7 @@
 #52 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #53 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #54 {main}
-"} 
+"}
 [2024-12-15 00:04:36] local.ERROR: SQLSTATE[23000]: Integrity constraint violation: 1052 Column 'type' in where clause is ambiguous (Connection: mysql, SQL: select * from `games` inner join `users` on `game`.`winner_user_id` = `users`.`id` where `created_user_id` = 9 and `type` = M order by `ended_at` desc) {"userId":9,"exception":"[object] (Illuminate\\Database\\QueryException(code: 23000): SQLSTATE[23000]: Integrity constraint violation: 1052 Column 'type' in where clause is ambiguous (Connection: mysql, SQL: select * from `games` inner join `users` on `game`.`winner_user_id` = `users`.`id` where `created_user_id` = 9 and `type` = M order by `ended_at` desc) at /var/www/html/vendor/laravel/framework/src/Illuminate/Database/Connection.php:825)
 [stacktrace]
 #0 /var/www/html/vendor/laravel/framework/src/Illuminate/Database/Connection.php(779): Illuminate\\Database\\Connection->runQueryCallback()
@@ -7514,7 +7514,7 @@
 #52 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #53 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #54 {main}
-"} 
+"}
 [2024-12-15 00:04:37] local.ERROR: SQLSTATE[23000]: Integrity constraint violation: 1052 Column 'type' in where clause is ambiguous (Connection: mysql, SQL: select * from `games` inner join `users` on `game`.`winner_user_id` = `users`.`id` where `created_user_id` = 9 and `type` = M order by `ended_at` desc) {"userId":9,"exception":"[object] (Illuminate\\Database\\QueryException(code: 23000): SQLSTATE[23000]: Integrity constraint violation: 1052 Column 'type' in where clause is ambiguous (Connection: mysql, SQL: select * from `games` inner join `users` on `game`.`winner_user_id` = `users`.`id` where `created_user_id` = 9 and `type` = M order by `ended_at` desc) at /var/www/html/vendor/laravel/framework/src/Illuminate/Database/Connection.php:825)
 [stacktrace]
 #0 /var/www/html/vendor/laravel/framework/src/Illuminate/Database/Connection.php(779): Illuminate\\Database\\Connection->runQueryCallback()
@@ -7628,7 +7628,7 @@
 #52 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #53 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #54 {main}
-"} 
+"}
 [2024-12-15 00:04:39] local.ERROR: SQLSTATE[23000]: Integrity constraint violation: 1052 Column 'type' in where clause is ambiguous (Connection: mysql, SQL: select * from `games` inner join `users` on `game`.`winner_user_id` = `users`.`id` where `created_user_id` = 9 and `type` = M order by `ended_at` desc) {"userId":9,"exception":"[object] (Illuminate\\Database\\QueryException(code: 23000): SQLSTATE[23000]: Integrity constraint violation: 1052 Column 'type' in where clause is ambiguous (Connection: mysql, SQL: select * from `games` inner join `users` on `game`.`winner_user_id` = `users`.`id` where `created_user_id` = 9 and `type` = M order by `ended_at` desc) at /var/www/html/vendor/laravel/framework/src/Illuminate/Database/Connection.php:825)
 [stacktrace]
 #0 /var/www/html/vendor/laravel/framework/src/Illuminate/Database/Connection.php(779): Illuminate\\Database\\Connection->runQueryCallback()
@@ -7742,7 +7742,7 @@
 #52 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #53 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #54 {main}
-"} 
+"}
 [2024-12-15 00:04:42] local.ERROR: SQLSTATE[23000]: Integrity constraint violation: 1052 Column 'type' in where clause is ambiguous (Connection: mysql, SQL: select * from `games` inner join `users` on `game`.`winner_user_id` = `users`.`id` where `created_user_id` = 9 and `type` = M order by `ended_at` desc) {"userId":9,"exception":"[object] (Illuminate\\Database\\QueryException(code: 23000): SQLSTATE[23000]: Integrity constraint violation: 1052 Column 'type' in where clause is ambiguous (Connection: mysql, SQL: select * from `games` inner join `users` on `game`.`winner_user_id` = `users`.`id` where `created_user_id` = 9 and `type` = M order by `ended_at` desc) at /var/www/html/vendor/laravel/framework/src/Illuminate/Database/Connection.php:825)
 [stacktrace]
 #0 /var/www/html/vendor/laravel/framework/src/Illuminate/Database/Connection.php(779): Illuminate\\Database\\Connection->runQueryCallback()
@@ -7856,7 +7856,7 @@
 #52 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #53 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #54 {main}
-"} 
+"}
 [2024-12-15 00:04:43] local.ERROR: SQLSTATE[23000]: Integrity constraint violation: 1052 Column 'type' in where clause is ambiguous (Connection: mysql, SQL: select * from `games` inner join `users` on `game`.`winner_user_id` = `users`.`id` where `created_user_id` = 9 and `type` = M order by `ended_at` desc) {"userId":9,"exception":"[object] (Illuminate\\Database\\QueryException(code: 23000): SQLSTATE[23000]: Integrity constraint violation: 1052 Column 'type' in where clause is ambiguous (Connection: mysql, SQL: select * from `games` inner join `users` on `game`.`winner_user_id` = `users`.`id` where `created_user_id` = 9 and `type` = M order by `ended_at` desc) at /var/www/html/vendor/laravel/framework/src/Illuminate/Database/Connection.php:825)
 [stacktrace]
 #0 /var/www/html/vendor/laravel/framework/src/Illuminate/Database/Connection.php(779): Illuminate\\Database\\Connection->runQueryCallback()
@@ -7970,7 +7970,7 @@
 #52 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #53 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #54 {main}
-"} 
+"}
 [2024-12-15 00:04:44] local.ERROR: SQLSTATE[23000]: Integrity constraint violation: 1052 Column 'type' in where clause is ambiguous (Connection: mysql, SQL: select * from `games` inner join `users` on `game`.`winner_user_id` = `users`.`id` where `created_user_id` = 9 and `type` = M order by `ended_at` desc) {"userId":9,"exception":"[object] (Illuminate\\Database\\QueryException(code: 23000): SQLSTATE[23000]: Integrity constraint violation: 1052 Column 'type' in where clause is ambiguous (Connection: mysql, SQL: select * from `games` inner join `users` on `game`.`winner_user_id` = `users`.`id` where `created_user_id` = 9 and `type` = M order by `ended_at` desc) at /var/www/html/vendor/laravel/framework/src/Illuminate/Database/Connection.php:825)
 [stacktrace]
 #0 /var/www/html/vendor/laravel/framework/src/Illuminate/Database/Connection.php(779): Illuminate\\Database\\Connection->runQueryCallback()
@@ -8084,7 +8084,7 @@
 #52 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #53 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #54 {main}
-"} 
+"}
 [2024-12-15 00:04:47] local.ERROR: SQLSTATE[23000]: Integrity constraint violation: 1052 Column 'type' in where clause is ambiguous (Connection: mysql, SQL: select * from `games` inner join `users` on `game`.`winner_user_id` = `users`.`id` where `created_user_id` = 9 and `type` = M order by `ended_at` desc) {"userId":9,"exception":"[object] (Illuminate\\Database\\QueryException(code: 23000): SQLSTATE[23000]: Integrity constraint violation: 1052 Column 'type' in where clause is ambiguous (Connection: mysql, SQL: select * from `games` inner join `users` on `game`.`winner_user_id` = `users`.`id` where `created_user_id` = 9 and `type` = M order by `ended_at` desc) at /var/www/html/vendor/laravel/framework/src/Illuminate/Database/Connection.php:825)
 [stacktrace]
 #0 /var/www/html/vendor/laravel/framework/src/Illuminate/Database/Connection.php(779): Illuminate\\Database\\Connection->runQueryCallback()
@@ -8198,4 +8198,4 @@
 #52 /var/www/html/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
 #53 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
 #54 {main}
-"} 
+"}

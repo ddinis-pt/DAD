@@ -17,6 +17,10 @@ export const useAuthStore = defineStore('auth', () => {
     axios.defaults.headers.common.Authorization = 'Bearer ' + token.value
   }
 
+  const userId = computed(() => {
+    return user.value ? user.value.id : -1
+})
+
   const userName = computed(() => {
     return user.value ? user.value.name : ''
   })
@@ -191,7 +195,6 @@ export const useAuthStore = defineStore('auth', () => {
         const responseUser = await axios.get('users/me')
         user.value = responseUser.data
         socket.emit('login', user.value)
-        console.log('User refreshed:', user.value)
         repeatRefreshToken()
         return true
       } catch {
@@ -202,8 +205,24 @@ export const useAuthStore = defineStore('auth', () => {
     return false
   }
 
+  const refreshUserData = async () => {
+    try {
+      const responseUser = await axios.get('/users/me')
+      user.value = responseUser.data
+      sessionStorage.setItem('user', JSON.stringify(user.value))
+    } catch (e) {
+      storeError.setErrorMessages(
+        e.response.data.message,
+        e.response.data.errors,
+        e.response.status,
+        'Error refreshing user data!'
+      )
+    }
+  }
+
   return {
     user,
+    userId,
     userName,
     userFirstLastName,
     userEmail,
@@ -217,6 +236,7 @@ export const useAuthStore = defineStore('auth', () => {
     logout,
     restoreToken,
     getFirstLastName,
-    register
+    register,
+    refreshUserData
   }
 })
