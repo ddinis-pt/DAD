@@ -12,14 +12,9 @@ import Board from '@/components/ui/game/BoardComponent.vue'
 import { useAuthStore } from '@/stores/auth'
 import { useGamesStore } from '@/stores/games'
 import Toaster from '@/components/ui/toast/Toaster.vue'
-import axios from 'axios';
 
 const storeGames = useGamesStore()
 const storeAuth = useAuthStore()
-
-let intervalo = null;
-let time = 0;
-const firstMove = true
 
 const props = defineProps({
     game: {
@@ -41,22 +36,6 @@ const currentUserTurn = computed(() => {
     return props.game.currentPlayer === storeGames.playerNumberOfCurrentUser(props.game)
 })
 
-const updateTime = async () => {
-    if (intervalo != null) {
-        console.log(time)
-        await axios.patch(`/games/${props.game.id}/time`, {
-            total_time: time
-        })
-            .then((response) => {
-                console.log(response.data)
-                clearInterval(intervalo)
-            })
-            .catch((error) => {
-                console.log(error)
-            })
-    }
-}
-
 const statusGameMessage = computed(() => {
     switch (props.game.gameStatus) {
         case null:
@@ -64,10 +43,8 @@ const statusGameMessage = computed(() => {
             return currentUserTurn.value ? 'Your turn' : 'Opponent turn'
         case 1:
         case 2:
-            updateTime()
             return storeGames.playerNumberOfCurrentUser(props.game) == props.game.winner_user_id ? 'You won' : 'You lost'
         case 3:
-            updateTime()
             return 'Draw'
         default:
             return 'Not started!'
@@ -77,13 +54,6 @@ const statusGameMessage = computed(() => {
 const playPieceOfBoard = (idx) => {
     if (props.game.currentPlayer !== storeAuth.user.id) {
         return;
-    }
-    if (firstMove.value) {
-        intervalo = setInterval(() => {
-            time++;
-        }, 1000);
-        console.log(intervalo)
-        firstMove = false
     }
     storeGames.play(props.game, idx)
 }

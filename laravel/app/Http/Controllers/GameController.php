@@ -207,13 +207,4 @@ class GameController extends Controller
             ->take(3)
             ->get(), 200);
     }
-
-    public function updateTime(UpdateTimeRequest $request, int $game_id)
-    {
-        $game = Game::findOrFail($game_id);
-        $data = $request->validated();
-        $game->total_time = $data["total_time"];
-        $game->save();
-        return response()->json($game, 200);
-    }
 }

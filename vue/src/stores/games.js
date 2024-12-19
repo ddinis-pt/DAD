@@ -5,7 +5,7 @@ import { useErrorStore } from '@/stores/error'
 import { useAuthStore } from '@/stores/auth'
 import { useToast } from '@/components/ui/toast/use-toast'
 
-import { format } from 'date-fns';
+import { format } from 'date-fns'
 
 export const useGamesStore = defineStore('games', () => {
   const storeAuth = useAuthStore()
@@ -113,15 +113,22 @@ export const useGamesStore = defineStore('games', () => {
     fetchPlayingGames()
     // Player that created the game is responsible for updating on the database
     if (playerNumberOfCurrentUser(game) === game.created_user_id) {
-      const winner = game.gameStatus === 1 ? game.player1 : game.gameStatus === 2 ? game.player2 : null
-      const APIresponse = await axios.patch('games/' + game.id, {
+      const winner =
+        game.gameStatus === 1 ? game.player1 : game.gameStatus === 2 ? game.player2 : null
+      const endedAt = new Date()
+      const APIresponse = await axios.put('games/' + game.id, {
         status: 'E',
         winner_user_id: winner,
-        ended_at: format(new Date(), 'yyyy-MM-dd HH:mm:ss'),
-        total_time: game.totalTime,
-        total_turns_winner: winner == game.player1 ? game.movesByPlayer1 : winner == game.player2 ? game.movesByPlayer2 : null,
+        ended_at: format(endedAt, 'yyyy-MM-dd HH:mm:ss'),
+        total_time: Math.round((endedAt - new Date(game.began_at)) / 1000).toFixed(2),
+        total_turns_winner:
+          winner == game.player1
+            ? game.movesByPlayer1
+            : winner == game.player2
+              ? game.movesByPlayer2
+              : null,
         player1: game.player1,
-        player2: game.player2,
+        player2: game.player2
       })
       const updatedGameOnDB = APIresponse.data
       console.log('Game has ended and updated on the database: ', updatedGameOnDB)
@@ -151,11 +158,12 @@ export const useGamesStore = defineStore('games', () => {
       description: `Game #${game.id} was interrupted because your opponent has gone offline!`,
       variant: 'destructive'
     })
-    const APIresponse = await axios.patch('games/' + game.id, {
+    const endedAt = new Date()
+    const APIresponse = await axios.put('games/' + game.id, {
       status: 'I',
-        winner_user_id: storeAuth.userId,
-        ended_at: format(new Date(), 'yyyy-MM-dd HH:mm:ss'),
-        total_time: game.totalTime,
+      winner_user_id: storeAuth.userId,
+      ended_at: format(endedAt, 'yyyy-MM-dd HH:mm:ss'),
+      total_time: Math.round((endedAt - new Date(game.began_at)) / 1000).toFixed(2)
     })
     const updatedGameOnDB = APIresponse.data
     console.log('Game was interrupted and updated on the database: ', updatedGameOnDB)

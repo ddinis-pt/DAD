@@ -24,6 +24,8 @@ exports.createGameEngine = () => {
     gameFromDB.isFlipping = false;
     gameFromDB.totalTime = 0;
     gameFromDB.totalTurnsWinner = 0;
+    gameFromDB.isFirstMove = 0;
+    gameFromDB.shouldUpdateTime = true;
     return gameFromDB;
   };
 

@@ -23,8 +23,8 @@ class UpdateGameRequest extends FormRequest
     {
         return [
             'winner_user_id' => 'nullable|integer|exists:users,id',
-            'status' => 'required|string|in:PE,PL,E,I',
-            'ended_at' => 'required|date',
+            'status' => 'nullable|string|in:PE,PL,E,I',
+            'ended_at' => 'nullable|date',
             'total_time' => 'nullable|numeric|regex:/^\d+(\.\d{1,2})?$/',
             'total_turns_winner' => 'nullable|integer',
             'player1' => 'nullable|integer|exists:users,id',
