@@ -124,6 +124,13 @@ class StatsController extends Controller
         return response()->json($games, 200);
     }
 
+    public function totalMultiplayerGames(){
+        $games = Game::where('status', 'E')
+            ->where('type', 'M')
+            ->count();
+        return response()->json($games, 200);
+    }
+
     public function gamesPlayedLastWeek()
     {
         $games = Game::where('status', 'E')
@@ -160,5 +167,49 @@ class StatsController extends Controller
             ->where('type','A')
             ->count();
         return response()->json($users, 200);
+    }
+
+    public function totalGamesByBoard(){
+        $gamesByBoard = DB::table('games')
+            ->join('boards', 'games.board_id', '=', 'boards.id')
+            ->select(DB::raw('CONCAT(boards.board_cols, "x", boards.board_rows) as board_size'), DB::raw('COUNT(*) as total_games'))
+            ->groupBy('board_size')
+            ->get();
+        return response()->json($gamesByBoard, 200);
+    }
+
+    public function totalGamesByTypeAndMonth(){
+        $jogosPorTipoPorMes = DB::table('games')
+        ->select(
+            DB::raw('DATE_FORMAT(created_at, "%Y-%m") as month'),'type',DB::raw('COUNT(*) as total_games')
+        )
+        ->whereRaw('YEAR(created_at) = YEAR(SYSDATE())')
+        ->groupBy('month', 'type')
+        ->orderBy('month')
+        ->get();
+
+        $resultado = [];
+        foreach ($jogosPorTipoPorMes as $entry) {
+            $mes = $entry->month;
+            $tipo = $entry->type;
+            $total = $entry->total_games;
+
+            if (!isset($resultado[$mes])) {
+                $resultado[$mes] = [
+                    'month' => $mes,
+                    'singleplayer' => 0,
+                    'multiplayer' => 0,
+                ];
+            }
+
+            if ($tipo === 'S') {
+                $resultado[$mes]['singleplayer'] = $total;
+            } elseif ($tipo === 'M') {
+                $resultado[$mes]['multiplayer'] = $total;
+            }
+        }
+
+        $dadosGrafico = array_values($resultado);
+        return response()->json($dadosGrafico);
     }
 }

@@ -10,6 +10,7 @@ const numberOfGames = ref(0);
 const numberOfGamesLastWeek = ref(0);
 const numberOfGamesLastMonth = ref(0);
 const numberOfAdmins = ref(0);
+const numberOfMultiplayerGames = ref(0);
 
 const top5Buyers = ref(0);
 const top5Spenders = ref(0);
@@ -22,7 +23,9 @@ const modeChosen = ref('users');
 let uniqueUsers = null;
 let purchasesYearByWeek = null;
 let gamesByStatus = null;
+let gamesByBoard = null;
 let blockedUsers = null;
+let gamesByTypeAndMonth = null;
 
 const chartOptions = {
   responsive: true,
@@ -123,15 +126,83 @@ onMounted(() => {
     ]
   };
 
+  const chartDataGamesByBoard = {
+    labels: [],
+    datasets: [
+      {
+        label: 'Games',
+        data: [],
+        backgroundColor: ['#fbcd8a','#b7e8a7','#c193b9'],
+        borderColor: ['#ffdf8c','#bfffb7','#ffc2f4']
+      }
+    ]
+  };
+
+  const chartDateGamesByTypeAndMonth = {
+    labels: [],
+    datasets: [
+      {
+        label: 'Singleplayer',
+        data: [],
+        backgroundColor: ['#fbcd8a','#b7e8a7','#c193b9'],
+        borderColor: ['#ffdf8c','#bfffb7','#ffc2f4']
+      },
+      {
+        label: 'Multiplayer',
+        data: [],
+        backgroundColor: ['#fbcd8a','#b7e8a7','#c193b9'],
+        borderColor: ['#ffdf8c','#bfffb7','#ffc2f4']
+      }
+    ]
+  };
+
 
   axios.get('stats/users/month')
     .then(response => {
       response.data.forEach(element => {
+        switch (element.month){
+          case 1:
+            element.month = "January";
+            break;
+          case 2:
+            element.month = "February";
+            break;
+          case 3:
+            element.month = "March";
+            break;
+          case 4:
+            element.month = "April";
+            break;
+          case 5:
+            element.month = "May";
+            break;
+          case 6:
+            element.month = "June";
+            break;
+          case 7:
+            element.month = "July";
+            break;
+          case 8:
+            element.month = "August";
+            break;
+          case 9:
+            element.month = "September";
+            break;
+          case 10:
+            element.month = "October";
+            break;
+          case 11:
+            element.month = "November";
+            break;
+          case 12:
+            element.month = "December";
+            break;
+        }
         chartData.labels.push(element.month);
         chartData.datasets[0].data.push(element.count);
       });
 
-      // Configurar o backgroundColor como uma função dinâmica
+      //Gradient
       uniqueUsers = {
         ...chartData,
         datasets: [
@@ -140,7 +211,7 @@ onMounted(() => {
             backgroundColor: (ctx) => {
               const chart = ctx.chart;
               const { ctx: canvasCtx, chartArea } = chart;
-              if (!chartArea) return; // Aguarda a área do gráfico ser calculada
+              if (!chartArea) return;
               return generateHorizontalGradient(canvasCtx, chartArea, 'rgba(31, 41, 55, 0.3)' , 'rgba(31, 41, 55, 1)');
             }
           }
@@ -160,7 +231,7 @@ onMounted(() => {
         chartData2.datasets[0].data.push(element.count);
       });
 
-      // Configurar o backgroundColor como uma função dinâmica
+      //Gradient
       purchasesYearByWeek = {
         ...chartData2,
         datasets: [
@@ -169,7 +240,7 @@ onMounted(() => {
             backgroundColor: (ctx) => {
               const chart = ctx.chart;
               const { ctx: canvasCtx, chartArea } = chart;
-              if (!chartArea) return; // Aguarda a área do gráfico ser calculada
+              if (!chartArea) return;
               return generateHorizontalGradient(canvasCtx, chartArea, 'rgba(204, 204, 255, 0.6)' , 'rgba(204, 204, 255, 1)');
             }
           }
@@ -216,6 +287,49 @@ onMounted(() => {
         chartDataBlockedUsers.datasets[0].data.push(element.count);
       });
       blockedUsers = chartDataBlockedUsers;
+    }).catch(error => {
+      console.log(error);
+    });
+
+    axios.get('stats/games/total/board').then(response => {
+      response.data.forEach(element => {
+        chartDataGamesByBoard.labels.push(element.board_size);
+        chartDataGamesByBoard.datasets[0].data.push(element.total_games);
+      });
+      gamesByBoard = chartDataGamesByBoard;
+    }).catch(error => {
+      console.log(error);
+    });
+
+    axios.get('stats/games/total/typeAndMonth').then(response => {
+      response.data.forEach(element => {
+        chartDateGamesByTypeAndMonth.labels.push(element.month);
+        chartDateGamesByTypeAndMonth.datasets[0].data.push(element.singleplayer);
+        chartDateGamesByTypeAndMonth.datasets[1].data.push(element.multiplayer);
+      });
+      gamesByTypeAndMonth = {
+        ...chartDateGamesByTypeAndMonth,
+        datasets: [
+          {
+            ...chartDateGamesByTypeAndMonth.datasets[0],
+            backgroundColor: (ctx) => {
+              const chart = ctx.chart;
+              const { ctx: canvasCtx, chartArea } = chart;
+              if (!chartArea) return;
+              return generateHorizontalGradient(canvasCtx, chartArea, 'rgba(72,198,247,0.3)' , 'rgba(72,198,247 ,1)');
+            }
+          },
+          {
+            ...chartDateGamesByTypeAndMonth.datasets[1],
+            backgroundColor: (ctx) => {
+              const chart = ctx.chart;
+              const { ctx: canvasCtx, chartArea } = chart;
+              if (!chartArea) return;
+              return generateHorizontalGradient(canvasCtx, chartArea, 'rgba(247, 189, 72, 0.3)' , 'rgba(247, 189, 72, 1)');
+            }
+          }
+        ]
+      }
     }).catch(error => {
       console.log(error);
     });
@@ -278,6 +392,12 @@ onMounted(() => {
 
     axios.get('stats/users/admins').then(response => {
       numberOfAdmins.value = response.data;
+    }).catch(error => {
+      console.log(error);
+    });
+
+    axios.get('stats/games/multiplayer').then(response => {
+      numberOfMultiplayerGames.value = response.data;
     }).catch(error => {
       console.log(error);
     });
@@ -346,7 +466,7 @@ onMounted(() => {
             type="bar" 
             :data="uniqueUsers" 
             :chartOptions="chartOptions" 
-            class="w-full md:w-[20rem]" 
+            class="w-full md:w-[20rem] lg:w-[30rem]" 
           />
         </div>
         <div class="bg-white shadow-md rounded-lg p-4 text-center lg:h-full flex flex-col justify-center w-46">
@@ -355,46 +475,46 @@ onMounted(() => {
             type="doughnut" 
             :data="blockedUsers"
             :chartOptions="chartOptionsDoughnut" 
-            class="w-full md:w-[15rem]"
+            class="w-full md:w-[20rem]"
           />
         </div>  
       </div>
-      <div class="flex flex-wrap justify-center gap-4 mt-6">
-        <!-- Tabela top 5 users que mais dinheiro gastaram em brain_coins -->
-        <div class="bg-white shadow-md rounded-lg p-4 text-center flex flex-col justify-top w-full max-w-sm">
-          <h2 class="text-md font-bold text-black mb-4">Top 5 Buyers</h2>
-          <table class="table-auto w-full text-sm border-collapse">
-            <thead>
-              <tr class="bg-gray-100 text-gray-700">
-                <th class="px-3 py-1 border-r border-gray-300 text-left">Name</th>
-                <th class="px-3 py-1 text-right">Total Bought</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="buyer in top5Buyers" :key="buyer.name" class="odd:bg-white even:bg-gray-50">
-                <td class="px-3 py-1 border-r border-gray-300 text-left text-gray-600">{{ buyer.name }}</td>
-                <td class="px-3 py-1 text-right text-gray-600">{{ buyer.total_bought }}€</td>
-              </tr>
-            </tbody>
-          </table>
+    </div>
+    <div v-if="modeChosen === 'games'">
+      <div class="flex flex-wrap justify-center gap-6 mt-20">
+
+        <div class="bg-white shadow-md rounded-lg p-4 text-center sm:h-24 md:h-30 lg:h-36 flex flex-col justify-center w-46">
+          <h2 class="text-md font-semibold text-gray-700 mb-1">Total Games Played</h2>
+          <p class="text-2xl font-bold text-blue-500">{{ numberOfGames }}</p>
         </div>
-        <!-- Tabela top 5 users que mais gastaram brain_coins-->
-        <div class="bg-white shadow-md rounded-lg p-4 text-center flex flex-col justify-center w-full max-w-sm">
-          <h2 class="text-md font-bold text-black mb-4">Top 5 Spenders</h2>
-          <table class="table-auto w-full text-sm border-collapse">
-            <thead>
-              <tr class="bg-gray-100 text-gray-700">
-                <th class="px-3 py-1 border-r border-gray-300 text-left">Name</th>
-                <th class="px-3 py-1 text-right">Total Spent (brain coins)</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="spender in top5Spenders" :key="spender.name" class="odd:bg-white even:bg-gray-50">
-                <td class="px-3 py-1 border-r border-gray-300 text-left text-gray-600">{{ spender.name }}</td>
-                <td class="px-3 py-1 text-right text-gray-600">{{ parseInt(spender.total_spent) * -1.0}}</td>
-              </tr>
-            </tbody>
-          </table>
+
+        <div class="bg-white shadow-md rounded-lg p-4 text-center sm:h-24 md:h-30 lg:h-36 flex flex-col justify-center w-46">
+          <h2 class="text-md font-semibold text-gray-700 mb-1">Total Multiplayer Games Played</h2>
+          <p class="text-2xl font-bold text-green-500">{{ numberOfMultiplayerGames }}</p>
+        </div>
+        
+        <div class="bg-white shadow-md rounded-lg p-4 text-center sm:h-24 md:h-30 lg:h-36 flex flex-col justify-center w-46">
+          <h2 class="text-md font-semibold text-gray-700 mb-1">Games Played Last Month</h2>
+          <p class="text-2xl font-bold text-red-500">{{ numberOfGamesLastMonth }}</p>
+        </div>
+        
+
+        <div class="bg-white shadow-md rounded-lg p-4 text-center sm:h-24 md:h-30 lg:h-36 flex flex-col justify-center w-46">
+          <h2 class="text-md font-semibold text-gray-700 mb-1">Games Played Last Week</h2>
+          <p class="text-2xl font-bold text-orange-500">{{ numberOfGamesLastWeek }}</p>
+        </div>
+
+      </div>
+
+      <div class="flex flex-wrap justify-center gap-4 mt-6">
+        <div class="bg-white shadow-md rounded-lg p-4 text-center lg:h-full flex flex-col justify-center w-46">
+          <h2 class="text-md font-bold text-black mb-2">Games by Month</h2>
+          <Chart 
+            type="bar" 
+            :data="gamesByTypeAndMonth" 
+            :chartOptions="chartOptions" 
+            class="w-full md:w-[20rem] lg:w-[30rem]" 
+          />
         </div>
       </div>
       <div class="flex flex-wrap justify-center gap-4 mt-6">
@@ -435,8 +555,26 @@ onMounted(() => {
           </table>
         </div>
       </div>
+      <div class="flex flex-wrap justify-center gap-4 mt-6">
+        <div class="bg-white shadow-md rounded-lg p-4 text-center lg:h-full flex flex-col justify-center w-46">
+          <h2 class="text-md font-bold text-black mb-2">Games by status</h2>
+          <Chart 
+            type="doughnut"
+            :data="gamesByStatus"
+            :chartOptions="chartOptionsDoughnut"
+            class="w-full md:w-[15rem]" />
+        </div>
+        <div class="bg-white shadow-md rounded-lg p-4 text-center lg:h-full flex flex-col justify-center w-46">
+          <h2 class="text-md font-bold text-black mb-2">Games by Board</h2>
+          <Chart 
+            type="doughnut" 
+            :data="gamesByBoard" 
+            :chartOptions="chartOptionsDoughnut"
+            class="w-full md:w-[15rem]" />
+        </div>
+      </div>
     </div>
-    <div v-if="modeChosen === 'games'">
+    <div v-if="modeChosen === 'transactions'">
       <div class="flex flex-wrap justify-center gap-6 mt-20">
 
         <div class="bg-white shadow-md rounded-lg p-4 text-center sm:h-24 md:h-30 lg:h-36 flex flex-col justify-center w-46">

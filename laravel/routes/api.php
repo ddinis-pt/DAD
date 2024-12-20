@@ -49,6 +49,9 @@ Route::get('/stats/games/lastWeek', [StatsController::class, 'gamesPlayedLastWee
 Route::get('/stats/games/lastMonth', [StatsController::class, 'gamesPlayedLastMonth']);
 Route::get('/stats/games/total/status', [StatsController::class, 'totalGamesByStatus']);
 Route::get('stats/users/blocked', [StatsController::class, 'usersByBlocked']);
+Route::get('stats/games/multiplayer', [StatsController::class, 'totalMultiplayerGames']);
+Route::get('stats/games/total/board', [StatsController::class, 'totalGamesByBoard']);
+Route::get('stats/games/total/typeAndMonth', [StatsController::class, 'totalGamesByTypeAndMonth']);
 
 //Auth
 Route::post('/auth/login', [AuthController::class, "login"]);
