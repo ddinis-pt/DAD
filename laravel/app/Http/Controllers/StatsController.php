@@ -26,7 +26,7 @@ class StatsController extends Controller
     {
         $users = DB::table('games')
             ->join('users', 'games.winner_user_id', '=', 'users.id')
-            ->select('users.nickname as name', DB::raw('COUNT(*) as total_victories'))
+            ->select('users.name as name', DB::raw('COUNT(*) as total_victories'))
             ->whereNotNull('games.winner_user_id')
             ->where('games.type', 'M')
             ->groupBy('games.winner_user_id', 'users.nickname')
@@ -36,11 +36,11 @@ class StatsController extends Controller
         return response()->json($users, 200);
     }
 
-    public function getTop5Loosers()
+    public function getTop5Losers()
     {
         $users = DB::table('multiplayer_games_played')
             ->join('users', 'multiplayer_games_played.user_id', '=', 'users.id')
-            ->select('users.nickname as name', DB::raw('COUNT(*) as total_defeats'))
+            ->select('users.name as name', DB::raw('COUNT(*) as total_defeats'))
             ->whereNotNull('multiplayer_games_played.user_id')
             ->where('multiplayer_games_played.player_won', 0)
             ->groupBy('users.nickname')
@@ -143,5 +143,22 @@ class StatsController extends Controller
             ])
             ->count();
         return response()->json($games, 200);
+    }
+
+    public function usersByBlocked(){
+        $users = DB::table('users')
+            ->select('blocked', DB::raw('count(*) as count'))
+            ->where('deleted_at', null)
+            ->where('type', 'P')
+            ->groupBy('blocked')
+            ->get();
+        return response()->json($users, 200);
+    }
+
+    public function getAdmins(){
+        $users = User::All()
+            ->where('type','A')
+            ->count();
+        return response()->json($users, 200);
     }
 }

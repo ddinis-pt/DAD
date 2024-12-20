@@ -3,26 +3,27 @@ import Header from '@/components/ui/Header.vue';
 import axios from 'axios';
 import { ref, onMounted } from 'vue';
 import Chart from 'primevue/chart';
-import DataTable from 'primevue/datatable';
-import Column from 'primevue/column';
 
 
 const numberOfPlayers = ref(0);
 const numberOfGames = ref(0);
 const numberOfGamesLastWeek = ref(0);
 const numberOfGamesLastMonth = ref(0);
+const numberOfAdmins = ref(0);
 
-const top5Buyers = ref();
-const top5Spenders = ref();
+const top5Buyers = ref(0);
+const top5Spenders = ref(0);
+
+const top5Winners = ref(0);
+const top5Losers = ref(0);
 
 const modeChosen = ref('users');
 
-//let chartDataDoughnut = null;
-//let chartOptionsDoughnut = null;
+let uniqueUsers = null;
+let purchasesYearByWeek = null;
+let gamesByStatus = null;
+let blockedUsers = null;
 
-let data = null;
-let data2 = null;
-let data3 = null;
 const chartOptions = {
   responsive: true,
   plugins: {
@@ -45,18 +46,7 @@ const chartOptions = {
     }
   }
 };
-// const setChartOptions = () => {
-//     return {
-//       plugins: {
-//         legend: {
-//             labels: {
-//               cutout: '60%',
-//               color: '#FFF'
-//             }
-//         }
-//       }
-//     };
-// };
+
 const chartOptionsDoughnut = {
       responsive: true,
       plugins: {
@@ -68,46 +58,6 @@ const chartOptionsDoughnut = {
               }
             }
     };
-
-const setChartData = () => {
-  let games = {
-        labels: [],
-        datasets: [
-            {
-                data: [],
-                backgroundColor: ['#6b7280','#09b9d7','#f97316','#9a08f9'],
-                hoverBackgroundColor: ['#9ca3af','#22d3ee','#fb923c','#5c08a0']
-            }
-        ]
-    };
-
-  axios.get('stats/games/total/status')
-    .then(response => {
-      response.data.forEach(element => {
-        var string = "";
-        switch(element.status) {
-          case "PE":
-            string = "Pending";
-            break;
-          case "PL":
-            string = 'In Progress';
-            break;
-          case "E":
-            string = 'Ended';
-            break;
-          case "I":
-            string = 'Interrupted';
-            break;
-        }
-        games.labels.push(string);
-        games.datasets[0].data.push(element.count);
-      });
-    })
-    .catch(error => {
-      console.log(error);
-    });
-    return games;
-};
 
 const generateHorizontalGradient = (ctx, chartArea, startingColor, endingColor) => {
   const { left, right } = chartArea;
@@ -122,6 +72,8 @@ const changeMode = (mode) => {
     modeChosen.value = 'users'
   } else if (mode == 2) {
     modeChosen.value = 'games'
+  } else if (mode == 3) {
+    modeChosen.value = 'transactions'
   }
 }
 
@@ -159,6 +111,18 @@ onMounted(() => {
     ]
   };
 
+  const chartDataBlockedUsers = {
+    labels: [],
+    datasets: [
+      {
+        label: 'users',
+        data: [],
+        backgroundColor: ['#22cc90','#df6464'],
+        hoverBackgroundColor: ['#2bffb4','#ff7b72']
+      }
+    ]
+  };
+
 
   axios.get('stats/users/month')
     .then(response => {
@@ -168,7 +132,7 @@ onMounted(() => {
       });
 
       // Configurar o backgroundColor como uma função dinâmica
-      data = {
+      uniqueUsers = {
         ...chartData,
         datasets: [
           {
@@ -197,7 +161,7 @@ onMounted(() => {
       });
 
       // Configurar o backgroundColor como uma função dinâmica
-      data2 = {
+      purchasesYearByWeek = {
         ...chartData2,
         datasets: [
           {
@@ -237,12 +201,24 @@ onMounted(() => {
         chartDataDoughnut.labels.push(string);
         chartDataDoughnut.datasets[0].data.push(element.count);
 
-        data3 = chartDataDoughnut;
+        gamesByStatus = chartDataDoughnut;
       });
     })
 
-    //chartDataDoughnut = setChartData();
-    //chartOptionsDoughnut = setChartOptions();
+    axios.get('stats/users/blocked').then(response => {
+      response.data.forEach(element => {
+        if(element.blocked == 1) {
+          element.blocked = "Blocked";
+        } else {
+          element.blocked = "Active";
+        }
+        chartDataBlockedUsers.labels.push(element.blocked);
+        chartDataBlockedUsers.datasets[0].data.push(element.count);
+      });
+      blockedUsers = chartDataBlockedUsers;
+    }).catch(error => {
+      console.log(error);
+    });
 
     // Gets para non-authenticated users
     axios.get('stats/users/total')
@@ -276,8 +252,6 @@ onMounted(() => {
     .catch(error => {
       console.log(error);
     });
-
-
     axios.get('stats/buyers/top5').then(response => {
       top5Buyers.value = response.data;
     }).catch(error => {
@@ -286,6 +260,24 @@ onMounted(() => {
 
     axios.get('stats/spenders/top5').then(response => {
       top5Spenders.value = response.data;
+    }).catch(error => {
+      console.log(error);
+    });
+
+    axios.get('stats/winners/top5').then(response => {
+      top5Winners.value = response.data;
+    }).catch(error => {
+      console.log(error);
+    });
+
+    axios.get('stats/losers/top5').then(response => {
+      top5Losers.value = response.data;
+    }).catch(error => {
+      console.log(error);
+    });
+
+    axios.get('stats/users/admins').then(response => {
+      numberOfAdmins.value = response.data;
     }).catch(error => {
       console.log(error);
     });
@@ -313,20 +305,28 @@ onMounted(() => {
               <i class="pi pi-trophy"></i>
               Games
             </a>
+            <a
+              class="py-4 px-1 inline-flex items-center gap-2 border-b-2 border-transparent text-sm whitespace-nowrap  focus:border-blue-500 dark:focus:border-blue-500 neutral-700 hover:text-blue-500 dark:hover:text-blue-500 hover:cursor-pointer"
+              @click.prevent="changeMode(3)"
+              :class="{ 'text-blue-500 border-b !border-blue-500': modeChosen === 'transactions' }"
+              aria-current="page"
+            >
+              <i class="pi pi-money-bill"></i>
+              Transactions
+            </a>
     </nav>
     <div v-if="modeChosen === 'users'">
       <div class="flex flex-wrap justify-center gap-6 mt-20">
-
         <div class="bg-white shadow-md rounded-lg p-4 text-center sm:h-24 md:h-30 lg:h-36 flex flex-col justify-center w-46">
-          <h2 class="text-md font-semibold text-gray-700 mb-1">Number of Players Registered</h2>
+          <h2 class="text-md font-semibold text-gray-700 mb-1">Number of Users Registered</h2>
           <p class="text-2xl font-bold text-blue-500">{{ numberOfPlayers }}</p>
         </div>
 
         <div class="bg-white shadow-md rounded-lg p-4 text-center sm:h-24 md:h-30 lg:h-36 flex flex-col justify-center w-46">
-          <h2 class="text-md font-semibold text-gray-700 mb-1">Total Games Played</h2>
-          <p class="text-2xl font-bold text-green-500">{{ numberOfGames }}</p>
+          <h2 class="text-md font-semibold text-gray-700 mb-1">Number of Admins</h2>
+          <p class="text-2xl font-bold text-green-500">{{ numberOfAdmins }}</p>
         </div>
-        
+        <!--
         <div class="bg-white shadow-md rounded-lg p-4 text-center sm:h-24 md:h-30 lg:h-36 flex flex-col justify-center w-46">
           <h2 class="text-md font-semibold text-gray-700 mb-1">Games Played Last Month</h2>
           <p class="text-2xl font-bold text-red-500">{{ numberOfGamesLastMonth }}</p>
@@ -336,27 +336,26 @@ onMounted(() => {
         <div class="bg-white shadow-md rounded-lg p-4 text-center sm:h-24 md:h-30 lg:h-36 flex flex-col justify-center w-46">
           <h2 class="text-md font-semibold text-gray-700 mb-1">Games Played Last Week</h2>
           <p class="text-2xl font-bold text-orange-500">{{ numberOfGamesLastWeek }}</p>
-        </div>
-
+        </div>-->
       </div>
 
       <div class="flex flex-wrap justify-center gap-4 mt-6">
         <div class="bg-white shadow-md rounded-lg p-4 text-center lg:h-full flex flex-col justify-center w-46">
-          <h2 class="text-md font-bold text-black mb-2">Unique Users this year</h2>
+          <h2 class="text-md font-bold text-black mb-2">New Users This Year</h2>
           <Chart 
             type="bar" 
-            :data="data" 
+            :data="uniqueUsers" 
             :chartOptions="chartOptions" 
             class="w-full md:w-[20rem]" 
           />
         </div>
         <div class="bg-white shadow-md rounded-lg p-4 text-center lg:h-full flex flex-col justify-center w-46">
-          <h2 class="text-md font-bold text-black mb-2">Purchases this year by week</h2>
+          <h2 class="text-md font-bold text-black mb-2">Blocked Users</h2>
           <Chart 
-            type="bar" 
-            :data="data2" 
-            :chartOptions="chartOptions" 
-            class="w-full md:w-[20rem]"
+            type="doughnut" 
+            :data="blockedUsers"
+            :chartOptions="chartOptionsDoughnut" 
+            class="w-full md:w-[15rem]"
           />
         </div>  
       </div>
@@ -398,12 +397,43 @@ onMounted(() => {
           </table>
         </div>
       </div>
-      <div class="flex justify-center gap-4 mt-6">
-        <Chart 
-          type="doughnut" 
-          :data="data3" 
-          :chartOptions="chartOptionsDoughnut" 
-          class="w-full md:w-[20rem]" />
+      <div class="flex flex-wrap justify-center gap-4 mt-6">
+        <!-- Tabela top 5 users que tem mais vitórias -->
+        <div class="bg-white shadow-md rounded-lg p-4 text-center flex flex-col justify-top w-full max-w-sm">
+          <h2 class="text-md font-bold text-black mb-4">Top 5 Winners</h2>
+          <table class="table-auto w-full text-sm border-collapse">
+            <thead>
+              <tr class="bg-gray-100 text-gray-700">
+                <th class="px-3 py-1 border-r border-gray-300 text-left">Name</th>
+                <th class="px-3 py-1 text-right">Total Wins</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="winner in top5Winners" :key="winner.name" class="odd:bg-white even:bg-gray-50">
+                <td class="px-3 py-1 border-r border-gray-300 text-left text-gray-600">{{ winner.name }}</td>
+                <td class="px-3 py-1 text-right text-gray-600">{{ winner.total_victories }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <!-- Tabela top 5 users com mais derrotas WALL OF SHAME-->
+        <div class="bg-white shadow-md rounded-lg p-4 text-center flex flex-col justify-center w-full max-w-sm">
+          <h2 class="text-md font-bold text-black mb-4">Top 5 Losers</h2>
+          <table class="table-auto w-full text-sm border-collapse">
+            <thead>
+              <tr class="bg-gray-100 text-gray-700">
+                <th class="px-3 py-1 border-r border-gray-300 text-left">Name</th>
+                <th class="px-3 py-1 text-right">Total Losses</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="loser in top5Losers" :key="loser.name" class="odd:bg-white even:bg-gray-50">
+                <td class="px-3 py-1 border-r border-gray-300 text-left text-gray-600">{{ loser.name }}</td>
+                <td class="px-3 py-1 text-right text-gray-600">{{ loser.total_defeats}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
     <div v-if="modeChosen === 'games'">
@@ -437,7 +467,7 @@ onMounted(() => {
           <h2 class="text-md font-bold text-black mb-2">Unique Users this year</h2>
           <Chart 
             type="bar" 
-            :data="data" 
+            :data="uniqueUsers" 
             :chartOptions="chartOptions" 
             class="w-full md:w-[20rem]" 
           />
@@ -446,7 +476,7 @@ onMounted(() => {
           <h2 class="text-md font-bold text-black mb-2">Purchases this year by week</h2>
           <Chart 
             type="bar" 
-            :data="data2" 
+            :data="purchasesYearByWeek" 
             :chartOptions="chartOptions" 
             class="w-full md:w-[20rem]"
           />
@@ -493,7 +523,7 @@ onMounted(() => {
       <div class="flex justify-center gap-4 mt-6">
         <Chart 
           type="doughnut" 
-          :data="data3" 
+          :data="gamesByStatus" 
           :chartOptions="chartOptionsDoughnut" 
           class="w-full md:w-[20rem]" />
       </div>

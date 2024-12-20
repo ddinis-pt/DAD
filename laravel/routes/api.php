@@ -35,10 +35,11 @@ Route::middleware(['auth:sanctum'])->group(function () {
     
     Route::get('/stats/users/month', [StatsController::class, 'getUsersCountByMonth']);
     Route::get('/stats/winners/top5', [StatsController::class, 'getTop5Winners']);
-    Route::get('/stats/loosers/top5', [StatsController::class, 'getTop5Loosers']); 
+    Route::get('/stats/losers/top5', [StatsController::class, 'getTop5Losers']); 
     Route::get('/stats/purchases/week', [StatsController::class, 'totalPurchasesByWeek']);
     Route::get('/stats/buyers/top5', [StatsController::class, 'getTop5Buyers']);
     Route::get('/stats/spenders/top5', [StatsController::class, 'getTop5Spenders']);
+    Route::get('/stats/users/admins', [StatsController::class, 'getAdmins']);
 });
 
 //Stats for all users
@@ -47,6 +48,7 @@ Route::get('/stats/games/total', [StatsController::class, 'totalGames']);
 Route::get('/stats/games/lastWeek', [StatsController::class, 'gamesPlayedLastWeek']);
 Route::get('/stats/games/lastMonth', [StatsController::class, 'gamesPlayedLastMonth']);
 Route::get('/stats/games/total/status', [StatsController::class, 'totalGamesByStatus']);
+Route::get('stats/users/blocked', [StatsController::class, 'usersByBlocked']);
 
 //Auth
 Route::post('/auth/login', [AuthController::class, "login"]);
