@@ -79,8 +79,9 @@ export const useLobbyStore = defineStore('lobby', () => {
       newGameOnDB.player1SocketId = response.player1SocketId
       newGameOnDB.player2SocketId = response.player2SocketId
       // subtract 5 coins from each user
-      await axios.get(`/users/${newGameOnDB.player1}/spend/5`)
-      await axios.get(`/users/${newGameOnDB.player2}/spend/5`)
+      await axios.put(`/users/${newGameOnDB.player1}/spend/5`)
+      await axios.put(`/users/${newGameOnDB.player2}/spend/5`)
+      storeAuth.refreshUserData()
       // After adding the game to the DB emit a message to the server to start the game
       socket.emit('startGame', newGameOnDB, (startedGame) => {
         console.log('Game has started', startedGame)

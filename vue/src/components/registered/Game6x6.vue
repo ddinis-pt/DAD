@@ -132,7 +132,7 @@ const showHint = async () => {
         });
         return;
     } else {
-        await axios.get('/spend/1')
+        await axios.put('/spend/1')
             .catch(() => {
                 toast({
                     title: 'Error',
