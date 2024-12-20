@@ -62,6 +62,7 @@ if (authStore.user === null) {
 
 const submit = async () => {
     if (confirmation.value === randomWord.value) {
+        await axios.put('/spend/' + authStore.userCoins);
         await axios.delete(`/users/${authStore.user.id}`)
             .then(() => {
                 authStore.logout()

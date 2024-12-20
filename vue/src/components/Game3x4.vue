@@ -77,8 +77,10 @@ const cartaVirada = async (index) => {
             }
         }, 1000);
         isFirstMove.value = false;
+        document.getElementById("background").play();
     }
     flippedCards.value[index] = true;
+    document.getElementById("flip").play();
     currentlyFlipped.value.push(index);
     await nextTick();
     if (currentlyFlipped.value.length == 2) {
@@ -115,6 +117,7 @@ const showHint = () => {
         const [index1, index2] = unflippedPairs[0];
         flippedCards.value[index1] = true;
         flippedCards.value[index2] = true;
+        document.getElementById("flip").play();
         setTimeout(() => {
             flippedCards.value[index1] = false;
             flippedCards.value[index2] = false;
@@ -126,6 +129,12 @@ const showHint = () => {
 </script>
 
 <template>
+    <audio id="background" volume="0.01" loop>
+        <source src="/src/assets/background-music.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="flip" volume="0.03">
+        <source src="/src/assets/flip.mp3" type="audio/mpeg">
+    </audio>
     <div class="min-h-screen flex flex-col justify-between bg-gray-800">
         <header>
             <div class="flex gap-x-8 gap-y-4 grid-cols-3 justify-between items-center px-4 py-2">

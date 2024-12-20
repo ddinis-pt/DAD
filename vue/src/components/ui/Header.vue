@@ -1,6 +1,6 @@
 <script setup>
 import router from '@/router';
-import { onMounted } from 'vue';
+import { onMounted, watch } from 'vue';
 import { useAuthStore } from '@/stores/auth'
 const authStore = useAuthStore()
 
@@ -9,14 +9,23 @@ const back = () => {
 }
 
 const logout = async () => {
-    let result = await authStore.logout(authStore.user)
-    if(result) {
+    if (authStore.user != null) {
+        let result = await authStore.logout(authStore.user)
+        if (result) {
+            router.push({ name: 'login' })
+        }
+    } else {
         router.push({ name: 'login' })
     }
 }
 
+watch(() => authStore.userCoins, (newValue, oldValue) => {
+    console.log('User coins changed from', oldValue, 'to', newValue)
+    authStore.refreshUserData()
+})
+
 onMounted(() => {
-    if(authStore.user) {
+    if (authStore.user) {
         authStore.refreshUserData()
     }
 })
@@ -48,7 +57,7 @@ onMounted(() => {
                     class="hs-dropdown-toggle ps-1 pe-3 inline-flex gap-x-2 text-sm font-medium text-white disabled:opacity-50 disabled:pointer-events-none"
                     aria-haspopup="menu" aria-expanded="false" aria-label="Dropdown">
                     <div v-if="authStore.user" class="flex items-center">
-                        <img @click="logout" class="inline-block size-[55px] rounded-full border-2 border-blue-600"
+                        <img class="inline-block size-[55px] rounded-full border-2 border-blue-600"
                             :src="authStore.userPhotoUrl" alt="Avatar">
                         <h2 class="block text-xl font-bold text-white pl-4 pr-2">Hello, {{ authStore.userFirstLastName
                             }}!
@@ -60,7 +69,7 @@ onMounted(() => {
                         </svg>
                     </div>
                     <div v-else class="flex items-center">
-                        <img @click="logout" class="inline-block size-[55px] rounded-full border-2 border-blue-600"
+                        <img class="inline-block size-[55px] rounded-full border-2 border-blue-600"
                             src="../../assets/avatar-none.png" alt="Avatar">
                         <h2 class="block text-xl font-bold text-white pl-2">Hello, Guest!</h2>
                     </div>

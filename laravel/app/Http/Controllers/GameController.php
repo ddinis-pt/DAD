@@ -6,9 +6,11 @@ use Illuminate\Http\Request;
 use App\Http\Requests\SaveGameRequest;
 use App\Http\Requests\UpdateGameRequest;
 use App\Http\Requests\UpdateTimeRequest;
+use App\Http\Requests\MultiplayerGameRequest;
 use App\Http\Resources\GameResource;
 use Illuminate\Validation\ValidationException;
 use App\Models\Game;
+use Illuminate\Support\Facades\DB;
 
 class GameController extends Controller
 {
@@ -214,5 +216,18 @@ class GameController extends Controller
             ->orderBy('total_time', 'asc')
             ->take(3)
             ->get(), 200);
+    }
+
+    public function insertMultiplayerGame(MultiplayerGameRequest $request) {
+        $result = DB::insert('INSERT INTO multiplayer_games_played (user_id, game_id, player_won, pairs_discovered) VALUES (?, ?, ?, ?)', [
+            $request->validated()["user_id"],
+            $request->validated()["game_id"],
+            $request->validated()["player_won"],
+            $request->validated()["pairs_discovered"]
+        ]);
+        if(!$result) {
+            return response()->json(['message' => 'Error inserting multiplayer game'], 500);
+        }
+        return response()->json(['message' => 'Multiplayer game inserted'], 201);
     }
 }

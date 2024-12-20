@@ -62,8 +62,12 @@ class UserController extends Controller
             if (!$user) {
                 return response()->json(['message' => 'Error fetching the user'], 200);
             }
+            if($user->type === 'A') {
+                return response()->json(['message' => 'Admins cannot spend coins'], 403);
+            }
             $user->decrement('brain_coins_balance', $value);
             $user->save();
+
             return response()->json(['message' => [`Balance decreased to $user->brain_coins_balance`]], 200);
         } catch (Error $e) {
             return response()->json(['message' => 'Error' + $e], 500);
@@ -73,6 +77,9 @@ class UserController extends Controller
     public function buyCoins(BuyCoinsRequest $request)
     {
         $type = $request->validated()['type'];
+        if($request->user()->type === 'A') {
+            return response()->json(['message' => 'Admins cannot buy coins'], 403);
+        }
         switch ($type) {
             case 'PAYPAL':
                 if (preg_match("/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/", $request->validated()['reference']) == 0) {
@@ -174,6 +181,9 @@ class UserController extends Controller
             if (!$user) {
                 return response()->json(['message' => 'Error fetching the user'], 200);
             }
+            if($user->type === 'A') {
+                return response()->json(['message' => 'Admins cannot win coins'], 403);
+            }
             $user->increment('brain_coins_balance', $value);
             $user->save();
             return response()->json(['message' => [`Balance increased to $user->brain_coins_balance`]], 200);
@@ -188,6 +198,9 @@ class UserController extends Controller
             if (!$user) {
                 return response()->json(['message' => 'Error fetching the user'], 200);
             }
+            if($user->type === 'A') {
+                return response()->json(['message' => 'Admins cannot win coins'], 403);
+            }
             $user->increment('brain_coins_balance', $value);
             $user->save();
             return response()->json(['message' => [`Balance increased to $user->brain_coins_balance`]], 200);
@@ -201,6 +214,9 @@ class UserController extends Controller
             $user = User::find($userId);
             if (!$user) {
                 return response()->json(['message' => 'Error fetching the user'], 200);
+            }
+            if($user->type === 'A') {
+                return response()->json(['message' => 'Admins cannot spend coins'], 403);
             }
             $user->decrement('brain_coins_balance', $value);
             $user->save();

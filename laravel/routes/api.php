@@ -16,11 +16,11 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::put('/users/{id}', [UserController::class, "update"]);
     Route::delete('/users/{id}', [UserController::class, "destroy"]);
 
-    Route::get('/spend/{value}', [UserController::class, "spendCoins"]);
+    Route::put('/spend/{value}', [UserController::class, "spendCoins"]);
     Route::post('/buy/', [UserController::class, "buyCoins"]);
-    Route::get('/win/{value}', [UserController::class, "winCoins"]);
-    Route::get('/users/{id}/win/{value}', [UserController::class, "winCoinsFor"]);
-    Route::get('/users/{id}/spend/{value}', [UserController::class, "spendCoinsFor"]);
+    Route::put('/win/{value}', [UserController::class, "winCoins"]);
+    Route::put('/users/{id}/win/{value}', [UserController::class, "winCoinsFor"]);
+    Route::put('/users/{id}/spend/{value}', [UserController::class, "spendCoinsFor"]);
 
     Route::get('/leaderboard/time', [GameController::class, "getTopTenByTime"]);
     Route::get('/leaderboard/turns', [GameController::class, "getTopTenByTurns"]);
@@ -32,6 +32,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/games/{id}', [GameController::class, 'show']);
     Route::post('/games', [GameController::class, 'store']);
     Route::put('/games/{game_id}', [GameController::class, 'updateStatus']);
+    Route::post('/games/multiplayer', [GameController::class, 'insertMultiplayerGame']);
     // Route::delete('/games/{game}', [GameController::class, 'destroy']);
 });
 
