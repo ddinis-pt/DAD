@@ -10,8 +10,16 @@ import { Button } from '@/components/ui/button';
 import { onMounted } from 'vue'
 import ListGamesLobby from './ListGamesLobby.vue'
 import { useLobbyStore } from '@/stores/lobby'
+import { useAuthStore } from '@/stores/auth'
+
+const authStore = useAuthStore()
 
 const storeLobby = useLobbyStore()
+
+const addGame = () => {
+    storeLobby.addGame()
+    authStore.refreshUserData()
+}
 
 onMounted(() => {
     storeLobby.fetchGames()
@@ -26,9 +34,12 @@ onMounted(() => {
         </CardHeader>
         <CardContent class="p-4">
             <div class="py-2">
-                <Button @click="storeLobby.addGame">
+                <Button v-show="storeLobby.hasMoney()" @click="addGame">
                     New Game
                 </Button>
+                <span v-show="!storeLobby.hasMoney()" class="text-red-500">
+                    You don't have enough coins to create or join a new game. (5 coins needed)
+                </span>
             </div>
             <div v-if="storeLobby.totalGames > 0">
                 <ListGamesLobby></ListGamesLobby>

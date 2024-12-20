@@ -132,6 +132,9 @@ export const useGamesStore = defineStore('games', () => {
       })
       const updatedGameOnDB = APIresponse.data
       console.log('Game has ended and updated on the database: ', updatedGameOnDB)
+      // give the winner 7 coins
+      const APIresponse2 = await axios.get(`/users/${winner}/win/7`)
+      console.log("Winner's coins have been updated: ", APIresponse2.data)
     }
   })
 

@@ -19,6 +19,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/spend/{value}', [UserController::class, "spendCoins"]);
     Route::post('/buy/', [UserController::class, "buyCoins"]);
     Route::get('/win/{value}', [UserController::class, "winCoins"]);
+    Route::get('/users/{id}/win/{value}', [UserController::class, "winCoinsFor"]);
+    Route::get('/users/{id}/spend/{value}', [UserController::class, "spendCoinsFor"]);
 
     Route::get('/leaderboard/time', [GameController::class, "getTopTenByTime"]);
     Route::get('/leaderboard/turns', [GameController::class, "getTopTenByTurns"]);
