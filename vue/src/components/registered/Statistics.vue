@@ -92,6 +92,17 @@ const chartOptionsDoughnut = {
             }
     };
 
+const chartOptionsPie =  {
+        plugins: {
+            legend: {
+                labels: {
+                    usePointStyle: true,
+                    color: '#FFF'
+                }
+            }
+        }
+    };
+
 const generateHorizontalGradient = (ctx, chartArea, startingColor, endingColor) => {
   const { left, right } = chartArea;
   const gradient = ctx.createLinearGradient(left, 0, right, 0); // Gradiente horizontal
@@ -114,7 +125,7 @@ const changeMode = (mode) => {
 onMounted(() => {
   mode.value = getCookie('modeChosen') || 'users';
 
-  const chartData = {
+  const chartDataUserByMonth = {
     labels: [],
     datasets: [
       {
@@ -125,7 +136,7 @@ onMounted(() => {
       }
     ]
   };
-  const chartData2 = {
+  const chartDataPurchasesByYear = {
     labels: [],
     datasets: [
       {
@@ -141,8 +152,8 @@ onMounted(() => {
     datasets: [
       {
         data: [],
-        backgroundColor: ['#6b7280','#09b9d7','#f97316','#9a08f9'],
-        hoverBackgroundColor: ['#9ca3af','#22d3ee','#fb923c','#5c08a0']
+        backgroundColor: ['rgba(68, 114, 196,0.6)','rgba(255, 99, 71,0.6)','rgba(112, 128, 144, 0.6)','rgba(152, 251, 152, 0.6)'],
+        hoverBackgroundColor: ['rgba(68, 114, 196,1)','rgba(255, 99, 71,1)','rgba(112, 128, 144, 1)','rgba(152, 251, 152, 1)']
       }
     ]
   };
@@ -166,7 +177,7 @@ onMounted(() => {
         label: 'Games',
         data: [],
         backgroundColor: ['#fbcd8a','#b7e8a7','#c193b9'],
-        borderColor: ['#ffdf8c','#bfffb7','#ffc2f4']
+        hoverBackgroundColor: ['#ffdf8c','#bfffb7','#ffc2f4']
       }
     ]
   };
@@ -243,16 +254,16 @@ onMounted(() => {
             element.month = "December";
             break;
         }
-        chartData.labels.push(element.month);
-        chartData.datasets[0].data.push(element.count);
+        chartDataUserByMonth.labels.push(element.month);
+        chartDataUserByMonth.datasets[0].data.push(element.count);
       });
 
       //Gradient
       uniqueUsers = {
-        ...chartData,
+        ...chartDataUserByMonth,
         datasets: [
           {
-            ...chartData.datasets[0],
+            ...chartDataUserByMonth.datasets[0],
             backgroundColor: (ctx) => {
               const chart = ctx.chart;
               const { ctx: canvasCtx, chartArea } = chart;
@@ -272,16 +283,16 @@ onMounted(() => {
     axios.get('stats/purchases/week')
     .then(response => {
       response.data.forEach(element => {
-        chartData2.labels.push(element.week+1);
-        chartData2.datasets[0].data.push(element.count);
+        chartDataPurchasesByYear.labels.push(element.week+1);
+        chartDataPurchasesByYear.datasets[0].data.push(element.count);
       });
 
       //Gradient
       purchasesYearByWeek = {
-        ...chartData2,
+        ...chartDataPurchasesByYear,
         datasets: [
           {
-            ...chartData2.datasets[0],
+            ...chartDataPurchasesByYear.datasets[0],
             backgroundColor: (ctx) => {
               const chart = ctx.chart;
               const { ctx: canvasCtx, chartArea } = chart;
@@ -384,6 +395,29 @@ onMounted(() => {
     axios.get('stats/transactions/brainCoinsUsed')
     .then(response => {
       response.data.forEach(element => {
+        /*switch(element.day_of_week){
+          case 1:
+            element.day_of_week = "monday";
+            break;
+          case 2:
+            element.day_of_week = "tuesday";
+            break;
+          case 3:
+            element.day_of_week = "wednesday";
+            break;
+          case 4:
+            element.day_of_week = "thursday";
+            break;
+          case 5:
+            element.day_of_week = "friday";
+            break;
+          case 6:
+            element.day_of_week = "saturday";
+            break;
+          case 7:
+            element.day_of_week = "sunday";
+            break;
+        }*/
         chartDataGamesCoinsUsed.labels.push(element.day_of_week);
         chartDataGamesCoinsUsed.datasets[0].data.push(element.total_brain_coins);
       });
@@ -398,7 +432,7 @@ onMounted(() => {
               const chart = ctx.chart;
               const { ctx: canvasCtx, chartArea } = chart;
               if (!chartArea) return;
-              return generateHorizontalGradient(canvasCtx, chartArea, 'rgba(204, 204, 255, 0.6)' , 'rgba(204, 204, 255, 1)');
+              return generateHorizontalGradient(canvasCtx, chartArea, 'rgba(255, 165, 0, 0.3)' , 'rgba(255, 165, 0, 1)');
             }
           }
         ]
@@ -671,9 +705,9 @@ onMounted(() => {
         <div class="bg-white shadow-md rounded-lg p-4 text-center lg:h-full flex flex-col justify-center w-46">
           <h2 class="text-md font-bold text-black mb-2">Games by Board</h2>
           <Chart 
-            type="doughnut" 
+            type="pie" 
             :data="gamesByBoard" 
-            :chartOptions="chartOptionsDoughnut"
+            :chartOptions="chartOptionsPie"
             class="w-full md:w-[15rem]" />
         </div>
       </div>
@@ -724,7 +758,7 @@ onMounted(() => {
           />
         </div>  
         <div class="bg-white shadow-md rounded-lg p-4 text-center lg:h-full flex flex-col justify-center w-46">
-          <h2 class="text-md font-bold text-black mb-2">Purchases this year by week</h2>
+          <h2 class="text-md font-bold text-black mb-2">Purchases this year by day of the week</h2>
           <Chart 
             type="bar" 
             :data="brainCoinsUsed" 
