@@ -106,7 +106,7 @@
                                 class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
                                 Update
                             </button>
-                            <button @click.prevent="deleteAccount"
+                            <button v-if="authStore.userType === 'P'" @click.prevent="deleteAccount"
                                 class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-red-700 text-white hover:bg-red-900 focus:outline-none focus:bg-red-900 disabled:opacity-50 disabled:pointer-events-none">
                                 Delete Account
                             </button>
@@ -134,6 +134,9 @@ const photo = ref('')
 
 const authStore = useAuthStore()
 const router = useRouter()
+
+
+const userPhoto = authStore.userPhotoUrl
 
 if (authStore.user === null) {
     router.push({ name: 'login' })
@@ -165,6 +168,9 @@ const submit = async () => {
                 })
                 return;
             });
+    } else {
+        // separate the values using / and get the last value
+        foto = userPhoto.split('/').pop();
     }
     await axios.put(`/users/${authStore.user.id}`, {
         email: email.value,

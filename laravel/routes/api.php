@@ -20,14 +20,17 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/spend/{value}', [UserController::class, "spendCoins"]);
     Route::post('/buy/', [UserController::class, "buyCoins"]);
     Route::get('/win/{value}', [UserController::class, "winCoins"]);
+    Route::get('/users/{id}/win/{value}', [UserController::class, "winCoinsFor"]);
+    Route::get('/users/{id}/spend/{value}', [UserController::class, "spendCoinsFor"]);
 
     Route::get('/leaderboard/time', [GameController::class, "getTopTenByTime"]);
     Route::get('/leaderboard/turns', [GameController::class, "getTopTenByTurns"]);
 
     Route::get('/games/singleplayer/{id}', [GameController::class, "getAllSingleGamesByUser"]);
-
+    Route::get('/games/multiplayer/{id}', [GameController::class, "getMultiplayerGamesByUser"]);
+    Route::get('/games/winner/{id}', [GameController::class, "getWinnerName"]);
     Route::get('/games', [GameController::class, 'index']);
-    Route::get('/games/{game}', [GameController::class, 'show']);
+    Route::get('/games/{id}', [GameController::class, 'show']);
     Route::post('/games', [GameController::class, 'store']);
     Route::patch('/games/{game}', [GameController::class, 'updateStatus']);
     Route::delete('/games/{game}', [GameController::class, 'destroy']);
@@ -37,6 +40,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/stats/losers/top5', [StatsController::class, 'getTop5Losers']); 
     Route::get('/stats/buyers/top5', [StatsController::class, 'getTop5Buyers']);
     Route::get('/stats/spenders/top5', [StatsController::class, 'getTop5Spenders']);
+    Route::put('/games/{game_id}', [GameController::class, 'updateStatus']);
+    // Route::delete('/games/{game}', [GameController::class, 'destroy']);
 });
 
 //Stats for all users
@@ -69,7 +74,7 @@ Route::get('/users', [UserController::class, "index"]);
 Route::get('/users/{id}', [UserController::class, "show"]);
 
 //Games
-Route::get('/games/user/{userId}', [GameController::class, "getAllGamesByUser"]);
+
 
 
 Route::get('/leaderboard/time/global', [GameController::class, "getTopTenByTimeGlobal"]);

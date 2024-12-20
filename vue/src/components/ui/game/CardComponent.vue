@@ -1,15 +1,11 @@
 <template>
-    <vue-flip v-model="flipped" class="simple-test" height="150px" width="100px" transition="0.7s">
+    <vue-flip :class="{'opacity-0': ghost}" v-model="flipped" class="simple-test" height="150px" width="100px" transition="0.7s">
         <template v-slot:front>
-            <img @click="flipCard" src="/src/assets/cards/semFace.png" alt="Carta Virada Para Baixo">
-          </template>
-          <template v-slot:back>
+            <img @click.prevent="flipCard" src="/src/assets/cards/semFace.png" alt="Carta Virada Para Baixo">
+        </template>
+        <template v-slot:back>
             <img :class="{ 'cartaVirada': flipped }" :src="getImg" :alt="getText">
-          </template>    
-    <div>
-        
-        
-    </div>
+        </template>
     </vue-flip>
 </template>
 <script setup>
@@ -22,20 +18,40 @@ const props = defineProps({
         type: Boolean,
         default: false
     },
+    index: Number,
     game: {
         type: Object,
-        required: false
+        required: true
     }
 })
 
-const emits = defineEmits(['has-been-flipped'])
 
 const flipped = ref(props.isFlipped)
+
+const ghost = ref(false)
+
+if (props.game && Object.hasOwn(props.game, 'pairs')) {
+    watch(() => props.game.pairs, (newValue) => {
+        // check if the card is in the pairs array
+        newValue.forEach(element => {
+            if (element.includes(props.index)) {
+                ghost.value = true
+            }
+        });
+    })
+}
+
+const emits = defineEmits(['has-been-flipped'])
+
 const number = ref(props.number)
 
-watch(() => props.isFlipped, (newVal) => {
-    flipped.value = newVal
-})
+// watch on props.game flipped array
+watch(
+    () => props.game.flipped[props.index],
+    (newValue) => {
+        flipped.value = newValue;
+    }
+);
 
 const getImg = computed(() => {
     if (number.value > 6) {
@@ -49,15 +65,6 @@ const getText = computed(() => {
 })
 
 const flipCard = () => {
-    console.log(props.game)
-    // check if the user can flip the card
-    if (props.game.currentPlayer !== props.game.currentPlayer) {
-        return
-    }
-    if (flipped.value) {
-        return
-    }
-    flipped.value = !flipped.value
-    emits('has-been-flipped')
+    emits('has-been-flipped', props.index)
 }
 </script>

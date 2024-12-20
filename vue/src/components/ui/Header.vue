@@ -1,5 +1,6 @@
 <script setup>
 import router from '@/router';
+import { onMounted } from 'vue';
 import { useAuthStore } from '@/stores/auth'
 const authStore = useAuthStore()
 
@@ -8,9 +9,17 @@ const back = () => {
 }
 
 const logout = async () => {
-    await authStore.logout()
-    router.push({ name: 'login' })
+    let result = await authStore.logout(authStore.user)
+    if(result) {
+        router.push({ name: 'login' })
+    }
 }
+
+onMounted(() => {
+    if(authStore.user) {
+        authStore.refreshUserData()
+    }
+})
 </script>
 <template>
     <header
