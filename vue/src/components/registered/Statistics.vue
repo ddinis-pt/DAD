@@ -4,6 +4,8 @@ import axios from 'axios';
 import { ref, onMounted } from 'vue';
 import Chart from 'primevue/chart';
 import { useAuthStore } from '@/stores/auth';
+import { toast } from '@/components/ui/toast/use-toast';
+import Toaster from '@/components/ui/toast/Toaster.vue';
 
 const authStore = useAuthStore();
 
@@ -276,8 +278,12 @@ onMounted(() => {
         ]
       };
     })
-    .catch(error => {
-      console.log(error);
+    .catch(() => {
+      toast({
+          description: 'An error occurred while fetching the statistics for the users',
+          title: 'Error fetching data',
+          variant: 'destructive'
+        })
     });
 
     
@@ -305,8 +311,12 @@ onMounted(() => {
         ]
       };
     })
-    .catch(error => {
-      console.log(error);
+    .catch(() => {
+      toast({
+          description: 'An error occurred while fetching the statistics for the transactions',
+          title: 'Error fetching data',
+          variant: 'destructive'
+        })
     });
 
     axios.get('stats/games/total/status')
@@ -347,8 +357,12 @@ onMounted(() => {
         chartDataBlockedUsers.datasets[0].data.push(element.count);
       });
       blockedUsers = chartDataBlockedUsers;
-    }).catch(error => {
-      console.log(error);
+    }).catch(() => {
+      toast({
+          description: 'An error occurred while fetching the statistics for the users',
+          title: 'Error fetching data',
+          variant: 'destructive'
+        })
     });
 
     axios.get('stats/games/total/board').then(response => {
@@ -357,8 +371,12 @@ onMounted(() => {
         chartDataGamesByBoard.datasets[0].data.push(element.total_games);
       });
       gamesByBoard = chartDataGamesByBoard;
-    }).catch(error => {
-      console.log(error);
+    }).catch(() => {
+      toast({
+          description: 'An error occurred while fetching the statistics for the games',
+          title: 'Error fetching data',
+          variant: 'destructive'
+        })
     });
 
     axios.get('stats/games/total/typeAndMonth').then(response => {
@@ -390,8 +408,12 @@ onMounted(() => {
           }
         ]
       }
-    }).catch(error => {
-      console.log(error);
+    }).catch(() => {
+      toast({
+          description: 'An error occurred while fetching the statistics for the games',
+          title: 'Error fetching data',
+          variant: 'destructive'
+        })
     });
 
     axios.get('stats/transactions/brainCoinsUsed')
@@ -440,112 +462,177 @@ onMounted(() => {
         ]
       };
     })
-    .catch(error => {
-      console.log(error);
+    .catch(() => {
+      toast({
+          description: 'An error occurred while fetching the statistics for the transactions',
+          title: 'Error fetching data',
+          variant: 'destructive'
+        })
     });
 
     axios.get('stats/users/total')
     .then(response => {
       numberOfPlayers.value = response.data;
     })
-    .catch(error => {
-      console.log(error);
+    .catch(() => {
+      toast({
+          description: 'An error occurred while fetching the statistics for the users',
+          title: 'Error fetching data',
+          variant: 'destructive'
+        })
     });
 
     axios.get('stats/games/total')
     .then(response => {
       numberOfGames.value = response.data;
     })
-    .catch(error => {
-      console.log(error);
+    .catch(() => {
+      toast({
+          description: 'An error occurred while fetching the statistics for the games',
+          title: 'Error fetching data',
+          variant: 'destructive'
+        })
     });
 
     axios.get('stats/games/lastWeek')
     .then(response => {
       numberOfGamesLastWeek.value = response.data;
     })
-    .catch(error => {
-      console.log(error);
+    .catch(() => {
+      toast({
+          description: 'An error occurred while fetching the statistics for the games',
+          title: 'Error fetching data',
+          variant: 'destructive'
+        })
     });
 
     axios.get('stats/games/lastMonth')
     .then(response => {
       numberOfGamesLastMonth.value = response.data;
     })
-    .catch(error => {
-      console.log(error);
+    .catch(() => {
+      toast({
+          description: 'An error occurred while fetching the statistics for the games',
+          title: 'Error fetching data',
+          variant: 'destructive'
+        })
     });
     if(authStore.userType === 'A') {
       axios.get('stats/buyers/top5').then(response => {
         top5Buyers.value = response.data;
-      }).catch(error => {
-        console.log(error);
+      }).catch(() => {
+        toast({
+          description: 'An error occurred while fetching the statistics for the transactions',
+          title: 'Error fetching data',
+          variant: 'destructive'
+        })
       });
 
       axios.get('stats/spenders/top5').then(response => {
         top5Spenders.value = response.data;
-      }).catch(error => {
-        console.log(error);
+      }).catch(() => {
+        toast({
+          description: 'An error occurred while fetching the statistics for the transactions',
+          title: 'Error fetching data',
+          variant: 'destructive'
+        })
       });
 
       axios.get('stats/winners/top5').then(response => {
         top5Winners.value = response.data;
-      }).catch(error => {
-        console.log(error);
+      }).catch(() => {
+        toast({
+          description: 'An error occurred while fetching the statistics for the games',
+          title: 'Error fetching data',
+          variant: 'destructive'
+        })
       });
 
       axios.get('stats/losers/top5').then(response => {
         top5Losers.value = response.data;
-      }).catch(error => {
-        console.log(error);
+      }).catch(() => {
+        toast({
+          description: 'An error occurred while fetching the statistics for the games',
+          title: 'Error fetching data',
+          variant: 'destructive'
+        })
       });
     }
 
     axios.get('stats/users/admins').then(response => {
       numberOfAdmins.value = response.data;
-    }).catch(error => {
-      console.log(error);
+    }).catch(() => {
+      toast({
+          description: 'An error occurred while fetching the statistics for the users',
+          title: 'Error fetching data',
+          variant: 'destructive'
+        })
     });
 
     axios.get('stats/games/multiplayer').then(response => {
       numberOfMultiplayerGames.value = response.data;
-    }).catch(error => {
-      console.log(error);
+    }).catch(() => {
+      toast({
+          description: 'An error occurred while fetching the statistics for the games',
+          title: 'Error fetching data',
+          variant: 'destructive'
+        })
     });
 
     axios.get('stats/purchases/total').then(response => {
       numberOfPurchases.value = response.data;
-    }).catch(error => {
-      console.log(error);
+    }).catch(() => {
+      toast({
+          description: 'An error occurred while fetching the statistics for the transactions',
+          title: 'Error fetching data',
+          variant: 'destructive'
+        })
     });
 
     axios.get('stats/transactions/total').then(response => {
       numberOfTransactions.value = response.data;
-    }).catch(error => {
-      console.log(error);
+    }).catch(() => {
+      toast({
+          description: 'An error occurred while fetching the statistics for the transactions',
+          title: 'Error fetching data',
+          variant: 'destructive'
+        })
     });
 
     axios.get('stats/purchases/totalMoney').then(response => {
       totalMoneySpent.value = response.data;
-    }).catch(error => {
-      console.log(error);
+    }).catch(() => {
+      toast({
+          description: 'An error occurred while fetching the statistics for the transactions',
+          title: 'Error fetching data',
+          variant: 'destructive'
+        })
     });
     
     axios.get('stats/users/totalBrainCoins').then(response => {
       numberOfBrainCoins.value = response.data;
-    }).catch(error => {
-      console.log(error);
+    }).catch(() => {
+      toast({
+          description: 'An error occurred while fetching the statistics for the transactions',
+          title: 'Error fetching data',
+          variant: 'destructive'
+        })
     });
 
     axios.get('stats/users/active').then(response => {
       numberOfActiveUsers.value = response.data;
-    }).catch(error => {
-      console.log(error);
+    }).catch(() => {
+      toast({
+          description: 'An error occurred while fetching the statistics for the users',
+          title: 'Error fetching data',
+          variant: 'destructive'
+        })
     });
 });
 </script>
 
 <template>
+  <Toaster></Toaster>
   <div class="min-h-screen bg-gray-800">
     <Header></Header>
     <nav class="-mb-0.5 flex flex-wrap gap-x-6 justify-center">
