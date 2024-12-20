@@ -16,9 +16,33 @@ const top5Buyers = ref(0);
 const top5Spenders = ref(0);
 
 const top5Winners = ref(0);
-const top5Losers = ref(0);
 
-const modeChosen = ref('users');
+
+const mode = ref(null);
+
+const setCookie = (name, value, minutes) => {
+    const now = new Date();
+    now.setTime(now.getTime() + minutes * 60 * 1000); // Adiciona 15 minutos
+    document.cookie = `${name}=${value}; expires=${now.toUTCString()}; path=/`;
+};
+
+const getCookie = (name) => {
+    const cookies = document.cookie.split('; ');
+    for (const cookie of cookies) {
+      const [key, value] = cookie.split('=');
+      if (key === name) {
+        return value;
+      }
+    }
+    return null;
+};
+
+const setMode = (chosenMode) => {
+    mode.value = chosenMode;
+    setCookie('modeChosen', chosenMode, 15); //Cookies expiram em 15 min
+};
+
+const top5Losers = ref(0);
 
 let uniqueUsers = null;
 let purchasesYearByWeek = null;
@@ -70,17 +94,20 @@ const generateHorizontalGradient = (ctx, chartArea, startingColor, endingColor) 
   return gradient;
 };
 
+/*
 const changeMode = (mode) => {
   if (mode == 1) {
-    modeChosen.value = 'users'
+    mode.value = 'users'
   } else if (mode == 2) {
-    modeChosen.value = 'games'
+    mode.value = 'games'
   } else if (mode == 3) {
-    modeChosen.value = 'transactions'
+    mode.value = 'transactions'
   }
-}
+}*/
 
 onMounted(() => {
+  mode.value = getCookie('modeChosen') || 'users';
+
   const chartData = {
     labels: [],
     datasets: [
@@ -410,16 +437,16 @@ onMounted(() => {
     <nav class="-mb-0.5 flex flex-wrap gap-x-6 justify-center">
             <a
               class="py-4 px-1 inline-flex items-center gap-2 border-b-2 border-transparent text-sm whitespace-nowrap hs-tab-active:border  focus:border-blue-500 dark:focus:border-blue-500 hover:text-blue-500 dark:hover:text-blue-500 hover:cursor-pointer"
-              @click.prevent="changeMode(1)"
-              :class="{ 'text-blue-500 border-b-2 !border-blue-500': modeChosen === 'users' }"
+              @click.prevent="setMode('users')"
+              :class="{ 'text-blue-500 border-b-2 !border-blue-500': mode === 'users' }"
             >
               <i class="pi pi-user"></i>
               Users
             </a>
             <a
               class="py-4 px-1 inline-flex items-center gap-2 border-b-2 border-transparent text-sm whitespace-nowrap  focus:border-blue-500 dark:focus:border-blue-500 neutral-700 hover:text-blue-500 dark:hover:text-blue-500 hover:cursor-pointer"
-              @click.prevent="changeMode(2)"
-              :class="{ 'text-blue-500 border-b !border-blue-500': modeChosen === 'games' }"
+              @click.prevent="setMode('games')"
+              :class="{ 'text-blue-500 border-b !border-blue-500': mode === 'games' }"
               aria-current="page"
             >
               <i class="pi pi-trophy"></i>
@@ -427,15 +454,15 @@ onMounted(() => {
             </a>
             <a
               class="py-4 px-1 inline-flex items-center gap-2 border-b-2 border-transparent text-sm whitespace-nowrap  focus:border-blue-500 dark:focus:border-blue-500 neutral-700 hover:text-blue-500 dark:hover:text-blue-500 hover:cursor-pointer"
-              @click.prevent="changeMode(3)"
-              :class="{ 'text-blue-500 border-b !border-blue-500': modeChosen === 'transactions' }"
+              @click.prevent="setMode('transactions')"
+              :class="{ 'text-blue-500 border-b !border-blue-500': mode === 'transactions' }"
               aria-current="page"
             >
               <i class="pi pi-money-bill"></i>
               Transactions
             </a>
     </nav>
-    <div v-if="modeChosen === 'users'">
+    <div v-if="mode === 'users'">
       <div class="flex flex-wrap justify-center gap-6 mt-20">
         <div class="bg-white shadow-md rounded-lg p-4 text-center sm:h-24 md:h-30 lg:h-36 flex flex-col justify-center w-46">
           <h2 class="text-md font-semibold text-gray-700 mb-1">Number of Users Registered</h2>
@@ -480,7 +507,7 @@ onMounted(() => {
         </div>  
       </div>
     </div>
-    <div v-if="modeChosen === 'games'">
+    <div v-if="mode === 'games'">
       <div class="flex flex-wrap justify-center gap-6 mt-20">
 
         <div class="bg-white shadow-md rounded-lg p-4 text-center sm:h-24 md:h-30 lg:h-36 flex flex-col justify-center w-46">
@@ -574,7 +601,7 @@ onMounted(() => {
         </div>
       </div>
     </div>
-    <div v-if="modeChosen === 'transactions'">
+    <div v-if="mode === 'transactions'">
       <div class="flex flex-wrap justify-center gap-6 mt-20">
 
         <div class="bg-white shadow-md rounded-lg p-4 text-center sm:h-24 md:h-30 lg:h-36 flex flex-col justify-center w-46">
