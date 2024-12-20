@@ -32,14 +32,11 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::patch('/games/{game}', [GameController::class, 'updateStatus']);
     Route::delete('/games/{game}', [GameController::class, 'destroy']);
 
-    
-    Route::get('/stats/users/month', [StatsController::class, 'getUsersCountByMonth']);
+    //Stats for admins
     Route::get('/stats/winners/top5', [StatsController::class, 'getTop5Winners']);
     Route::get('/stats/losers/top5', [StatsController::class, 'getTop5Losers']); 
-    Route::get('/stats/purchases/week', [StatsController::class, 'totalPurchasesByWeek']);
     Route::get('/stats/buyers/top5', [StatsController::class, 'getTop5Buyers']);
     Route::get('/stats/spenders/top5', [StatsController::class, 'getTop5Spenders']);
-    Route::get('/stats/users/admins', [StatsController::class, 'getAdmins']);
 });
 
 //Stats for all users
@@ -58,6 +55,9 @@ Route::get('stats/purchases/totalMoney', [StatsController::class, 'totalMoney'])
 Route::get('stats/users/totalBrainCoins', [StatsController::class, 'totalBrainCoins']);
 Route::get('stats/users/active', [StatsController::class, 'activeUsers']);
 Route::get('stats/transactions/brainCoinsUsed', [StatsController::class, 'brainCoinsUsed']);
+Route::get('/stats/users/admins', [StatsController::class, 'getAdmins']);
+Route::get('/stats/users/month', [StatsController::class, 'getUsersCountByMonth']);
+Route::get('/stats/purchases/week', [StatsController::class, 'totalPurchasesByWeek']);
 
 //Auth
 Route::post('/auth/login', [AuthController::class, "login"]);

@@ -3,7 +3,9 @@ import Header from '@/components/ui/Header.vue';
 import axios from 'axios';
 import { ref, onMounted } from 'vue';
 import Chart from 'primevue/chart';
+import { useAuthStore } from '@/stores/auth';
 
+const authStore = useAuthStore();
 
 const numberOfPlayers = ref(0);
 const numberOfGames = ref(0);
@@ -442,7 +444,6 @@ onMounted(() => {
       console.log(error);
     });
 
-    // Gets para non-authenticated users
     axios.get('stats/users/total')
     .then(response => {
       numberOfPlayers.value = response.data;
@@ -474,29 +475,31 @@ onMounted(() => {
     .catch(error => {
       console.log(error);
     });
-    axios.get('stats/buyers/top5').then(response => {
-      top5Buyers.value = response.data;
-    }).catch(error => {
-      console.log(error);
-    });
+    if(authStore.userType === 'A') {
+      axios.get('stats/buyers/top5').then(response => {
+        top5Buyers.value = response.data;
+      }).catch(error => {
+        console.log(error);
+      });
 
-    axios.get('stats/spenders/top5').then(response => {
-      top5Spenders.value = response.data;
-    }).catch(error => {
-      console.log(error);
-    });
+      axios.get('stats/spenders/top5').then(response => {
+        top5Spenders.value = response.data;
+      }).catch(error => {
+        console.log(error);
+      });
 
-    axios.get('stats/winners/top5').then(response => {
-      top5Winners.value = response.data;
-    }).catch(error => {
-      console.log(error);
-    });
+      axios.get('stats/winners/top5').then(response => {
+        top5Winners.value = response.data;
+      }).catch(error => {
+        console.log(error);
+      });
 
-    axios.get('stats/losers/top5').then(response => {
-      top5Losers.value = response.data;
-    }).catch(error => {
-      console.log(error);
-    });
+      axios.get('stats/losers/top5').then(response => {
+        top5Losers.value = response.data;
+      }).catch(error => {
+        console.log(error);
+      });
+    }
 
     axios.get('stats/users/admins').then(response => {
       numberOfAdmins.value = response.data;
@@ -655,7 +658,7 @@ onMounted(() => {
           />
         </div>
       </div>
-      <div class="flex flex-wrap justify-center gap-4 mt-6">
+      <div class="flex flex-wrap justify-center gap-4 mt-6" v-if="authStore.userType == 'A'">
         <!-- Tabela top 5 users que tem mais vitórias -->
         <div class="bg-white shadow-md rounded-lg p-4 text-center flex flex-col justify-top w-full max-w-sm">
           <h2 class="text-md font-bold text-black mb-4">Top 5 Winners</h2>
@@ -767,7 +770,7 @@ onMounted(() => {
           />
         </div>  
       </div>
-      <div class="flex flex-wrap justify-center gap-4 mt-6">
+      <div class="flex flex-wrap justify-center gap-4 mt-6" v-if="authStore.userType == 'A'">
         <!-- Tabela top 5 users que mais dinheiro gastaram em brain_coins -->
         <div class="bg-white shadow-md rounded-lg p-4 text-center flex flex-col justify-top w-full max-w-sm">
           <h2 class="text-md font-bold text-black mb-4">Top 5 Buyers</h2>
