@@ -11,18 +11,23 @@ const numberOfGamesLastWeek = ref(0);
 const numberOfGamesLastMonth = ref(0);
 const numberOfAdmins = ref(0);
 const numberOfMultiplayerGames = ref(0);
+const numberOfPurchases = ref(0);
+const numberOfTransactions = ref(0);
+const totalMoneySpent = ref(0);
+const numberOfBrainCoins = ref(0);
+const numberOfActiveUsers = ref(0);
 
 const top5Buyers = ref(0);
 const top5Spenders = ref(0);
-
 const top5Winners = ref(0);
 
 
 const mode = ref(null);
 
+//TODO, atualizar para usar session ? talvez
 const setCookie = (name, value, minutes) => {
     const now = new Date();
-    now.setTime(now.getTime() + minutes * 60 * 1000); // Adiciona 15 minutos
+    now.setTime(now.getTime() + minutes * 60 * 1000);
     document.cookie = `${name}=${value}; expires=${now.toUTCString()}; path=/`;
 };
 
@@ -50,6 +55,7 @@ let gamesByStatus = null;
 let gamesByBoard = null;
 let blockedUsers = null;
 let gamesByTypeAndMonth = null;
+let brainCoinsUsed = null;
 
 const chartOptions = {
   responsive: true,
@@ -147,8 +153,8 @@ onMounted(() => {
       {
         label: 'users',
         data: [],
-        backgroundColor: ['#22cc90','#df6464'],
-        hoverBackgroundColor: ['#2bffb4','#ff7b72']
+        backgroundColor: ['#22cc90','#df6464','#f97316'],
+        hoverBackgroundColor: ['#2bffb4','#ff7b72','#ff8516']
       }
     ]
   };
@@ -179,6 +185,18 @@ onMounted(() => {
         data: [],
         backgroundColor: ['#fbcd8a','#b7e8a7','#c193b9'],
         borderColor: ['#ffdf8c','#bfffb7','#ffc2f4']
+      }
+    ]
+  };
+
+  const chartDataGamesCoinsUsed = {
+    labels: [],
+    datasets: [
+      {
+        label: 'Brain Coins',
+        data: [],
+        backgroundColor: null, 
+        borderColor: '#ffffff'
       }
     ]
   };
@@ -307,8 +325,10 @@ onMounted(() => {
       response.data.forEach(element => {
         if(element.blocked == 1) {
           element.blocked = "Blocked";
-        } else {
+        } else if (element.blocked == 0) {
           element.blocked = "Active";
+        } else {
+          element.blocked = "Deleted";
         }
         chartDataBlockedUsers.labels.push(element.blocked);
         chartDataBlockedUsers.datasets[0].data.push(element.count);
@@ -358,6 +378,33 @@ onMounted(() => {
         ]
       }
     }).catch(error => {
+      console.log(error);
+    });
+
+    axios.get('stats/transactions/brainCoinsUsed')
+    .then(response => {
+      response.data.forEach(element => {
+        chartDataGamesCoinsUsed.labels.push(element.day_of_week);
+        chartDataGamesCoinsUsed.datasets[0].data.push(element.total_brain_coins);
+      });
+
+      //Gradient
+      brainCoinsUsed = {
+        ...chartDataGamesCoinsUsed,
+        datasets: [
+          {
+            ...chartDataGamesCoinsUsed.datasets[0],
+            backgroundColor: (ctx) => {
+              const chart = ctx.chart;
+              const { ctx: canvasCtx, chartArea } = chart;
+              if (!chartArea) return;
+              return generateHorizontalGradient(canvasCtx, chartArea, 'rgba(204, 204, 255, 0.6)' , 'rgba(204, 204, 255, 1)');
+            }
+          }
+        ]
+      };
+    })
+    .catch(error => {
       console.log(error);
     });
 
@@ -428,6 +475,36 @@ onMounted(() => {
     }).catch(error => {
       console.log(error);
     });
+
+    axios.get('stats/purchases/total').then(response => {
+      numberOfPurchases.value = response.data;
+    }).catch(error => {
+      console.log(error);
+    });
+
+    axios.get('stats/transactions/total').then(response => {
+      numberOfTransactions.value = response.data;
+    }).catch(error => {
+      console.log(error);
+    });
+
+    axios.get('stats/purchases/totalMoney').then(response => {
+      totalMoneySpent.value = response.data;
+    }).catch(error => {
+      console.log(error);
+    });
+    
+    axios.get('stats/users/totalBrainCoins').then(response => {
+      numberOfBrainCoins.value = response.data;
+    }).catch(error => {
+      console.log(error);
+    });
+
+    axios.get('stats/users/active').then(response => {
+      numberOfActiveUsers.value = response.data;
+    }).catch(error => {
+      console.log(error);
+    });
 });
 </script>
 
@@ -473,13 +550,13 @@ onMounted(() => {
           <h2 class="text-md font-semibold text-gray-700 mb-1">Number of Admins</h2>
           <p class="text-2xl font-bold text-green-500">{{ numberOfAdmins }}</p>
         </div>
-        <!--
+
         <div class="bg-white shadow-md rounded-lg p-4 text-center sm:h-24 md:h-30 lg:h-36 flex flex-col justify-center w-46">
-          <h2 class="text-md font-semibold text-gray-700 mb-1">Games Played Last Month</h2>
-          <p class="text-2xl font-bold text-red-500">{{ numberOfGamesLastMonth }}</p>
+          <h2 class="text-md font-semibold text-gray-700 mb-1">Active Users this Month</h2>
+          <p class="text-2xl font-bold text-red-500">{{ numberOfActiveUsers }}</p>
         </div>
         
-
+        <!--
         <div class="bg-white shadow-md rounded-lg p-4 text-center sm:h-24 md:h-30 lg:h-36 flex flex-col justify-center w-46">
           <h2 class="text-md font-semibold text-gray-700 mb-1">Games Played Last Week</h2>
           <p class="text-2xl font-bold text-orange-500">{{ numberOfGamesLastWeek }}</p>
@@ -497,7 +574,7 @@ onMounted(() => {
           />
         </div>
         <div class="bg-white shadow-md rounded-lg p-4 text-center lg:h-full flex flex-col justify-center w-46">
-          <h2 class="text-md font-bold text-black mb-2">Blocked Users</h2>
+          <h2 class="text-md font-bold text-black mb-2">User Distribuition</h2>
           <Chart 
             type="doughnut" 
             :data="blockedUsers"
@@ -605,43 +682,52 @@ onMounted(() => {
       <div class="flex flex-wrap justify-center gap-6 mt-20">
 
         <div class="bg-white shadow-md rounded-lg p-4 text-center sm:h-24 md:h-30 lg:h-36 flex flex-col justify-center w-46">
-          <h2 class="text-md font-semibold text-gray-700 mb-1">Number of Players Registered</h2>
-          <p class="text-2xl font-bold text-blue-500">{{ numberOfPlayers }}</p>
+          <h2 class="text-md font-semibold text-gray-700 mb-1">Total transactions done</h2>
+          <p class="text-2xl font-bold text-blue-500">{{ numberOfTransactions }}</p>
         </div>
 
         <div class="bg-white shadow-md rounded-lg p-4 text-center sm:h-24 md:h-30 lg:h-36 flex flex-col justify-center w-46">
-          <h2 class="text-md font-semibold text-gray-700 mb-1">Total Games Played</h2>
-          <p class="text-2xl font-bold text-green-500">{{ numberOfGames }}</p>
+          <h2 class="text-md font-semibold text-gray-700 mb-1">Number of Purchases</h2>
+          <p class="text-2xl font-bold text-green-500">{{ numberOfPurchases }}</p>
         </div>
         
         <div class="bg-white shadow-md rounded-lg p-4 text-center sm:h-24 md:h-30 lg:h-36 flex flex-col justify-center w-46">
-          <h2 class="text-md font-semibold text-gray-700 mb-1">Games Played Last Month</h2>
-          <p class="text-2xl font-bold text-red-500">{{ numberOfGamesLastMonth }}</p>
+          <h2 class="text-md font-semibold text-gray-700 mb-1">Total Money Spent</h2>
+          <p class="text-2xl font-bold text-red-500">{{ totalMoneySpent }}€</p>
         </div>
         
 
         <div class="bg-white shadow-md rounded-lg p-4 text-center sm:h-24 md:h-30 lg:h-36 flex flex-col justify-center w-46">
-          <h2 class="text-md font-semibold text-gray-700 mb-1">Games Played Last Week</h2>
-          <p class="text-2xl font-bold text-orange-500">{{ numberOfGamesLastWeek }}</p>
+          <h2 class="text-md font-semibold text-gray-700 mb-1">Total Number of Brain Coins</h2>
+          <p class="text-2xl font-bold text-[#ffa500] flex justify-center ml-4">{{ numberOfBrainCoins }}
+            <svg class="shrink-0 size-10 mt-[7px] ml-1" xmlns="http://www.w3.org/2000/svg" width="40" height="40"
+                    viewBox="0 0 40 40" fill="none" stroke="orange" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <circle cx="8" cy="8" r="6" />
+                    <path d="M18.09 10.37A6 6 0 1 1 10.34 18" />
+                    <path d="M7 6h1v4" />
+                    <path d="m16.71 13.88.7.71-2.82 2.82" />
+                </svg>
+          </p>
         </div>
 
       </div>
 
       <div class="flex flex-wrap justify-center gap-4 mt-6">
         <div class="bg-white shadow-md rounded-lg p-4 text-center lg:h-full flex flex-col justify-center w-46">
-          <h2 class="text-md font-bold text-black mb-2">Unique Users this year</h2>
-          <Chart 
-            type="bar" 
-            :data="uniqueUsers" 
-            :chartOptions="chartOptions" 
-            class="w-full md:w-[20rem]" 
-          />
-        </div>
-        <div class="bg-white shadow-md rounded-lg p-4 text-center lg:h-full flex flex-col justify-center w-46">
           <h2 class="text-md font-bold text-black mb-2">Purchases this year by week</h2>
           <Chart 
             type="bar" 
             :data="purchasesYearByWeek" 
+            :chartOptions="chartOptions" 
+            class="w-full md:w-[20rem]"
+          />
+        </div>  
+        <div class="bg-white shadow-md rounded-lg p-4 text-center lg:h-full flex flex-col justify-center w-46">
+          <h2 class="text-md font-bold text-black mb-2">Purchases this year by week</h2>
+          <Chart 
+            type="bar" 
+            :data="brainCoinsUsed" 
             :chartOptions="chartOptions" 
             class="w-full md:w-[20rem]"
           />
@@ -684,13 +770,6 @@ onMounted(() => {
             </tbody>
           </table>
         </div>
-      </div>
-      <div class="flex justify-center gap-4 mt-6">
-        <Chart 
-          type="doughnut" 
-          :data="gamesByStatus" 
-          :chartOptions="chartOptionsDoughnut" 
-          class="w-full md:w-[20rem]" />
       </div>
     </div>
   </div>

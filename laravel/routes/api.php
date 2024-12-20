@@ -52,6 +52,12 @@ Route::get('stats/users/blocked', [StatsController::class, 'usersByBlocked']);
 Route::get('stats/games/multiplayer', [StatsController::class, 'totalMultiplayerGames']);
 Route::get('stats/games/total/board', [StatsController::class, 'totalGamesByBoard']);
 Route::get('stats/games/total/typeAndMonth', [StatsController::class, 'totalGamesByTypeAndMonth']);
+Route::get('stats/purchases/total', [StatsController::class, 'totalPurchases']);
+Route::get('stats/transactions/total', [StatsController::class, 'totalTransactions']);
+Route::get('stats/purchases/totalMoney', [StatsController::class, 'totalMoney']);
+Route::get('stats/users/totalBrainCoins', [StatsController::class, 'totalBrainCoins']);
+Route::get('stats/users/active', [StatsController::class, 'activeUsers']);
+Route::get('stats/transactions/brainCoinsUsed', [StatsController::class, 'brainCoinsUsed']);
 
 //Auth
 Route::post('/auth/login', [AuthController::class, "login"]);

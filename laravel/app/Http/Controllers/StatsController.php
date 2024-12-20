@@ -87,7 +87,6 @@ class StatsController extends Controller
             ->orderBy('year','asc')
             ->orderBy('week','asc')
             ->get();
-
         return response()->json($purchases, 200);
     }
 
@@ -159,6 +158,16 @@ class StatsController extends Controller
             ->where('type', 'P')
             ->groupBy('blocked')
             ->get();
+
+        $usersTrashed = User::onlyTrashed()
+            ->where('type','P')
+            ->count();
+
+        $users->push([
+            'blocked' => 'trashed',
+            'count' => $usersTrashed
+        ]);
+        
         return response()->json($users, 200);
     }
 
@@ -211,5 +220,51 @@ class StatsController extends Controller
 
         $dadosGrafico = array_values($resultado);
         return response()->json($dadosGrafico);
+    }
+
+    public function totalPurchases(){
+        $purchases = DB::table('transactions')
+            ->where('type','P')
+            ->count();
+        return response()->json($purchases, 200);
+    }
+
+    public function totalTransactions(){
+        $transactions = DB::table('transactions')
+            ->count();
+        return response()->json($transactions, 200);
+    }
+
+    public function totalMoney(){
+        $money = DB::table('transactions')
+            ->where('type','P')
+            ->sum('euros');
+        return response()->json($money, 200);
+    }
+
+    public function totalBrainCoins(){
+        $brainCoins = User::All()
+            ->sum('brain_coins_balance');
+        return response()->json($brainCoins, 200);
+    }
+
+    public function activeUsers(){
+        $activeUsers = User::where('updated_at', '>=', now()->startOfMonth())
+            ->where('updated_at', '<', now()->startOfMonth()->addMonth())
+            ->count();
+        return response()->json($activeUsers, 200);
+    }
+
+    public function brainCoinsUsed(){
+        $brainCoins = DB::table('transactions')
+            ->select(DB::raw('SUM(brain_coins) * -1 as total_brain_coins'), 
+                    DB::raw('WEEKDAY(transaction_datetime) + 1 as day_of_week')
+            )
+            ->where('type','I')
+            ->where('brain_coins', '<', 0)
+            ->orderBy('day_of_week')
+            ->groupBy('day_of_week')
+            ->get();
+        return response()->json($brainCoins, 200);
     }
 }
