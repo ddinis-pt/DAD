@@ -641,11 +641,11 @@ onMounted(() => {
 
 <template>
   <Toaster></Toaster>
-  <div class="min-h-screen bg-gray-800">
+  <div class="min-h-screen bg-sky-50 dark:bg-gray-800">
     <Header></Header>
     <nav class="-mb-0.5 flex flex-wrap gap-x-6 justify-center">
             <a
-              class="py-4 px-1 inline-flex items-center gap-2 border-b-2 border-transparent text-sm whitespace-nowrap hs-tab-active:border  focus:border-blue-500 dark:focus:border-blue-500 hover:text-blue-500 dark:hover:text-blue-500 hover:cursor-pointer"
+              class="py-4 px-1 inline-flex items-center gap-2 border-b-2 border-transparent text-sm whitespace-nowrap hs-tab-active:border text-gray-800 dark:text-white focus:border-blue-500 dark:focus:border-blue-500 hover:text-blue-500 dark:hover:text-blue-500 hover:cursor-pointer"
               @click.prevent="setMode('users')"
               :class="{ 'text-blue-500 border-b-2 !border-blue-500': mode === 'users' }"
             >
@@ -653,7 +653,7 @@ onMounted(() => {
               Users
             </a>
             <a
-              class="py-4 px-1 inline-flex items-center gap-2 border-b-2 border-transparent text-sm whitespace-nowrap  focus:border-blue-500 dark:focus:border-blue-500 neutral-700 hover:text-blue-500 dark:hover:text-blue-500 hover:cursor-pointer"
+              class="py-4 px-1 inline-flex items-center gap-2 border-b-2 border-transparent text-sm whitespace-nowrap  focus:border-blue-500 text-gray-800 dark:text-white dark:focus:border-blue-500 neutral-700 hover:text-blue-500 dark:hover:text-blue-500 hover:cursor-pointer"
               @click.prevent="setMode('games')"
               :class="{ 'text-blue-500 border-b !border-blue-500': mode === 'games' }"
               aria-current="page"
@@ -663,7 +663,7 @@ onMounted(() => {
             </a>
             <a
               v-if="authStore.userType == 'A'"
-              class="py-4 px-1 inline-flex items-center gap-2 border-b-2 border-transparent text-sm whitespace-nowrap  focus:border-blue-500 dark:focus:border-blue-500 neutral-700 hover:text-blue-500 dark:hover:text-blue-500 hover:cursor-pointer"
+              class="py-4 px-1 inline-flex items-center gap-2 border-b-2 border-transparent text-sm whitespace-nowrap  focus:border-blue-500 text-gray-800 dark:text-white dark:focus:border-blue-500 neutral-700 hover:text-blue-500 dark:hover:text-blue-500 hover:cursor-pointer"
               @click.prevent="setMode('transactions')"
               :class="{ 'text-blue-500 border-b !border-blue-500': mode === 'transactions' }"
               aria-current="page"
