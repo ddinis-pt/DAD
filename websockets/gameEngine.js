@@ -160,10 +160,6 @@ exports.createGameEngine = () => {
       playerSocketId == game.player1SocketId ? game.player2 : game.player1;
     game.gameStatus =
       playerSocketId == game.player1SocketId ? 2 : 1;
-    console.log("Game ended. Winner is: ", 
-      playerSocketId == game.player1SocketId ? game.player2 : game.player1
-    );
-    console.log("Game Status: ", game.gameStatus);
     game.isGameWon = true;
     return true;
   };

@@ -1,5 +1,6 @@
 <script setup>
 import { useAuthStore } from '@/stores/auth';
+import { onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 
 const router = useRouter()
@@ -11,6 +12,10 @@ const logout = async () => {
     }
     router.push({ name: 'login' })
 }
+
+onMounted(() => {
+    document.title = 'Memory Card Game - About'
+})
 
 </script>
 <template>

@@ -24,20 +24,20 @@ const inputText = ref('')
 const inputTextLabel = ref('')
 
 const open = (actionCallBackFunction,
-                title = 'Title',
-                description = '',
-                labelInputText = 'Input',
-                initialInputText = '',
-                cancelLabel = 'Cancel',
-                actionLabel = 'Save',
-                mainText = ''
-                ) => {
+    title = 'Title',
+    description = '',
+    labelInputText = 'Input',
+    initialInputText = '',
+    cancelLabel = 'Cancel',
+    actionLabel = 'Save',
+    mainText = ''
+) => {
     titleText.value = title
-    inputTextLabel.value = labelInputText 
+    inputTextLabel.value = labelInputText
     inputText.value = initialInputText
     descriptionText.value = description
     cancelText.value = cancelLabel
-    actionText.value = actionLabel 
+    actionText.value = actionLabel
     actionCallBack.value = actionCallBackFunction
     mainContentText.value = mainText
     isOpen.value = true;
@@ -68,8 +68,8 @@ defineExpose({
             <DialogHeader>
                 <DialogTitle>{{ titleText }}</DialogTitle>
                 <DialogDescription>
-                    {{  descriptionText }}
-                </DialogDescription>                
+                    {{ descriptionText }}
+                </DialogDescription>
             </DialogHeader>
             <div>
                 <div class="text-base pb-5">
@@ -79,14 +79,14 @@ defineExpose({
                     <Label for="inputField">
                         {{ inputTextLabel }}
                     </Label>
-                    <Input id="inputField" v-model="inputText" @keydown.enter="handleAction"/>
+                    <Input class="dark:text-white" id="inputField" v-model="inputText" @keydown.enter="handleAction" />
                 </div>
             </div>
             <DialogFooter class="flex justify-end space-x-3">
                 <Button variant="secondary" @click="cancel" class="px-8">
                     {{ cancelText }}
                 </Button>
-                <Button @click="handleAction" :disabled="!inputText.trim()"  class="px-8">
+                <Button @click="handleAction" :disabled="!inputText.trim()" class="px-8">
                     {{ actionText }}
                 </Button>
             </DialogFooter>

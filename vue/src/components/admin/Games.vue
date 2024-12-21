@@ -48,8 +48,8 @@ async function fetchData() {
     try {
         const response = await axios.get('games/all')
         response.data.forEach(game => {
-            game.created_at = new Date(game.created_at)
-            game.updated_at = new Date(game.updated_at)
+            game.began_at = new Date(game.began_at)
+            game.ended_at = new Date(game.ended_at)
         })
         games.value = response.data
     } catch (error) {

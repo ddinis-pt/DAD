@@ -261,7 +261,7 @@ onMounted(() => {
                 </div>
             </div>
             <div v-show="!guest" v-if="hascoins" class="justify-items-center">
-                <div class="py-6" @click="showTemplate()">
+                <div class="py-6 cursor-pointer" @click="showTemplate()">
                     <div class="dark:bg-white dark:p-2 dark:rounded-xl">
                         <svg width="110" height="110" viewBox="0 0 110 110" fill="none"
                             xmlns="http://www.w3.org/2000/svg">
@@ -302,7 +302,7 @@ onMounted(() => {
                     </div>
                     <h3 class="text-1xl font-semibold text-gray-800 dark:text-white py-2">4x4</h3>
                 </div>
-                <div class="py-6" @click="showTemplate2()">
+                <div class="py-6 cursor-pointer" @click="showTemplate2()">
                     <div class="dark:bg-white dark:p-2 dark:rounded-xl">
                         <svg width="155" height="155" viewBox="0 0 155 155" fill="none"
                             xmlns="http://www.w3.org/2000/svg">

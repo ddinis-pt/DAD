@@ -145,8 +145,6 @@ const showHint = async () => {
             flippedCards.value[index1] = false;
             flippedCards.value[index2] = false;
         }, 750);
-    } else {
-        console.log('No unflipped pairs found.');
     }
 }
 

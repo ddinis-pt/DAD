@@ -103,6 +103,7 @@ onMounted(() => {
         router.push({ name: 'login' })
     }
     getUser()
+    document.title = 'Memory Card Game - Edit User'
 })
 
 const getUser = async () => {

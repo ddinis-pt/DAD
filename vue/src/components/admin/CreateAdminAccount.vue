@@ -4,7 +4,6 @@ import { useAuthStore } from '@/stores/auth';
 import { useRouter } from 'vue-router';
 import Header from '@/components/ui/Header.vue'
 
-
 import { useErrorStore } from '@/stores/error';
 import axios from 'axios';
 const errorStore = useErrorStore()
@@ -33,7 +32,6 @@ const submit = async () => {
         document.getElementById('error').classList.remove('hidden')
         return
     }
-
     if (photo.value !== '') {
         const form = new FormData();
         form.append('photo', photo.value)
@@ -56,22 +54,17 @@ const submit = async () => {
                     responseData.value = 'Unable to register, please try again later'
                     document.getElementById('error').classList.remove('hidden')
                 }
-
                 router.push({ name: 'users' })
-
                 if (errorStore.statusCode === 401) {
                     responseData.value = 'Invalid credentials'
                 }
-
                 else if (errorStore.statusCode === 422) {
                     responseData.value = 'Please fill all the fields above'
                 }
                 document.getElementById('error').classList.remove('hidden')
-
             })
         return;
     } else {
-
         try {
             await authStore.registerAdmin({
                 email: email.value,
@@ -83,18 +76,14 @@ const submit = async () => {
             responseData.value = 'Unable to register, please try again later'
             document.getElementById('error').classList.remove('hidden')
         }
-
         router.push({ name: 'users' })
-
         if (errorStore.statusCode === 401) {
             responseData.value = 'Invalid credentials'
         }
-
         else if (errorStore.statusCode === 422) {
             responseData.value = 'Please fill all the fields above'
         }
         document.getElementById('error').classList.remove('hidden')
-
     }
 }
 
@@ -103,7 +92,6 @@ onMounted(() => {
 })
 
 </script>
-
 <template>
     <div class="min-h-screen bg-sky-50 dark:bg-gray-800">
         <Header></Header>

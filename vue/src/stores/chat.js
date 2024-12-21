@@ -22,6 +22,7 @@ export const useChatStore = defineStore('chat', () => {
     
     const sendMessageToChat = (message) => {
         storeError.resetMessages()
+        socket.emit('chatMessage', message)
     }
 
     socket.on('chatMessage', (messageObj) => {

@@ -8,6 +8,7 @@ import { toast } from '@/components/ui/toast/use-toast'
 
 const authStore = useAuthStore()
 const guest = authStore.user === null
+const admin = authStore.userType === 'A'
 const dataByTime = ref([])
 const dataByTurns = ref([])
 const top3Board1 = ref({
@@ -128,7 +129,7 @@ async function getTop1(board_id) {
   }
 }
 onBeforeMount(async () => {
-  if (guest) {
+  if (guest || admin) {
     mode.value = 'global'
   } else {
     mode.value = 'personal'
@@ -186,7 +187,7 @@ onMounted(() => {
         <div class="p-2 text-black dark:text-white">
           <nav class="-mb-0.5 flex flex-wrap gap-x-6 justify-center">
             <a
-              v-if="!guest"
+              v-if="!guest && !admin"
               class="py-4 px-1 inline-flex items-center gap-2 border-b-2 border-transparent text-sm whitespace-nowrap hs-tab-active:border focus:border-blue-500 dark:focus:border-blue-500 hover:text-blue-500 dark:hover:text-blue-500 hover:cursor-pointer"
               @click.prevent="setMode('personal')"
               :class="{ 'text-blue-500 border-b-2 !border-blue-500': mode === 'personal' }"

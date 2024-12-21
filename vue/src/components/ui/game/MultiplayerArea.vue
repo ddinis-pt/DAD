@@ -14,6 +14,7 @@ onMounted(() => {
   if (!authStore.user) {
     router.push({ name: 'dashboard' })
   }
+  document.title = 'Memory Card Game - Multiplayer'
 })
 </script>
 <template>

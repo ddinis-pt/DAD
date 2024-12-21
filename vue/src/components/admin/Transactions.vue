@@ -48,8 +48,7 @@ async function fetchData() {
     try {
         const response = await axios.get('transactions')
         response.data.forEach(transaction => {
-            transaction.created_at = new Date(transaction.created_at)
-            transaction.updated_at = new Date(transaction.updated_at)
+            transaction.transaction_datetime = new Date(transaction.transaction_datetime)
         })
         transactions.value = response.data
     } catch (error) {

@@ -4,6 +4,9 @@ import axios from 'axios';
 import CardComponent from '@/components/ui/game/CardSingleplayer.vue';
 import { toast } from '@/components/ui/toast/use-toast';
 import { format } from 'date-fns';
+import { useRouter } from 'vue-router';
+import { useConfirm } from 'primevue/useconfirm';
+import ConfirmDialog from 'primevue/confirmdialog';
 
 import { useAuthStore } from '@/stores/auth';
 
