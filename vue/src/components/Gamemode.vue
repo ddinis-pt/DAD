@@ -4,7 +4,7 @@ import Footer from '@/components/ui/Footer.vue';
 import { useAuthStore } from '@/stores/auth'
 import { useRouter } from 'vue-router';
 import axios from 'axios';
-import { onMounted } from 'vue';
+import { onMounted, ref } from 'vue';
 
 import { format } from 'date-fns';
 import { useConfirm } from "primevue/useconfirm";
@@ -17,11 +17,13 @@ const guest = authStore.user ? false : true
 
 const confirm = useConfirm();
 
+const hascoins = ref(true)
+
 const showTemplate = () => {
     confirm.require({
         group: 'templating',
         header: 'Start Game',
-        icon: 'pi pi-exclamation-circle',
+        icon: 'pi pi-exclamation-triangle',
         rejectProps: {
             label: 'Cancel',
             icon: 'pi pi-times',
@@ -37,7 +39,7 @@ const showTemplate = () => {
             checkMoney(2)
         },
         reject: () => {
-            
+
         }
     });
 };
@@ -46,7 +48,7 @@ const showTemplate2 = () => {
     confirm.require({
         group: 'templating2',
         header: 'Start Game',
-        icon: 'pi pi-exclamation-circle',
+        icon: 'pi pi-exclamation-triangle',
         rejectProps: {
             label: 'Cancel',
             icon: 'pi pi-times',
@@ -62,7 +64,7 @@ const showTemplate2 = () => {
             checkMoney(3)
         },
         reject: () => {
-            
+
         }
     });
 };
@@ -90,6 +92,11 @@ const checkMoney = async (mode) => {
 }
 onMounted(() => {
     window.HSStaticMethods.autoInit();
+
+    if (authStore.userCoins < 1) {
+        hascoins.value = false
+    }
+
 })
 
 </script>
@@ -135,8 +142,10 @@ onMounted(() => {
                 </div>
             </RouterLink>
 
-            <div v-show="guest" class="justify-items-center">
-                <h2 class="text-xl font-semibold text-gray-300 py-2">Only available for registered players:</h2>
+            <div v-show="guest || !hascoins" class="justify-items-center">
+                <h2 v-if="guest" class="text-xl font-semibold text-gray-300 py-2">Only available for registered players:
+                </h2>
+                <h2 v-else class="text-xl font-semibold text-gray-300 py-2">You don't have enough coins to play</h2>
                 <div class="py-6">
                     <div class="dark:bg-white dark:p-2 dark:rounded-xl">
                         <svg width="110" height="110" viewBox="0 0 110 110" fill="none"
@@ -263,7 +272,7 @@ onMounted(() => {
                 </div>
 
             </div>
-            <div v-show="!guest" class="justify-items-center">
+            <div v-show="!guest" v-if="hascoins" class="justify-items-center">
                 <div class="py-6" @click="showTemplate()">
                     <div class="dark:bg-white dark:p-2 dark:rounded-xl">
                         <svg width="110" height="110" viewBox="0 0 110 110" fill="none"
@@ -391,28 +400,28 @@ onMounted(() => {
 
         </div>
         <ConfirmDialog group="templating">
-                    <template #message="slotProps">
-                        <div
-                            class="flex flex-col items-center w-full gap-4 border-b border-surface-200 dark:border-surface-700">
-                            <i :class="slotProps.message.icon" class="!text-6xl text-primary-500"></i>
-                            <p> Are you sure you want to start this game? <br> Starting this game spends <strong>1
-                                coin</strong>.</p>
-                        </div>
-                    </template>
-                </ConfirmDialog>
-                <ConfirmDialog group="templating2">
-                    <template #message="slotProps">
-                        <div
-                            class="flex flex-col items-center w-full gap-4 border-b border-surface-200 dark:border-surface-700">
-                            <i :class="slotProps.message.icon" class="!text-6xl text-primary-500"></i>
-                            <p> Are you sure you want to start this game? <br> Starting this game spends <strong>1
-                                coin</strong>.</p>
-                        </div>
-                    </template>
-                </ConfirmDialog>
+            <template #message="slotProps">
+                <div
+                    class="flex flex-col items-center w-full gap-4 border-b border-surface-200 dark:border-surface-700">
+                    <i :class="slotProps.message.icon" class="!text-6xl text-primary-500"></i>
+                    <p class="pb-2"> Are you sure you want to start this game? <br> Starting this game spends <strong>1
+                            coin</strong>.</p>
+                </div>
+            </template>
+        </ConfirmDialog>
+        <ConfirmDialog group="templating2">
+            <template #message="slotProps">
+                <div
+                    class="flex flex-col items-center w-full gap-4 border-b border-surface-200 dark:border-surface-700">
+                    <i :class="slotProps.message.icon" class="!text-6xl text-primary-500"></i>
+                    <p class="pb-2"> Are you sure you want to start this game? <br> Starting this game spends <strong>1
+                            coin</strong>.</p>
+                </div>
+            </template>
+        </ConfirmDialog>
 
 
-       
-        
+
+
     </div>
 </template>

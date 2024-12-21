@@ -29,11 +29,20 @@
                             class="p-2 bg-gray-700 text-white rounded" />
                         <input v-model="value" type="number" placeholder="Value"
                             class="p-2 bg-gray-700 text-white rounded" />
-                        <button @click.prevent="comprar" class="p-2 bg-blue-500 text-white rounded">Buy</button>
+                        <button @click="showTemplate()" class="p-2 bg-blue-500 text-white rounded">Buy</button>
                     </div>
                 </div>
             </div>
         </main>
+        <ConfirmDialog group="templating">
+            <template #message="slotProps">
+                <div
+                    class="flex flex-col items-center w-full gap-4 border-b border-surface-200 dark:border-surface-700">
+                    <i :class="slotProps.message.icon" class="!text-6xl text-primary-500"></i>
+                    <p>Are you sure you want to buy {{ value*10 }} coins for {{ value }}€?</p>
+                </div>
+            </template>
+        </ConfirmDialog>
         <!-- <Footer></Footer> -->
     </div>
 </template>
@@ -46,8 +55,11 @@ import axios from 'axios';
 import { ref, watch } from 'vue';
 import Toaster from '@/components/ui/toast/Toaster.vue';
 import { toast } from '@/components/ui/toast';
+import { useConfirm } from "primevue/useconfirm";
+import ConfirmDialog from 'primevue/confirmdialog';
 
 import { format } from 'date-fns';
+const confirm = useConfirm();
 
 const router = useRouter()
 const authStore = useAuthStore()
@@ -117,4 +129,59 @@ const comprar = async () => {
         brain_coins: value.value * 10,
     })
 }
+
+const showTemplate = () => {
+    if (type.value === '-1') {
+        toast({
+            description: 'Choose a payment method',
+            title: 'Error',
+            variant: 'warning'
+        })
+        return
+    }
+
+    if (reference.value === '') {
+        toast({
+            description: 'Insert a reference',
+            title: 'Error',
+            variant: 'warning'
+        })
+        return
+    }
+
+    if (value.value === '') {
+        toast({
+            description: 'Insert a value',
+            title: 'Error',
+            variant: 'warning'
+        })
+        return
+    }
+
+        confirm.require({
+        group: 'templating',
+        header: 'Confirm purchase',
+        icon: 'pi pi-exclamation-triangle',
+        rejectProps: {
+            label: 'Cancel',
+            icon: 'pi pi-times',
+            outlined: true,
+            size: 'small'
+        },
+        acceptProps: {
+            label: 'Buy Coins',
+            icon: 'pi pi-check',
+            size: 'small'
+        },
+        accept: async () => {
+            await comprar()
+            authStore.refreshUserData()
+        },
+        reject: () => {
+
+        }
+    });
+   
+    
+};
 </script>
