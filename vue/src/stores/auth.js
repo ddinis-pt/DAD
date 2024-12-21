@@ -63,7 +63,8 @@ export const useAuthStore = defineStore('auth', () => {
   const userPhotoUrl = computed(() => {
     const photoFile = user.value ? (user.value.photo_filename ?? '') : ''
     if (photoFile) {
-      return axios.defaults.baseURL.replaceAll('/api', '/storage/photos/' + photoFile)
+      //return axios.defaults.baseURL.replaceAll(/\/api(?!-)/, '/storage/photos/' + photoFile)
+      return axios.defaults.baseURL.replace('/api', '/storage/photos/' + photoFile)
     }
     return avatarNoneAssetURL
   })
@@ -119,6 +120,22 @@ export const useAuthStore = defineStore('auth', () => {
       sessionStorage.setItem('user', JSON.stringify(user.value))
       repeatRefreshToken()
       return user.value
+    } catch (e) {
+      clearUser()
+      storeError.setErrorMessages(
+        e.response.data.message,
+        e.response.data.errors,
+        e.response.status,
+        'Authentication Error!'
+      )
+      return false
+    }
+  }
+
+  const registerAdmin = async (credentials) => {
+    storeError.resetMessages()
+    try {
+      await axios.post('auth/registeradmin', credentials)
     } catch (e) {
       clearUser()
       storeError.setErrorMessages(
@@ -237,6 +254,7 @@ export const useAuthStore = defineStore('auth', () => {
     restoreToken,
     getFirstLastName,
     register,
+    registerAdmin,
     refreshUserData
   }
 })

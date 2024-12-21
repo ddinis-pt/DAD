@@ -218,6 +218,11 @@ class GameController extends Controller
             ->get(), 200);
     }
 
+    public function getAllGames()
+    {
+        return response()->json(Game::all(), 200);
+    }
+
     public function insertMultiplayerGame(MultiplayerGameRequest $request) {
         $result = DB::insert('INSERT INTO multiplayer_games_played (user_id, game_id, player_won, pairs_discovered) VALUES (?, ?, ?, ?)', [
             $request->validated()["user_id"],

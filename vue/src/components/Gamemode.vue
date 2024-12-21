@@ -27,41 +27,41 @@ const checkMoney = async (mode) => {
 
 </script>
 <template>
-    <div class="min-h-screen grid content-between bg-gray-800">
+    <div class="min-h-screen grid content-between bg-sky-50 dark:bg-gray-800">
         <Header></Header>
         <div class="grid justify-center text-center justify-items-center">
-            <h2 class="block text-2xl font-bold text-gray-800 text-white py-8">Choose your board size:</h2>
+            <h2 class="block text-2xl font-bold text-gray-800 dark:text-white py-8">Choose your board size:</h2>
             <RouterLink :to="{ name: '3by4' }">
                 <div class="py-6">
-                <svg width="111" height="86" viewBox="0 0 111 86" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <rect x="13" y="13" width="16" height="16" rx="3" fill="#1F2937" stroke="#1F2937" stroke-width="4"
-                        stroke-linecap="round" />
-                    <rect x="13" y="35" width="16" height="16" rx="3" fill="#1F2937" stroke="#1F2937" stroke-width="4"
-                        stroke-linecap="round" />
-                    <rect x="13" y="57" width="16" height="16" rx="3" fill="#1F2937" stroke="#1F2937" stroke-width="4"
-                        stroke-linecap="round" />
-                    <rect x="36" y="13" width="16" height="16" rx="3" fill="#1F2937" stroke="#1F2937" stroke-width="4"
-                        stroke-linecap="round" />
-                    <rect x="36" y="35" width="16" height="16" rx="3" fill="#1F2937" stroke="#1F2937" stroke-width="4"
-                        stroke-linecap="round" />
-                    <rect x="36" y="57" width="16" height="16" rx="3" fill="#1F2937" stroke="#1F2937" stroke-width="4"
-                        stroke-linecap="round" />
-                    <rect x="59" y="13" width="16" height="16" rx="3" fill="#1F2937" stroke="#1F2937" stroke-width="4"
-                        stroke-linecap="round" />
-                    <rect x="59" y="35" width="16" height="16" rx="3" fill="#1F2937" stroke="#1F2937" stroke-width="4"
-                        stroke-linecap="round" />
-                    <rect x="59" y="57" width="16" height="16" rx="3" fill="#1F2937" stroke="#1F2937" stroke-width="4"
-                        stroke-linecap="round" />
-                    <rect x="82" y="13" width="16" height="16" rx="3" fill="#1F2937" stroke="#1F2937" stroke-width="4"
-                        stroke-linecap="round" />
-                    <rect x="82" y="35" width="16" height="16" rx="3" fill="#1F2937" stroke="#1F2937" stroke-width="4"
-                        stroke-linecap="round" />
-                    <rect x="82" y="57" width="16" height="16" rx="3" fill="#1F2937" stroke="#1F2937" stroke-width="4"
-                        stroke-linecap="round" />
-                    <rect x="2" y="2" width="107" height="82" rx="5" stroke="#1E293B" stroke-width="4" />
-                </svg>
-                <h3 class="text-1xl font-semibold text-gray-800 text-white py-2">3x4</h3>
-            </div>
+                    <svg width="111" height="86" viewBox="0 0 111 86" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="13" y="13" width="16" height="16" rx="3" fill="#1F2937" stroke="#1F2937"
+                            stroke-width="4" stroke-linecap="round" />
+                        <rect x="13" y="35" width="16" height="16" rx="3" fill="#1F2937" stroke="#1F2937"
+                            stroke-width="4" stroke-linecap="round" />
+                        <rect x="13" y="57" width="16" height="16" rx="3" fill="#1F2937" stroke="#1F2937"
+                            stroke-width="4" stroke-linecap="round" />
+                        <rect x="36" y="13" width="16" height="16" rx="3" fill="#1F2937" stroke="#1F2937"
+                            stroke-width="4" stroke-linecap="round" />
+                        <rect x="36" y="35" width="16" height="16" rx="3" fill="#1F2937" stroke="#1F2937"
+                            stroke-width="4" stroke-linecap="round" />
+                        <rect x="36" y="57" width="16" height="16" rx="3" fill="#1F2937" stroke="#1F2937"
+                            stroke-width="4" stroke-linecap="round" />
+                        <rect x="59" y="13" width="16" height="16" rx="3" fill="#1F2937" stroke="#1F2937"
+                            stroke-width="4" stroke-linecap="round" />
+                        <rect x="59" y="35" width="16" height="16" rx="3" fill="#1F2937" stroke="#1F2937"
+                            stroke-width="4" stroke-linecap="round" />
+                        <rect x="59" y="57" width="16" height="16" rx="3" fill="#1F2937" stroke="#1F2937"
+                            stroke-width="4" stroke-linecap="round" />
+                        <rect x="82" y="13" width="16" height="16" rx="3" fill="#1F2937" stroke="#1F2937"
+                            stroke-width="4" stroke-linecap="round" />
+                        <rect x="82" y="35" width="16" height="16" rx="3" fill="#1F2937" stroke="#1F2937"
+                            stroke-width="4" stroke-linecap="round" />
+                        <rect x="82" y="57" width="16" height="16" rx="3" fill="#1F2937" stroke="#1F2937"
+                            stroke-width="4" stroke-linecap="round" />
+                        <rect x="2" y="2" width="107" height="82" rx="5" stroke="#1E293B" stroke-width="4" />
+                    </svg>
+                    <h3 class="text-1xl font-semibold text-gray-800 dark:text-white py-2">3x4</h3>
+                </div>
             </RouterLink>
 
             <div v-show="guest" class="justify-items-center">
@@ -103,7 +103,7 @@ const checkMoney = async (mode) => {
                         <rect x="2" y="2" width="106" height="106" rx="5" stroke="#CBD5E1" stroke-width="4" />
                     </svg>
 
-                    <h3 class="text-1xl font-semibold text-gray-300 text-white py-2">4x4</h3>
+                    <h3 class="text-1xl font-semibold text-gray-800 dark:text-white py-2">4x4</h3>
                 </div>
 
 
@@ -183,7 +183,7 @@ const checkMoney = async (mode) => {
                             stroke-width="4" stroke-linecap="round" />
                         <rect x="2" y="2" width="151" height="151" rx="5" stroke="#CBD5E1" stroke-width="4" />
                     </svg>
-                    <h3 class="text-1xl font-semibold text-gray-300 text-white py-2">6x6</h3>
+                    <h3 class="text-1xl font-semibold text-gray-300 dark:text-white py-2">6x6</h3>
                 </div>
 
             </div>
@@ -226,7 +226,7 @@ const checkMoney = async (mode) => {
                         <rect x="2" y="2" width="106" height="106" rx="5" stroke="#1F2937" stroke-width="4" />
                     </svg>
 
-                    <h3 class="text-1xl font-semibold text-gray-800 text-white py-2">4x4</h3>
+                        <h3 class="text-1xl font-semibold text-gray-800 dark:text-white py-2">4x4</h3>
 
                 </div>
                 <div @click.prevent="checkMoney(3)" class="py-6">
@@ -305,12 +305,10 @@ const checkMoney = async (mode) => {
                             stroke-width="4" stroke-linecap="round" />
                         <rect x="2" y="2" width="151" height="151" rx="5" stroke="#1F2937" stroke-width="4" />
                     </svg>
-                    <h3 class="text-1xl font-semibold text-gray-800 text-white py-2">6x6</h3>
-                </div>
+                    <h3 class="text-1xl font-semibold text-gray-800 dark:text-white py-2">6x6</h3>
+                   </div>
             </div>
 
         </div>
-
-        <Footer></Footer>
     </div>
 </template>

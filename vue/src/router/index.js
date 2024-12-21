@@ -17,6 +17,10 @@ import MultiplayerArea from '@/components/ui/game/MultiplayerArea.vue'
 import Register from '@/components/auth/Register.vue'
 import DeleteAccount from '@/components/registered/DeleteAccount.vue'
 import Statistics from '@/components/registered/Statistics.vue'
+import Users from '@/components/admin/Users.vue'
+import EditUser from '@/components/admin/EditUser.vue'
+import CreateAdminAccount from '@/components/admin/CreateAdminAccount.vue'
+import Transactions from '@/components/admin/Information.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -75,6 +79,26 @@ const router = createRouter({
       path: '/settings',
       name: 'settings',
       component: Settings
+    },
+    {
+      path: '/users',
+      name: 'users',
+      component: Users,
+    },
+    {
+      path: '/users/edit/:id',
+      name: 'edit-user',
+      component: EditUser 
+    },
+    {
+      path: '/users/create',
+      name: 'create-user',
+      component: CreateAdminAccount
+    },
+    {
+      path: '/information',
+      name: 'information',
+      component: Transactions
     },
     {
       path: '/testers',

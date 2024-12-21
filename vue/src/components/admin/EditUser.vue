@@ -1,12 +1,132 @@
+<script setup>
+import { onBeforeMount, onMounted, ref } from 'vue'
+import { useAuthStore } from '@/stores/auth'
+import { useRouter, useRoute } from 'vue-router'
+import axios from 'axios';
+import Toaster from '@/components/ui/toast/Toaster.vue';
+import { toast } from '@/components/ui/toast';
+import Header from '@/components/ui/Header.vue';
+import avatarNoneAssetURL from '@/assets/avatar-none.png'
+
+const id = ref('')
+const email = ref('')
+const password = ref('')
+const name = ref('')
+const nickname = ref('')
+const photo = ref('')
+const currentPhoto = ref('')
+let photoFile = ref('')
+
+const authStore = useAuthStore()
+const router = useRouter()
+const route = useRoute()
+
+if (authStore.user === null) {
+    router.push({ name: 'login' })
+}
+
+const handleFileUpload = (event) => {
+    const file = event.target.files[0]
+    photo.value = file;
+}
+
+const submit = async () => {
+    let foto = null;
+    console.log(photo.value)
+    if (photo.value !== '') {
+        const form = new FormData();
+        form.append('photo', photo.value);
+        await axios.post('/images', form, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        })
+            .then(response => {
+                foto = response.data.photo_filename;
+            })
+            .catch(() => {
+                toast({
+                    title: 'Error',
+                    description: 'Unable to upload photo',
+                    variant: 'error'
+                })
+                return;
+            });
+    }
+    if (foto === null) {
+        foto = currentPhoto.value
+    }
+    console.log(foto)
+    await axios.put(`/users/${id.value}/update`, {
+        email: email.value,
+        password: password.value,
+        name: name.value,
+        nickname: nickname.value,
+        photo_filename: foto,
+    })
+        .then(() => {
+            toast({
+                title: 'Success',
+                description: 'User updated successfully',
+                variant: 'success'
+            })
+            router.push({ name: 'dashboard' })
+        })
+        .catch(() => {
+            toast({
+                title: 'Error',
+                description: 'Unable to update user',
+                variant: 'error'
+            })
+        });
+}
+
+onMounted(() => {
+    if (!authStore.user) {
+        router.push({ name: 'login' })
+    }
+    getUser()
+})
+
+const getUser = async () => {
+    await axios.get(`/users/${route.params.id}`)
+        .then(response => {
+            id.value = response.data.id
+            email.value = response.data.email
+            name.value = response.data.name
+            nickname.value = response.data.nickname
+            currentPhoto.value = response.data.photo_filename
+            password.value = response.data.password
+            getUserPhoto(currentPhoto.value)
+        })
+        .catch(() => {
+            toast({
+                title: 'Error',
+                description: 'Unable to get user',
+                variant: 'error'
+            })
+        });
+
+}
+
+const getUserPhoto = (photo) => {
+    if (photo) {
+        photoFile = axios.defaults.baseURL.replace(/\/api(?!.*\/api)/, '/storage/photos/' + photo)
+    } else {
+        photoFile = avatarNoneAssetURL
+    }
+}
+
+</script>
 <template>
-    <div class="bg-sky-50 dark:bg-gray-800 min-h-screen">
+    <div class="bg-gray-800 min-h-screen">
         <Header></Header>
-        <main>
-
-            <h1 class="text-3xl font-bold dark:text-white text-gray-800 text-center pt-8">Settings</h1>
-
+        <main class="">
+            <h1 class="text-3xl font-bold text-white text-center pt-8">Edit User:</h1>
             <div class="space-y-2 rounded-xl shadow-md bg-white px-6 py-4 mt-4 max-w-2xl mx-auto">
-
+                <div class="text-center py-4">
+                    <h2 class="block text-2xl font-bold text-gray-800">{{ name }}</h2>
+                </div>
                 <div class="mt-5">
 
                     <!-- Form -->
@@ -86,17 +206,18 @@
                             </div>
 
                             <!-- File Upload -->
-                            <div>
+                            <div class="flex flex-col">
                                 <label for="file-upload" class="inline-block text-sm mb-2 text-gray-800">Profile
                                     Picture</label>
 
                                 <div class="current-picture">
                                     <img class="inline-block size-[100px] rounded-sm border-2 border-blue-600"
-                                        :src="currentPhoto" alt="Avatar">
+                                        :src="photoFile" alt="Avatar">
                                     <span class="block text-xs text-left text-gray-500">Current profile
                                         picture</span>
                                 </div>
-                                
+
+
                                 <div class="relative">
                                     <input type="file" id="file-upload" name="file-upload"
                                         class="appearance-none py-3 px-4 border w-full bg-blue-600 rounded-lg text-sm focus:border-blue-600"
@@ -107,7 +228,7 @@
                                 class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
                                 Update
                             </button>
-                            <button v-if="authStore.userType === 'P'" @click.prevent="deleteAccount"
+                            <button @click.prevent="deleteAccount"
                                 class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-red-700 text-white hover:bg-red-900 focus:outline-none focus:bg-red-900 disabled:opacity-50 disabled:pointer-events-none">
                                 Delete Account
                             </button>
@@ -119,96 +240,3 @@
         </main>
     </div>
 </template>
-<script setup>
-import { onMounted, ref } from 'vue'
-import { useAuthStore } from '@/stores/auth'
-import { useRouter } from 'vue-router'
-import axios from 'axios';
-import Toaster from '@/components/ui/toast/Toaster.vue';
-import { toast } from '@/components/ui/toast';
-import Header from '@/components/ui/Header.vue';
-
-const email = ref('')
-const password = ref('')
-const name = ref('')
-const nickname = ref('')
-const photo = ref('')
-const currentPhoto = ref('')
-
-const authStore = useAuthStore()
-const router = useRouter()
-
-
-const userPhoto = authStore.userPhotoUrl
-
-if (authStore.user === null) {
-    router.push({ name: 'login' })
-}
-
-const handleFileUpload = (event) => {
-    const file = event.target.files[0]
-    photo.value = file;
-}
-
-const submit = async () => {
-    let foto = null;
-    if (photo.value !== '') {
-        const form = new FormData();
-        form.append('photo', photo.value);
-        await axios.post('/images', form, {
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            }
-        })
-            .then(response => {
-                foto = response.data.photo_filename;
-            })
-            .catch(() => {
-                toast({
-                    title: 'Error',
-                    description: 'Unable to upload photo',
-                    variant: 'error'
-                })
-                return;
-            });
-    } else {
-        // separate the values using / and get the last value
-        foto = userPhoto.split('/').pop();
-    }
-    await axios.put(`/users/${authStore.user.id}`, {
-        email: email.value,
-        password: password.value,
-        name: name.value,
-        nickname: nickname.value,
-        photo_filename: foto
-    })
-        .then(() => {
-            toast({
-                title: 'Success',
-                description: 'User updated successfully',
-                variant: 'success'
-            })
-            router.push({ name: 'dashboard' })
-        })
-        .catch(() => {
-            toast({
-                title: 'Error',
-                description: 'Unable to update user',
-                variant: 'error'
-            })
-        });
-}
-
-onMounted(() => {
-    email.value = authStore.userEmail
-    name.value = authStore.userName
-    nickname.value = authStore.userNickname
-    password.value = authStore.userPassword
-    currentPhoto.value = authStore.userPhotoUrl
-})
-
-const deleteAccount = () => {
-    router.push({ name: 'deleteAccount' })
-}
-
-</script>

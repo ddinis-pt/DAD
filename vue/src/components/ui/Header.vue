@@ -2,10 +2,15 @@
 import router from '@/router';
 import { onMounted, watch } from 'vue';
 import { useAuthStore } from '@/stores/auth'
+import { onBeforeMount, onMounted, watch, ref } from 'vue';
 const authStore = useAuthStore()
 
 const back = () => {
     router.push({ name: 'dashboard' })
+}
+
+const leave = () => {
+    router.push({ name: 'login' })
 }
 
 const logout = async () => {
@@ -25,24 +30,33 @@ watch(() => authStore.userCoins, (newValue, oldValue) => {
 })
 
 onMounted(() => {
+    window.HSStaticMethods.autoInit();
     if (authStore.user) {
         authStore.refreshUserData()
     }
 })
+
+const isAdmin = () => {
+    return authStore.user && authStore.userType === 'A'
+}
+
+const isPlayer = () => {
+    return authStore.user && authStore.userType === 'P'
+}
 </script>
 <template>
     <header
         class="flex flex-row z-50 w-full text-sm max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 justify-between self-start">
         <!-- Logo -->
-        <div>
-            <img @click.prevent="back" class="flex-none inline-block h-16" src="../../assets/cards-light.png"
-                alt="App Logo" />
+        <div class="bg-gray-800 p-2 dark:p-0 rounded-xl dark:border-neutral-700">
+            <img @click.prevent="back" class="cursor-pointer flex-none inline-block h-16"
+                src="../../assets/cards-light.png" alt="Memory Game Logo" title="Go to dashboard" />
         </div>
         <!-- End Logo -->
         <!-- Navigation -->
         <div class="flex items-center gap-x-2">
-            <span v-if="authStore.user"
-                class="mr-3 inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium border border-white text-white dark:border-neutral-200 dark:text-white">
+            <span v-if="isPlayer()"
+                class="mr-3 inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium border bg-gray-800 text-white border-gray-800 dark:border-white dark:text-white">
                 <svg class="shrink-0 size-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                     viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"
                     stroke-linejoin="round">
@@ -59,14 +73,12 @@ onMounted(() => {
                     <div v-if="authStore.user" class="flex items-center">
                         <img class="inline-block size-[55px] rounded-full border-2 border-blue-600"
                             :src="authStore.userPhotoUrl" alt="Avatar">
-                        <h2 class="block text-xl font-bold text-white pl-4 pr-2">Hello, {{ authStore.userFirstLastName
+                        <h2 class="block text-xl font-bold text-gray-800 dark:text-white pl-4 pr-2">Hello, {{
+                            authStore.userFirstLastName
                             }}!
                         </h2>
-                        <svg class="hs-dropdown-open:rotate-180 size-4" xmlns="http://www.w3.org/2000/svg" width="24"
-                            height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"
-                            stroke-linecap="round" stroke-linejoin="round">
-                            <path d="m6 9 6 6 6-6" />
-                        </svg>
+                        <i
+                            class="pi pi-chevron-down hs-dropdown-open:rotate-180 text-sm text-gray-800 dark:text-white"></i>
                     </div>
                     <div v-else class="flex items-center">
                         <img class="inline-block size-[55px] rounded-full border-2 border-blue-600"
@@ -74,28 +86,20 @@ onMounted(() => {
                         <h2 class="block text-xl font-bold text-white pl-2">Hello, Guest!</h2>
                     </div>
                 </button>
-                <div class="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden min-w-60 bg-white shadow-md rounded-lg mt-2 dark:bg-neutral-800 dark:border dark:border-neutral-700"
+                <div class="z-10 hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden min-w-60 bg-white shadow-md rounded-lg mt-2 dark:bg-slate-900 dark:border dark:border-neutral-700"
                     role="menu" aria-orientation="vertical" aria-labelledby="hs-dropdown-with-header">
                     <div v-if="authStore.user" class="py-3 px-4 border-b border-gray-200 dark:border-neutral-700">
                         <p class="text-sm text-gray-500 dark:text-neutral-400">Signed in as</p>
                         <p class="text-sm font-medium text-gray-800 dark:text-neutral-300">{{ authStore.userEmail }}</p>
                     </div>
                     <div class="p-1 space-y-0.5">
-                        <RouterLink v-if="authStore.user"
-                            class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700"
-                            :to="{ name: 'settings' }">
-                            <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                stroke-linecap="round" stroke-linejoin="round">
-                                <path
-                                    d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z" />
-                                <circle cx="12" cy="12" r="3" />
-                            </svg>
+                        <RouterLink :to="{ name: 'settings' }" v-if="authStore.user"
+                            class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-white dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700">
+                            <i class="pi pi-cog"></i>
                             Settings
                         </RouterLink>
-                        <RouterLink v-if="authStore.user"
-                            class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700"
-                            :to="{ name: 'buy-coins' }">
+                        <RouterLink :to="{ name: 'buy-coins' }" v-if="isPlayer()"
+                            class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-white dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700">
                             <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                 stroke-linecap="round" stroke-linejoin="round">
@@ -106,16 +110,19 @@ onMounted(() => {
                             </svg>
                             Buy Coins
                         </RouterLink>
-                        <a class="cursor-pointer flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700"
+                        <a v-if="authStore.user"
+                            class="cursor-pointer flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-white dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700"
                             @click="logout">
-                            <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
-                                <polyline points="16 17 21 12 16 7" />
-                                <line x1="21" x2="9" y1="12" y2="12" />
-                            </svg>
+                            <i class="pi pi-sign-out"></i>
                             Logout
+                        </a>
+
+                        <a v-if="!authStore.user"
+                            class="cursor-pointer flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-white dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700"
+                            @click="leave">
+                            <i class="pi pi-sign-out"></i>
+                            Leave
+
                         </a>
                     </div>
                 </div>

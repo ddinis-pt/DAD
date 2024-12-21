@@ -24,13 +24,6 @@ const email = ref('')
 const password = ref('')
 const responseData = ref('')
 
-const continueAsGuest = async () => {
-    if (authStore.user) {
-        await authStore.logout()
-    }
-    router.push({ name: 'dashboard' })
-}
-
 const handleFileUpload = (event) => {
     const file = event.target.files[0]
     photo.value = file;
@@ -43,7 +36,6 @@ const submit = async () => {
         return
     }
 
-    let user = null
     if (photo.value !== '') {
         console.log(photo.value)
         const form = new FormData();
@@ -56,7 +48,7 @@ const submit = async () => {
             .then(async (response) => {
 
                 try {
-                    user = await authStore.register({
+                    await authStore.registerAdmin({
                         email: email.value,
                         name: name.value,
                         nickname: nickname.value,
@@ -68,61 +60,46 @@ const submit = async () => {
                     document.getElementById('error').classList.remove('hidden')
                 }
 
-                if (user) {
-                    await axios.get('/win/10');
-                    router.push({ name: 'dashboard' })
-                }
-                else {
-                    if (errorStore.statusCode === 401) {
-                        responseData.value = 'Invalid credentials'
-                    }
+                router.push({ name: 'users' })
 
-                    else if (errorStore.statusCode === 422) {
-                        responseData.value = 'Please fill all the fields above'
-                    }
-                    document.getElementById('error').classList.remove('hidden')
+                if (errorStore.statusCode === 401) {
+                    responseData.value = 'Invalid credentials'
                 }
+
+                else if (errorStore.statusCode === 422) {
+                    responseData.value = 'Please fill all the fields above'
+                }
+                document.getElementById('error').classList.remove('hidden')
+
             })
         return;
     } else {
 
-     
         try {
-            user = await authStore.register({
+            await authStore.registerAdmin({
                 email: email.value,
                 name: name.value,
                 nickname: nickname.value,
                 password: password.value,
-                photo_filename: null
             })
         } catch (error) {
             responseData.value = 'Unable to register, please try again later'
             document.getElementById('error').classList.remove('hidden')
         }
 
-        if (user) {
-            await axios.get('/win/10');
-            router.push({ name: 'dashboard' })
-        }
-        else {
-            if (errorStore.statusCode === 401) {
-                responseData.value = 'Invalid credentials'
-            }
+        router.push({ name: 'users' })
 
-            else if (errorStore.statusCode === 422) {
-                responseData.value = 'Please fill all the fields above'
-            }
-            document.getElementById('error').classList.remove('hidden')
+        if (errorStore.statusCode === 401) {
+            responseData.value = 'Invalid credentials'
         }
-        
+
+        else if (errorStore.statusCode === 422) {
+            responseData.value = 'Please fill all the fields above'
+        }
+        document.getElementById('error').classList.remove('hidden')
+
     }
 }
-
-onMounted(() => {
-    if (authStore.user) {
-        router.push({ name: 'dashboard' })
-    }
-})
 
 </script>
 
@@ -137,7 +114,7 @@ onMounted(() => {
                 </div>
 
                 <div class="text-center py-4">
-                    <h2 class="block text-2xl font-bold text-gray-800">Register an account</h2>
+                    <h2 class="block text-2xl font-bold text-gray-800">Register an admin account</h2>
                 </div>
 
 
@@ -252,17 +229,6 @@ onMounted(() => {
 
                         <div class="pb-3">
 
-                            <!-- Remember me -->
-                            <div class="flex items-center pb-3">
-                                <div class="flex">
-                                    <input id="remember-me" name="remember-me" type="checkbox" checked
-                                        class="shrink-0 mt-0.5 border-gray-200 rounded text-blue-600 focus:ring-blue-500 bg-neutral-800 checked:bg-blue-500 checked:border-blue-500 focus:ring-offset-gray-800">
-                                </div>
-                                <div class="ms-3">
-                                    <label for="remember-me" class="text-sm text-gray-800">Remember me</label>
-                                </div>
-                            </div>
-
                             <!-- File Upload -->
                             <div class="pb-3">
                                 <label for="file-upload" class="inline-block text-sm mb-2 text-gray-800">Profile
@@ -277,25 +243,6 @@ onMounted(() => {
                             <button @click.prevent="submit"
                                 class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
                                 Register
-                            </button>
-
-                            <!-- Divider -->
-                            <div class="flex items-center text-xs uppercase text-neutral-500 py-6">
-                                <div class="flex-1 border-t border-blue-600 rounded-full border-8"></div>
-                            </div>
-
-                            <RouterLink :to="{ name: 'login' }"
-                                class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-blue-text bg-white text-blue-text hover:bg-blue-text hover:text-white focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
-                                Log in
-                            </RouterLink>
-                            <div class="flex items-center text-xs uppercase text-neutral-500 py-3">
-                                <div class="flex-1 border-t border-neutral-600"></div>
-                                <span class="px-3">Or</span>
-                                <div class="flex-1 border-t border-neutral-600"></div>
-                            </div>
-                            <button @click.prevent="continueAsGuest"
-                                class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-blue-text bg-white text-blue-text hover:bg-blue-text hover:text-white focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
-                                Continue as Guest
                             </button>
 
                         </div>

@@ -14,8 +14,11 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::post('/auth/logout', [AuthController::class, "logout"]);
     Route::post('/auth/refreshtoken', [AuthController::class, "refreshtoken"]);
+    Route::put('/users/{id}/update', [UserController::class, "updateByAdmin"]);
     Route::put('/users/{id}', [UserController::class, "update"]);
     Route::delete('/users/{id}', [UserController::class, "destroy"]);
+    Route::put('/users/{id}/block', [UserController::class, "block"]);
+    Route::put('/users/{id}/unblock', [UserController::class, "unblock"]);
 
     Route::put('/spend/{value}', [UserController::class, "spendCoins"]);
     Route::post('/buy/', [UserController::class, "buyCoins"]);
@@ -29,6 +32,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/games/singleplayer/{id}', [GameController::class, "getAllSingleGamesByUser"]);
     Route::get('/games/multiplayer/{id}', [GameController::class, "getMultiplayerGamesByUser"]);
     Route::get('/games/winner/{id}', [GameController::class, "getWinnerName"]);
+    Route::get('/games/all', [GameController::class, 'getAllGames']);
     Route::get('/games', [GameController::class, 'index']);
     Route::get('/games/{id}', [GameController::class, 'show']);
     Route::post('/games', [GameController::class, 'store']);
@@ -68,10 +72,12 @@ Route::get('/stats/purchases/week', [StatsController::class, 'totalPurchasesByWe
 //Auth
 Route::post('/auth/login', [AuthController::class, "login"]);
 Route::post('/auth/register', [AuthController::class, "register"]);
+Route::post('/auth/registeradmin', [AuthController::class, "registerAdmin"]);
 Route::post('/auth/loginTAES', [AuthController::class, "loginTAES"]);
 
 //Users
 Route::get('/users', [UserController::class, "index"]);
+Route::get('/users/all', [UserController::class, "allUsers"]);
 Route::get('/users/{id}', [UserController::class, "show"]);
 
 //Games
@@ -82,3 +88,5 @@ Route::get('/leaderboard/time/global', [GameController::class, "getTopTenByTimeG
 Route::get('/leaderboard/turns/global', [GameController::class, "getTopTenByTurnsGlobal"]);
 
 Route::post('/images', [UserController::class, "getImagePath"]);
+
+Route::get('/transactions', [UserController::class, 'getTransactions']);
