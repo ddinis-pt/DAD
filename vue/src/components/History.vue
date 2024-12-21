@@ -240,7 +240,7 @@ import { useAuthStore } from '@/stores/auth'
 import { useRouter } from 'vue-router'
 import { toast } from '@/components/ui/toast/use-toast';
 import axios from 'axios'
-import { ref,watch } from 'vue'
+import { ref,watch,onMounted } from 'vue'
 
 
 const router = useRouter()
@@ -375,6 +375,12 @@ watch(modeChosen, async (newValue) => {
       console.log(games.value)
   }
   
+})
+
+onMounted(() => {
+  if (!authStore.user) {
+    router.push({ name: 'dashboard' })
+  }
 })
 
 </script>

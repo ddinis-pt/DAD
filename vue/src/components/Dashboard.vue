@@ -100,7 +100,7 @@ const isGuest = () => {
           </div>
         </div>
         <!-- MultiPlayer -->
-        <div v-if="!isAdmin()" id="hs-sign-out-alert-small-window" class="size-full px-6 pb-2" role="dialog"
+        <div v-if="!isAdmin() && !isGuest" id="hs-sign-out-alert-small-window" class="size-full px-6 pb-2" role="dialog"
           tabindex="-1" aria-labelledby="hs-sign-out-alert-small-window-label">
           <div class="mt-7 opacity-100 duration-500 sm:max-w-xs sm:w-full m-3 sm:mx-auto">
             <div class="relative flex flex-col shadow-[0px_0px_14px_5px_#a5f3fc] rounded-xl bg-white dark:bg-slate-800">
@@ -156,7 +156,7 @@ const isGuest = () => {
           </div>
         </div>
         <!-- Game History -->
-        <div v-if="!isAdmin() || isGuest()" id="hs-sign-out-alert-small-window" class="size-full px-6 pb-2" role="dialog"
+        <div v-if="!isAdmin() && !isGuest()" id="hs-sign-out-alert-small-window" class="size-full px-6 pb-2" role="dialog"
           tabindex="-1" aria-labelledby="hs-sign-out-alert-small-window-label">
           <div class="mt-7 opacity-100 duration-500 sm:max-w-xs sm:w-full m-3 sm:mx-auto">
             <div class="relative flex flex-col shadow-[0px_0px_14px_5px_#a5f3fc] rounded-xl bg-white dark:bg-slate-800">

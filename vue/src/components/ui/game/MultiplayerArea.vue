@@ -4,8 +4,17 @@ import Chat from '@/components/ui/chat/Chat.vue'
 import Lobby from '@/components/ui/game/Lobby.vue'
 import Games from '@/components/ui/game/Games.vue'
 import { useAuthStore } from '@/stores/auth'
+import { onMounted } from 'vue'
+import { useRouter } from 'vue-router';
 
 const authStore = useAuthStore()
+const router = useRouter()
+
+onMounted(() => {
+  if (!authStore.user) {
+    router.push({ name: 'dashboard' })
+  }
+})
 </script>
 <template>
   <div class="min-h-screen bg-sky-50 dark:bg-gray-800">

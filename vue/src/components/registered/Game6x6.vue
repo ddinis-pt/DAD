@@ -33,10 +33,10 @@ const startedAt = new Date();
 const user = authStore.user;
 
 // Randomized numbers
-// const numbers = Array.from({ length: 18 }, (_, i) => i + 1).flatMap(n => [n, n]).sort(() => Math.random() - 0.5);
+const numbers = Array.from({ length: 18 }, (_, i) => i + 1).flatMap(n => [n, n]).sort(() => Math.random() - 0.5);
 
 // Static numbers for testing
-const numbers = [1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10, 11, 11, 12, 12, 13, 13, 14, 14, 15, 15, 16, 16, 17, 17, 18, 18];
+//const numbers = [1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10, 11, 11, 12, 12, 13, 13, 14, 14, 15, 15, 16, 16, 17, 17, 18, 18];
 
 const timer = ref(0);
 const nParesEncontrados = ref(0);
@@ -228,7 +228,7 @@ const showHint = async () => {
                 </div>
             </div>
         </header>
-        <main class="container mx-auto p-4 space-y-8">
+        <main class="container mx-auto p-8 space-y-8 max-w-lg">
             <h1 v-if="isGameWon" class="text-lg font-semibold text-center text-green-600">
                 {{ user ? `Parabéns ${authStore.userFirstLastName}! Ganhou o jogo em ${timer} segundos, com apenas
                 ${nJogadas} jogadas!` : `Parabéns, jogador anónimo! Ganhou o jogo em ${timer} segundos, com apenas
@@ -259,8 +259,8 @@ const showHint = async () => {
                     </svg>
                     <p class="font-semibold text-center text-white ps-2">{{ nParesEncontrados }}/18</p>
                 </div>
-                <div id="flips flex items-center justify-end">
-                    <p class="font-semibold text-center text-white">Flips done: {{ nJogadas }}</p>
+                <div id="flips flex items-right justify-end">
+                    <p class="font-semibold text-right text-white">Flips done: {{ nJogadas }}</p>
                 </div>
 
             </div>

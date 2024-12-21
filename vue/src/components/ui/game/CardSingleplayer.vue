@@ -1,5 +1,5 @@
 <template>
-    <vue-flip v-model="flipped" class="simple-test" height="150px" width="100px" transition="0.7s">
+    <vue-flip v-model="flipped" class="simple-test" :height="heightcard" :width="widthcard" transition="0.7s">
         <template v-slot:front>
             <img @click="flipCard" src="/src/assets/cards/semFace.png" alt="Carta Virada Para Baixo">
         </template>
@@ -25,6 +25,19 @@ const props = defineProps({
     modo: Number
 })
 
+const widthcard = ref('100px')
+const heightcard = ref('150px')
+
+const cardSize = () => {
+    if (props.modo === 6) {
+        widthcard.value = '50px'
+        heightcard.value = '80px'
+    } else {
+        widthcard.value = '100px'
+        heightcard.value = '150px'
+    }
+}
+
 const emits = defineEmits(['has-been-flipped'])
 
 const flipped = ref(props.isFlipped)
@@ -36,6 +49,8 @@ watch(() => props.isFlipped, (newVal) => {
 
 const getImg = computed(() => {
     let pairSize = props.modo === 1 ? 6 : props.modo === 2 ? 8 : 18;
+    console.log(props.modo)
+    cardSize()
     if (number.value > pairSize) {
         return `/src/assets/cards/c${number.value - pairSize}.png`;
     }
