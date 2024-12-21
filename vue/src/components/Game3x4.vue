@@ -3,7 +3,9 @@ import { ref, watch, nextTick } from 'vue';
 import axios from 'axios';
 import { format } from 'date-fns';
 import CardComponent from './ui/game/CardSingleplayer.vue';
-
+import { useConfirm } from "primevue/useconfirm";
+import ConfirmDialog from 'primevue/confirmdialog';
+import { useRouter } from 'vue-router';
 import { useAuthStore } from '@/stores/auth';
 
 const authStore = useAuthStore();
@@ -11,6 +13,10 @@ const authStore = useAuthStore();
 const startedAt = new Date();
 
 const user = authStore.user;
+
+const confirm = useConfirm();
+
+const router = useRouter();
 
 // Randomized numbers
 const numbers = Array.from({ length: 6 }, (_, i) => i + 1).flatMap(n => [n, n]).sort(() => Math.random() - 0.5);
@@ -143,6 +149,56 @@ const showHint = async () => {
         console.log('No unflipped pairs found.');
     }
 }
+
+const showTemplateHint = () => {
+    confirm.require({
+        group: 'hint',
+        header: 'Get Hint',
+        icon: 'pi pi-exclamation-triangle',
+        rejectProps: {
+            label: 'Cancel',
+            icon: 'pi pi-times',
+            outlined: true,
+            size: 'small'
+        },
+        acceptProps: {
+            label: 'Yes',
+            icon: 'pi pi-check',
+            size: 'small'
+        },
+        accept: () => {
+            showHint();
+        },
+        reject: () => {
+
+        }
+    });
+};
+
+const showTemplateBack = () => {
+    confirm.require({
+        group: 'back',
+        header: 'Go Back',
+        icon: 'pi pi-exclamation-triangle',
+        rejectProps: {
+            label: 'Cancel',
+            icon: 'pi pi-times',
+            outlined: true,
+            size: 'small'
+        },
+        acceptProps: {
+            label: 'Confirm',
+            icon: 'pi pi-check',
+            size: 'small'
+        },
+        accept: () => {
+            router.push({ name: 'modes' });
+        },
+        reject: () => {
+
+        }
+    });
+};
 </script>
 
 <template>
@@ -155,17 +211,15 @@ const showHint = async () => {
     <div class="min-h-screen flex flex-col justify-between bg-sky-50 dark:bg-gray-800">
         <header>
             <div class="flex gap-x-8 gap-y-4 grid-cols-3 justify-between items-center px-4 py-2">
-                <RouterLink :to="{ name: 'dashboard' }">
-                    <div id="back" class="justify-center bg-white py-2 px-3 rounded-full">
-                        <i class="pi pi-arrow-left text-gray-900"></i>
-                    </div>
-                </RouterLink>
+                <div @click="showTemplateBack()" id="back" class="justify-center bg-white py-2 px-3 rounded-full">
+                    <i class="pi pi-arrow-left text-gray-900"></i>
+                </div>
                 <div id="time" class="justify-center">
                     <p class="font-semibold text-lg  dark:text-white text-gray-900">{{ ('0' + horas).slice(-2) + ':' +
                         ('0' +
                             minutos).slice(-2) + ':' + ('0' + segundos).slice(-2) }}</p>
                 </div>
-                <div v-show="authStore.user" @click="showHint" id="hint" class="justify-center bg-white py-2 px-3 rounded-full">
+                <div v-show="authStore.user" @click="showTemplateHint()" id="hint" class="justify-center bg-white py-2 px-3 rounded-full">
                     <i class="pi pi-lightbulb text-gray-900"></i>
                 </div>
             </div>
@@ -207,5 +261,23 @@ const showHint = async () => {
 
             </div>
         </footer>
+        <ConfirmDialog group="hint">
+            <template #message="slotProps">
+                <div
+                    class="flex flex-col items-center w-full gap-4 border-b border-surface-200 dark:border-surface-700">
+                    <i :class="slotProps.message.icon" class="!text-6xl text-primary-500"></i>
+                    <p class="pb-2">Are you sure you want to use the hint? <br> Using the Hint costs <strong>1 coin</strong></p>
+                </div>
+            </template>
+        </ConfirmDialog>
+        <ConfirmDialog group="back">
+            <template #message="slotProps">
+                <div
+                    class="flex flex-col items-center w-full gap-4 border-b border-surface-200 dark:border-surface-700">
+                    <i :class="slotProps.message.icon" class="!text-6xl text-primary-500"></i>
+                    <p class="pb-2">Are you sure you want to leave the game? <br>Your progress will be lost.</p>
+                </div>
+            </template>
+        </ConfirmDialog>
     </div>
 </template>

@@ -49,7 +49,6 @@ watch(() => props.isFlipped, (newVal) => {
 
 const getImg = computed(() => {
     let pairSize = props.modo === 1 ? 6 : props.modo === 2 ? 8 : 18;
-    console.log(props.modo)
     cardSize()
     if (number.value > pairSize) {
         return `/src/assets/cards/c${number.value - pairSize}.png`;

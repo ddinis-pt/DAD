@@ -4,7 +4,9 @@ import axios from 'axios';
 import CardComponent from '@/components/ui/game/CardSingleplayer.vue';
 import { toast } from '@/components/ui/toast/use-toast';
 import { format } from 'date-fns';
-
+import { useConfirm } from "primevue/useconfirm";
+import ConfirmDialog from 'primevue/confirmdialog';
+import { useRouter } from 'vue-router';
 import { useAuthStore } from '@/stores/auth';
 
 const authStore = useAuthStore();
@@ -14,11 +16,15 @@ const startedAt = new Date();
 
 const user = authStore.user;
 
+const router = useRouter();
+
+const confirm = useConfirm();
+
 // Randomized numbers
-// const numbers = Array.from({ length: 8 }, (_, i) => i + 1).flatMap(n => [n, n]).sort(() => Math.random() - 0.5);
+const numbers = Array.from({ length: 8 }, (_, i) => i + 1).flatMap(n => [n, n]).sort(() => Math.random() - 0.5);
 
 // Static numbers for testing
-const numbers = [1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8];
+//const numbers = [1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8];
 
 const timer = ref(0);
 const nParesEncontrados = ref(0);
@@ -175,6 +181,56 @@ const showHint = async () => {
         console.log('No unflipped pairs found.');
     }
 }
+
+const showTemplateHint = () => {
+    confirm.require({
+        group: 'hint',
+        header: 'Get Hint',
+        icon: 'pi pi-exclamation-triangle',
+        rejectProps: {
+            label: 'Cancel',
+            icon: 'pi pi-times',
+            outlined: true,
+            size: 'small'
+        },
+        acceptProps: {
+            label: 'Yes',
+            icon: 'pi pi-check',
+            size: 'small'
+        },
+        accept: () => {
+            showHint();
+        },
+        reject: () => {
+
+        }
+    });
+};
+
+const showTemplateBack = () => {
+    confirm.require({
+        group: 'back',
+        header: 'Go Back',
+        icon: 'pi pi-exclamation-triangle',
+        rejectProps: {
+            label: 'Cancel',
+            icon: 'pi pi-times',
+            outlined: true,
+            size: 'small'
+        },
+        acceptProps: {
+            label: 'Confirm',
+            icon: 'pi pi-check',
+            size: 'small'
+        },
+        accept: () => {
+            router.push({ name: 'modes' });
+        },
+        reject: () => {
+
+        }
+    });
+};
 </script>
 
 <template>
@@ -187,27 +243,15 @@ const showHint = async () => {
     <div class="min-h-screen flex flex-col justify-between bg-gray-50">
         <header>
             <div class="flex gap-x-8 gap-y-4 grid-cols-3 justify-between items-center px-4 py-2">
-                <RouterLink to="/modes">
-                    <div id="back" class="justify-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                            <path d="M12 19L5 12L12 5" stroke="black" stroke-linecap="round" stroke-linejoin="round" />
-                            <path d="M19 12H5" stroke="black" stroke-linecap="round" stroke-linejoin="round" />
-                        </svg>
-                    </div>
-                </RouterLink>
+                <div @click="showTemplateBack()" id="back" class="justify-center bg-white py-2 px-3 rounded-full">
+                    <i class="pi pi-arrow-left text-gray-900"></i>
+                </div>
                 <div id="time" class="justify-center">
                     <p class="font-semibold text-lg  text-gray-900">{{ ('0' + horas).slice(-2) + ':' + ('0' +
                         minutos).slice(-2) + ':' + ('0' + segundos).slice(-2) }}</p>
                 </div>
-                <div @click="showHint" id="hint" class="justify-center">
-                    <svg width="46" height="46" viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="23" cy="23" r="23" fill="#1E293B" />
-                        <path
-                            d="M26 25C26.2 24 26.7 23.3 27.5 22.5C28.5 21.6 29 20.3 29 19C29 17.4087 28.3679 15.8826 27.2426 14.7574C26.1174 13.6321 24.5913 13 23 13C21.4087 13 19.8826 13.6321 18.7574 14.7574C17.6321 15.8826 17 17.4087 17 19C17 20 17.2 21.2 18.5 22.5C19.2 23.2 19.8 24 20 25"
-                            stroke="white" stroke-linecap="round" stroke-linejoin="round" />
-                        <path d="M20 29H26" stroke="white" stroke-linecap="round" stroke-linejoin="round" />
-                        <path d="M21 33H25" stroke="white" stroke-linecap="round" stroke-linejoin="round" />
-                    </svg>
+                <div v-show="authStore.user" @click="showTemplateHint()" id="hint" class="justify-center bg-white py-2 px-3 rounded-full">
+                    <i class="pi pi-lightbulb text-gray-900"></i>
                 </div>
             </div>
         </header>
@@ -248,5 +292,23 @@ const showHint = async () => {
 
             </div>
         </footer>
+        <ConfirmDialog group="hint">
+            <template #message="slotProps">
+                <div
+                    class="flex flex-col items-center w-full gap-4 border-b border-surface-200 dark:border-surface-700">
+                    <i :class="slotProps.message.icon" class="!text-6xl text-primary-500"></i>
+                    <p class="pb-2">Are you sure you want to use the hint? <br> Using the Hint costs <strong>1 coin</strong></p>
+                </div>
+            </template>
+        </ConfirmDialog>
+        <ConfirmDialog group="back">
+            <template #message="slotProps">
+                <div
+                    class="flex flex-col items-center w-full gap-4 border-b border-surface-200 dark:border-surface-700">
+                    <i :class="slotProps.message.icon" class="!text-6xl text-primary-500"></i>
+                    <p class="pb-2">Are you sure you want to leave the game? <br>Your progress will be lost.</p>
+                </div>
+            </template>
+        </ConfirmDialog>
     </div>
 </template>
