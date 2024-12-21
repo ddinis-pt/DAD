@@ -62,7 +62,7 @@ const rowClass = (data) => {
         return ['!text-blue-600'];
     }
     if (data.deleted_at) {
-        return ['!text-slate-700'];
+        return ['!text-slate-300 dark:!text-slate-700'];
     }
 };
 
@@ -222,7 +222,7 @@ const getStatus = (data) => {
 
 <template>
 
-    <div class="min-h-screen bg-white dark:bg-gray-800">
+    <div class="min-h-screen bg-sky-50 dark:bg-gray-800">
         <Header></Header>
         <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 content-top min-w-full">
 

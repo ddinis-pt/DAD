@@ -5,7 +5,7 @@
 
             <h1 class="text-3xl font-bold dark:text-white text-gray-800 text-center pt-8">Settings</h1>
 
-            <div class="space-y-2 rounded-xl shadow-md bg-white px-6 py-4 mt-4 max-w-2xl mx-auto">
+            <div class="space-y-2 rounded-xl shadow-md bg-white dark:bg-slate-900 px-6 py-4 mt-4 max-w-2xl mx-auto">
 
                 <div class="mt-5">
 
@@ -14,11 +14,11 @@
                         <div class="grid gap-y-4">
                             <!-- Email -->
                             <div>
-                                <label for="email" class="block text-sm mb-2 text-gray-800">Email</label>
+                                <label for="email" class="block text-sm mb-2 text-gray-800 dark:text-white">Email</label>
                                 <div class="relative">
                                     <input v-model="email" type="text" id="email" name="email"
                                         placeholder="Your email goes here"
-                                        class="appearance-none py-3 px-4 block w-full border border-gray-500 rounded-lg text-sm focus:border-blue-600"
+                                        class="appearance-none py-3 px-4 block w-full border border-gray-500 rounded-lg text-sm focus:border-blue-600 dark:bg-gray-800"
                                         required aria-describedby="email-error">
                                     <div class="hidden absolute inset-y-0 end-0 pointer-events-none pe-3">
                                         <svg class="size-5 text-red-500" width="16" height="16" fill="currentColor"
@@ -32,11 +32,11 @@
 
                             <!-- Nickname -->
                             <div>
-                                <label for="nickname" class="block text-sm mb-2 text-gray-800">Nickname</label>
+                                <label for="nickname" class="block text-sm mb-2 text-gray-800 dark:text-white">Nickname</label>
                                 <div class="relative">
                                     <input v-model="nickname" type="text" id="nickname" name="nickname"
                                         placeholder="Your nickname goes here"
-                                        class="appearance-none py-3 px-4 block w-full border border-gray-500 rounded-lg text-sm focus:border-blue-600"
+                                        class="appearance-none py-3 px-4 block w-full border border-gray-500 rounded-lg text-sm focus:border-blue-600 dark:bg-gray-800"
                                         required aria-describedby="email-error">
                                     <div class="hidden absolute inset-y-0 end-0 pointer-events-none pe-3">
                                         <svg class="size-5 text-red-500" width="16" height="16" fill="currentColor"
@@ -50,11 +50,11 @@
 
                             <!-- Name -->
                             <div>
-                                <label for="name" class="block text-sm mb-2 text-gray-800">Name</label>
+                                <label for="name" class="block text-sm mb-2 text-gray-800 dark:text-white">Name</label>
                                 <div class="relative">
                                     <input v-model="name" type="text" id="name" name="name"
                                         placeholder="Your name goes here"
-                                        class="appearance-none py-3 px-4 block w-full border border-gray-500 rounded-lg text-sm focus:border-blue-600"
+                                        class="appearance-none py-3 px-4 block w-full border border-gray-500 rounded-lg text-sm focus:border-blue-600 dark:bg-gray-800"
                                         required aria-describedby="email-error">
                                     <div class="hidden absolute inset-y-0 end-0 pointer-events-none pe-3">
                                         <svg class="size-5 text-red-500" width="16" height="16" fill="currentColor"
@@ -69,11 +69,11 @@
                             <!-- Password -->
                             <div>
                                 <div class="flex justify-between items-center">
-                                    <label for="password" class="block text-sm mb-2 text-gray-800">Password</label>
+                                    <label for="password" class="block text-sm mb-2 text-gray-800 dark:text-white">Password</label>
                                 </div>
                                 <div class="relative">
                                     <input v-model="password" type="password" id="password" name="password"
-                                        class="py-3 px-4 block w-full border border-gray-500 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none placeholder-neutral-500"
+                                        class="py-3 px-4 block w-full border border-gray-500 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none placeholder-neutral-500 dark:bg-gray-800"
                                         required aria-describedby="password-error">
                                     <div class="hidden absolute inset-y-0 end-0 pointer-events-none pe-3">
                                         <svg class="size-5 text-red-500" width="16" height="16" fill="currentColor"
@@ -87,16 +87,16 @@
 
                             <!-- File Upload -->
                             <div>
-                                <label for="file-upload" class="inline-block text-sm mb-2 text-gray-800">Profile
+                                <label for="file-upload" class="inline-block text-sm mb-2 text-gray-800 dark:text-white">Profile
                                     Picture</label>
 
-                                <div class="current-picture">
+                                <div class="current-picture pb-2">
                                     <img class="inline-block size-[100px] rounded-sm border-2 border-blue-600"
                                         :src="currentPhoto" alt="Avatar">
                                     <span class="block text-xs text-left text-gray-500">Current profile
                                         picture</span>
                                 </div>
-                                
+
                                 <div class="relative">
                                     <input type="file" id="file-upload" name="file-upload"
                                         class="appearance-none py-3 px-4 border w-full bg-blue-600 rounded-lg text-sm focus:border-blue-600"
