@@ -175,7 +175,7 @@ class GameController extends Controller
             ->select('users.name')
             ->get(), 200);
     }
-
+#TAES
     public function getTopTenByTime(Request $request)
     {
         return response()->json(Game::where('status', 'E')
@@ -196,7 +196,7 @@ class GameController extends Controller
             ->get(), 200);
     }
 
-    public function getTopTenByTimeGlobal()
+    public function getTop3ByTimeGlobal()
     {
         return response()->json(Game::where('status', 'E')
             ->where('games.type', 'S')
@@ -207,7 +207,7 @@ class GameController extends Controller
             ->get(), 200);
     }
 
-    public function getTopTenByTurnsGlobal()
+    public function getTop3ByTurnsGlobal()
     {
         return response()->json(Game::where('status', 'E')
             ->where('games.type', 'S')
@@ -215,6 +215,87 @@ class GameController extends Controller
             ->orderBy('total_turns_winner', 'asc')
             ->orderBy('total_time', 'asc')
             ->take(3)
+            ->get(), 200);
+    }
+
+
+    #DAD
+    public function getTop3ByTime(Request $request,$board)
+    {
+        $user_id = $request->user()->id;
+
+        return response()->json(Game::where('status', 'E')
+            ->where('games.type', 'S')
+            ->where('created_user_id', '=', $user_id)
+            ->where('board_id', '=', $board)
+            ->orderBy('total_time', 'asc')
+            ->select('total_time')
+            ->take(3)
+            ->get(),200);
+    }
+    public function getTop3ByTurns(Request $request,$board)
+    {
+        $user_id = $request->user()->id;
+
+        return response()->json(Game::where('status', 'E')
+            ->where('games.type', 'S')
+            ->where('created_user_id', '=', $user_id)
+            ->where('board_id', '=', $board)
+
+            ->orderBy('total_turns_winner', 'asc')
+            ->orderBy('total_time', 'asc')
+            ->select('total_turns_winner')
+            ->take(3)
+            ->get(),200);
+    }
+    public function getMultiplayerVictories(Request $request)
+    {
+        return response()->json(Game::where('status', 'E')
+            ->where('type', 'M')
+            ->where('winner_user_id', '=', $request->user()->id)
+            ->orderBy('ended_at', 'desc')
+            ->count(), 200);
+    }
+    public function getMultiplayerLosses(Request $request)
+    {
+        return response()->json(Game::where('status', 'E')
+            ->where('type', 'M')
+            ->where('created_user_id', '=', $request->user()->id)
+            ->where('winner_user_id', '!=', $request->user()->id)
+            ->orderBy('ended_at', 'desc')
+            ->count(), 200);
+    }
+    public function getTop5PlayersMostVictories()
+    {
+        return response()->json(Game::where('status', 'E')
+            ->where('games.type', 'M')
+            ->join('users', 'games.winner_user_id', '=', 'users.id')
+            ->select('users.nickname', DB::raw('count(*) as victories'))
+            ->groupBy('users.nickname')
+            ->orderBy('victories', 'desc')
+            ->take(5)
+            ->get(), 200);
+    }
+    public function getTop1byTime($board)
+    {
+        return response()->json(Game::where('status', 'E')
+            ->where('games.type', 'S')
+            ->where('board_id', '=', $board)
+            ->join('users', 'games.created_user_id', '=', 'users.id')
+            ->orderBy('total_time', 'asc')
+            ->select('total_time', 'users.nickname')
+            ->take(1)
+            ->get(), 200);
+    }
+    public function getTop1byTurns($board)
+    {
+        return response()->json(Game::where('status', 'E')
+            ->where('games.type', 'S')
+            ->where('board_id', '=', $board)
+            ->join('users', 'games.created_user_id', '=', 'users.id')
+            ->orderBy('total_turns_winner', 'asc')
+            ->select('total_turns_winner', 'users.nickname')
+            ->take(1)
             ->get(), 200);
     }
 
@@ -235,4 +316,5 @@ class GameController extends Controller
         }
         return response()->json(['message' => 'Multiplayer game inserted'], 201);
     }
+
 }
