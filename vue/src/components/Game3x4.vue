@@ -2,7 +2,7 @@
 import { ref, watch, nextTick } from 'vue';
 import axios from 'axios';
 import { format } from 'date-fns';
-import CardComponent from './ui/game/CardComponent.vue';
+import CardComponent from './ui/game/CardSingleplayer.vue';
 
 import { useAuthStore } from '@/stores/auth';
 
@@ -38,6 +38,7 @@ watch(nParesEncontrados, async (n) => {
     if (n == 6) {
         clearInterval(intervalo);
         isGameWon.value = true;
+        document.getElementById("background").pause();
         // Save game to database
         if (user) {
             const game = {
@@ -46,6 +47,7 @@ watch(nParesEncontrados, async (n) => {
                 status: 'E',
                 began_at: format(startedAt, 'yyyy-MM-dd HH:mm:ss'),
                 ended_at: format(new Date(), 'yyyy-MM-dd HH:mm:ss'),
+                //total time should have the tenths of seconds
                 total_time: timer.value,
                 board_id: 1,
                 total_turns_winner: nJogadas.value,
@@ -76,8 +78,10 @@ const cartaVirada = async (index) => {
             }
         }, 1000);
         isFirstMove.value = false;
+        document.getElementById("background").play();
     }
     flippedCards.value[index] = true;
+    document.getElementById("flip").play();
     currentlyFlipped.value.push(index);
     await nextTick();
     if (currentlyFlipped.value.length == 2) {
@@ -114,6 +118,7 @@ const showHint = () => {
         const [index1, index2] = unflippedPairs[0];
         flippedCards.value[index1] = true;
         flippedCards.value[index2] = true;
+        document.getElementById("flip").play();
         setTimeout(() => {
             flippedCards.value[index1] = false;
             flippedCards.value[index2] = false;
@@ -125,10 +130,16 @@ const showHint = () => {
 </script>
 
 <template>
+    <audio id="background" volume="0.04" loop>
+        <source src="/src/assets/background-music.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="flip" volume="0.2">
+        <source src="/src/assets/flip.mp3" type="audio/mpeg">
+    </audio>
     <div class="min-h-screen flex flex-col justify-between bg-sky-50 dark:bg-gray-800">
         <header>
             <div class="flex gap-x-8 gap-y-4 grid-cols-3 justify-between items-center px-4 py-2">
-                <RouterLink :to="{name: 'dashboard'}">
+                <RouterLink :to="{ name: 'dashboard' }">
                     <div id="back" class="justify-center">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                             <path d="M12 19L5 12L12 5" stroke="black" stroke-linecap="round" stroke-linejoin="round" />
@@ -137,10 +148,11 @@ const showHint = () => {
                     </div>
                 </RouterLink>
                 <div id="time" class="justify-center">
-                    <p class="font-semibold text-lg  text-gray-900">{{ ('0' + horas).slice(-2) + ':' + ('0' +
-                        minutos).slice(-2) + ':' + ('0' + segundos).slice(-2) }}</p>
+                    <p class="font-semibold text-lg  dark:text-white text-gray-900">{{ ('0' + horas).slice(-2) + ':' +
+                        ('0' +
+                            minutos).slice(-2) + ':' + ('0' + segundos).slice(-2) }}</p>
                 </div>
-                <div @click="showHint" id="hint" class="justify-center">
+                <div v-show="authStore.user" @click="showHint" id="hint" class="justify-center">
                     <svg width="46" height="46" viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <circle cx="23" cy="23" r="23" fill="#1E293B" />
                         <path

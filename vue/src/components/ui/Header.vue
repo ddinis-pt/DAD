@@ -1,5 +1,6 @@
 <script setup>
 import router from '@/router';
+import { onMounted, watch } from 'vue';
 import { useAuthStore } from '@/stores/auth'
 import { onBeforeMount, onMounted, watch, ref } from 'vue';
 const authStore = useAuthStore()
@@ -13,9 +14,27 @@ const leave = () => {
 }
 
 const logout = async () => {
-    await authStore.logout()
-    router.push({ name: 'login' })
+    if (authStore.user != null) {
+        let result = await authStore.logout(authStore.user)
+        if (result) {
+            router.push({ name: 'login' })
+        }
+    } else {
+        router.push({ name: 'login' })
+    }
 }
+
+watch(() => authStore.userCoins, (newValue, oldValue) => {
+    console.log('User coins changed from', oldValue, 'to', newValue)
+    authStore.refreshUserData()
+})
+
+onMounted(() => {
+    window.HSStaticMethods.autoInit();
+    if (authStore.user) {
+        authStore.refreshUserData()
+    }
+})
 
 const isAdmin = () => {
     return authStore.user && authStore.userType === 'A'
@@ -24,15 +43,6 @@ const isAdmin = () => {
 const isPlayer = () => {
     return authStore.user && authStore.userType === 'P'
 }
-
-onMounted(() => {
-    window.HSStaticMethods.autoInit();
-    if (authStore.user) {
-        authStore.refreshUserData();
-    }
-    //authStore.refreshUserData();
-
-})
 </script>
 <template>
     <header
@@ -71,7 +81,7 @@ onMounted(() => {
                             class="pi pi-chevron-down hs-dropdown-open:rotate-180 text-sm text-gray-800 dark:text-white"></i>
                     </div>
                     <div v-else class="flex items-center">
-                        <img @click="logout" class="inline-block size-[55px] rounded-full border-2 border-blue-600"
+                        <img class="inline-block size-[55px] rounded-full border-2 border-blue-600"
                             src="../../assets/avatar-none.png" alt="Avatar">
                         <h2 class="block text-xl font-bold text-white pl-2">Hello, Guest!</h2>
                     </div>

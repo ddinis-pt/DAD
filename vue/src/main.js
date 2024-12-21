@@ -10,6 +10,11 @@ import 'primeicons/primeicons.css'
 import "preline/preline";
 import '@/assets/base.css'
 
+import 'primeicons/primeicons.css'
+
+
+import 'primeicons/primeicons.css'
+import Chart from 'primevue/chart'
 import App from './App.vue'
 import router from './router'
 import { AlignCenter } from 'lucide-vue-next'

@@ -3,14 +3,6 @@ import { useAuthStore } from '@/stores/auth'
 import { useRouter } from 'vue-router'
 const authStore = useAuthStore()
 const router = useRouter()
-
-const logout = async () => {
-    if (authStore.user) {
-        if (!await authStore.logout(authStore.user))
-            console.log(errorStore.message + ' ' + errorStore.statusCode)
-    }
-    router.push({ name: 'login' })
-}
 </script>
 <template>
     <footer class="bg-gray-dark">
@@ -40,7 +32,7 @@ const logout = async () => {
                     <!-- End Icon -->
                 </RouterLink>
             </div>
-            <div @click="logout" class="text-center gap-5 profile">
+            <div class="text-center gap-5 profile">
                 <img class="inline-block size-[80px] rounded-full border-8 border-slate-700 -mt-4"
                     :src="authStore.userPhotoUrl" alt="Avatar">
             </div>

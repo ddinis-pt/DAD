@@ -4,6 +4,11 @@ import { useLobbyStore } from '@/stores/lobby';
 
 const storeAuth = useAuthStore()
 const storeLobby = useLobbyStore()
+
+const joinGame = (id) => {
+    storeLobby.joinGame(id)
+    storeAuth.refreshUserData()
+}
 </script>
 
 <template>
@@ -28,7 +33,7 @@ const storeLobby = useLobbyStore()
                     </svg>
                 </button>
                 <button v-show="storeLobby.canJoinGame(game)" type="button"
-                    class="rounded bg-cyan-500 p-2 m-0.5 text-white" @click="storeLobby.joinGame(game.id)">
+                    class="rounded bg-cyan-500 p-2 m-0.5 text-white" @click="joinGame(game.id)">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3"
                         stroke="currentColor" class="size-4">
                         <path stroke-linecap="round" stroke-linejoin="round"

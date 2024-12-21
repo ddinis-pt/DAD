@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\SaveGameRequest;
 use App\Http\Requests\UpdateGameRequest;
+use App\Http\Requests\UpdateTimeRequest;
+use App\Http\Requests\MultiplayerGameRequest;
+use App\Http\Resources\GameResource;
 use Illuminate\Validation\ValidationException;
 use App\Models\Game;
-use Error;
 use Illuminate\Support\Facades\DB;
 
 class GameController extends Controller
@@ -31,19 +33,29 @@ class GameController extends Controller
 
     public function store(SaveGameRequest $request)
     {
-        $game = Game::create($request->validated());
-        return response()->json($game, 201);
+        $game = new Game();
+        $game->created_user_id = $request->validated()["created_user_id"];
+        $game->type = $request->validated()["type"];
+        $game->status = $request->validated()["status"];
+        $game->board_id = $request->validated()["board_id"];
+        if (array_key_exists("began_at", $request->validated())) {
+            $game->began_at = $request->validated()["began_at"];
+        }
+        $game->total_time = 0;
+        $game->save();
+        return response()->json(new GameResource($game), 201);
     }
 
-    public function updateStatus(UpdateGameRequest $request, Game $game)
+    public function updateStatus(UpdateGameRequest $request, int $game_id)
     {
+        $game = Game::findOrFail($game_id);
         $data = $request->validated();
         $newStatus = $data["status"];
         // Only playing games can have their status changed (to ended or interrupted)
         if ($game->status != "PL") {
             throw ValidationException::withMessages([
                 "status" =>
-                    "Cannot change game #" .
+                "Cannot change game #" .
                     $game->id .
                     " status from '" .
                     $game->status .
@@ -51,7 +63,7 @@ class GameController extends Controller
             ]);
         }
         switch ($game->status) {
-            case "P":
+            case "PE":
                 if (
                     $newStatus == "PL" &&
                     $request->user()->id == $game->created_user_id
@@ -59,7 +71,7 @@ class GameController extends Controller
                     return response()->json(
                         [
                             "message" =>
-                                "Forbidden! Player 1 cannot start the game without player 2.",
+                            "Forbidden! Player 1 cannot start the game without player 2.",
                         ],
                         403
                     );
@@ -67,7 +79,7 @@ class GameController extends Controller
                 if ($newStatus == "E") {
                     throw ValidationException::withMessages([
                         "status" =>
-                            "Cannot change game #" .
+                        "Cannot change game #" .
                             $game->id .
                             " status from 'pending' to 'ended'!",
                     ]);
@@ -75,7 +87,7 @@ class GameController extends Controller
                 $game->status = $newStatus;
                 $game->winner_user_id = null;
                 if ($newStatus == "PL") {
-                    $game->custom = $data["custom"];
+                    $game->player2 = $request->user()->id;
                 }
                 break;
             case "PL":
@@ -85,36 +97,42 @@ class GameController extends Controller
                         $winner_user_id = $data["winner_user_id"];
                         if ($winner_user_id != null) {
                             if (
-                                $winner_user_id != $game->player1_id &&
-                                $winner_user_id != json_decode($data["custom"])->{"player2"}
+                                $winner_user_id != $data["player1"] &&
+                                $winner_user_id != $data["player2"]
                             ) {
                                 throw ValidationException::withMessages([
                                     "winner_id" =>
-                                        "Cannot change game #" .
+                                    "Cannot change game #" .
                                         $game->id .
-                                        " status from 'playing' to 'ended', because the winner is invalid!",
+                                        " status from 'playing' to 'ended', because the winner id is invalid!\nPlayer1 - " . $game->player1 . "\nPlayer2 - " . $game->player2 . "Game - " . $game . "Winner - " . $winner_user_id,
                                 ]);
                             }
+                            $game->total_turns_winner = $data["total_turns_winner"];
                         }
                     }
                     $game->status = $newStatus;
-                    $game->winner_id = $winner_user_id;
+                    $game->winner_user_id = $winner_user_id;
+                    $game->ended_at = $data["ended_at"];
+                    $game->total_time = $data["total_time"];
                 } else {
+                    if(array_key_exists("ended_at", $data)){
+                        $game->ended_at = $data["ended_at"];
+                    }
                     $game->status = $newStatus;
                 }
                 break;
-            case "interrupted":
+            case "I":
                 throw ValidationException::withMessages([
                     "status" =>
-                        "Cannot change game #" .
+                    "Cannot change game #" .
                         $game->id .
                         " status because it already has been interrupted!",
                 ]);
                 break;
-            case "ended":
+            case "E":
                 throw ValidationException::withMessages([
                     "status" =>
-                        "Cannot change game #" .
+                    "Cannot change game #" .
                         $game->id .
                         " status because it already has ended!",
                 ]);
@@ -134,10 +152,11 @@ class GameController extends Controller
         return response()->json(Game::where('type', 'M')->get(), 200);
     }
 
-    public function getAllGamesByUser($userId)
+    public function getMultiplayerGamesByUser($userId)
     {
         return response()->json(Game::where('created_user_id', $userId)
-            ->where('type', 'S')
+            ->where('games.type', 'M')
+           ->join('users', 'games.winner_user_id', '=', 'users.id')
             ->orderBy('ended_at', 'desc')
             ->get(), 200);
     }
@@ -147,6 +166,13 @@ class GameController extends Controller
         return response()->json(Game::where('created_user_id', $userId)
             ->where('type', 'S')
             ->orderBy('ended_at', 'desc')
+            ->get(), 200);
+    }
+    public function getWinnerName($userId)
+    {
+        return response()->json(Game::where('winner_user_id', $userId)
+            ->join('users', 'games.winner_user_id', '=', 'users.id')
+            ->select('users.name')
             ->get(), 200);
     }
 
@@ -195,5 +221,18 @@ class GameController extends Controller
     public function getAllGames()
     {
         return response()->json(Game::all(), 200);
+    }
+
+    public function insertMultiplayerGame(MultiplayerGameRequest $request) {
+        $result = DB::insert('INSERT INTO multiplayer_games_played (user_id, game_id, player_won, pairs_discovered) VALUES (?, ?, ?, ?)', [
+            $request->validated()["user_id"],
+            $request->validated()["game_id"],
+            $request->validated()["player_won"],
+            $request->validated()["pairs_discovered"]
+        ]);
+        if(!$result) {
+            return response()->json(['message' => 'Error inserting multiplayer game'], 500);
+        }
+        return response()->json(['message' => 'Multiplayer game inserted'], 201);
     }
 }

@@ -16,6 +16,7 @@ import { useAuthStore } from '@/stores/auth'
 import MultiplayerArea from '@/components/ui/game/MultiplayerArea.vue'
 import Register from '@/components/auth/Register.vue'
 import DeleteAccount from '@/components/registered/DeleteAccount.vue'
+import Statistics from '@/components/registered/Statistics.vue'
 import Users from '@/components/admin/Users.vue'
 import EditUser from '@/components/admin/EditUser.vue'
 import CreateAdminAccount from '@/components/admin/CreateAdminAccount.vue'
@@ -131,6 +132,11 @@ const router = createRouter({
           component: Game6x6
         }
       ]
+    },
+    {
+      path: '/statistics',
+      name: 'statistics',
+      component: Statistics
     }
   ]
 })

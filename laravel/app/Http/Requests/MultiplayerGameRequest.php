@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class SaveGameRequest extends FormRequest
+class MultiplayerGameRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,12 +22,10 @@ class SaveGameRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'created_user_id' => 'required|integer|exists:users,id',
-            'type' => 'required|string|in:S,M',
-            'status' => 'required|string|in:PE,PL,E,I',
-            'began_at' => 'nullable|date',
-            'total_time' => 'nullable|numeric|regex:/^\d+(\.\d{1,2})?$/',
-            'board_id' => 'required|integer|in:1,2,3',
+            'user_id' => 'required|integer|exists:users,id',
+            'game_id' => 'required|integer|exists:games,id',
+            'player_won' => 'nullable|boolean',
+            'pairs_discovered' => 'nullable|integer',
         ];
     }
 }

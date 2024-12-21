@@ -25,9 +25,11 @@
                             <option value="VISA">VISA</option>
                             <option value="IBAN">IBAN</option>
                         </select>
-                        <input v-model="reference" type="text" placeholder="Reference" class="p-2 bg-gray-700 text-white rounded" />
-                        <input v-model="value" type="number" placeholder="Value" class="p-2 bg-gray-700 text-white rounded" />
-                        <button @click="comprar" class="p-2 bg-blue-500 text-white rounded">Buy</button>
+                        <input v-model="reference" type="text" :placeholder="placeholder"
+                            class="p-2 bg-gray-700 text-white rounded" />
+                        <input v-model="value" type="number" placeholder="Value"
+                            class="p-2 bg-gray-700 text-white rounded" />
+                        <button @click.prevent="comprar" class="p-2 bg-blue-500 text-white rounded">Buy</button>
                     </div>
                 </div>
             </div>
@@ -51,6 +53,7 @@ const authStore = useAuthStore()
 const type = ref('-1')
 const reference = ref('')
 const value = ref('')
+const placeholder = ref('')
 
 watch(value, (newValue) => {
     if (isNaN(newValue)) {
@@ -58,8 +61,24 @@ watch(value, (newValue) => {
     }
 })
 
+watch(type, (newValue) => {
+    if (newValue === 'PAYPAL') {
+        placeholder.value = 'e.g. john.doe@gmail.com'
+    } else if (newValue === 'MBWAY') {
+        placeholder.value = 'e.g. 915785345'
+    } else if (newValue === 'MB') {
+        placeholder.value = 'e.g. 45634-123456789'
+    } else if (newValue === 'VISA') {
+        placeholder.value = 'e.g. 4321567812345678'
+    } else if (newValue === 'IBAN') {
+        placeholder.value = 'e.g. PT50123456781234567812349'
+    } else {
+        placeholder.value = 'Invalid Payment Method'
+    }
+})
+
 const comprar = async () => {
-    if(type.value === '-1') {
+    if (type.value === '-1') {
         toast({
             description: 'Choose a payment method',
             title: 'Error',
@@ -72,19 +91,19 @@ const comprar = async () => {
         'reference': reference.value,
         'value': value.value
     })
-    .then(() => {
-        toast({
-            description: 'Coins bought successfully',
-            title: 'Success',
-            variant: 'success'
+        .then(() => {
+            toast({
+                description: 'Coins bought successfully',
+                title: 'Success',
+                variant: 'success'
+            })
         })
-    })
-    .catch((error) => {
-        toast({
-            description: `Error buying coins - ${error.response.data.description}`,
-            title: error.response.data.message,
-            variant: 'error'
+        .catch((error) => {
+            toast({
+                description: `Error buying coins - ${error.response.data.description}`,
+                title: error.response.data.message,
+                variant: 'error'
+            })
         })
-    })
 }
 </script>
