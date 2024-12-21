@@ -3,13 +3,21 @@ import { createPinia } from 'pinia'
 import axios from 'axios'
 import { io } from 'socket.io-client'
 import PrimeVue from 'primevue/config'
-import Aura from '@primevue/themes/aura'
 import { definePreset } from '@primevue/themes';
+import Aura from '@primevue/themes/aura';
+
+import 'primeicons/primeicons.css'
 import "preline/preline";
 import '@/assets/base.css'
+
 import 'primeicons/primeicons.css'
+
+
+import 'primeicons/primeicons.css'
+import Chart from 'primevue/chart'
 import App from './App.vue'
 import router from './router'
+import { AlignCenter } from 'lucide-vue-next'
 
 const pinia = await createPinia()
 
@@ -17,6 +25,7 @@ const app = createApp(App)
 
 app.use(pinia)
 app.use(router)
+
 const CustomPreset = definePreset(Aura, {
     semantic: {
         primary: {
@@ -51,12 +60,16 @@ const CustomPreset = definePreset(Aura, {
                         background: "{slate.900}",
                         color: "{surface.0}",
                         borderColor: "{surface.800}",
+                        AlignCenter
                     },
                     row: {
                         background: '{slate.900}',
                         color: '{surface.0}',
                         borderColor: "{slate.0}",
                     },
+                    footer: {
+                        background: '{slate.900}',
+                    }
                 }
             }
         },
@@ -72,7 +85,7 @@ const CustomPreset = definePreset(Aura, {
         inputtext : {
             colorScheme: {
                 dark: {
-                    background: "{slate.950}",
+                    background: "{slate.900}",
                     color: "{surface.0}",
                     borderColor: "{surface.800}",
                 }
@@ -81,7 +94,16 @@ const CustomPreset = definePreset(Aura, {
         select : {
             colorScheme: {
                 dark: {
-                    background: "{slate.950}",
+                    background: "{slate.800}",
+                    color: "{surface.0}",
+                    borderColor: "{surface.800}",
+                }
+            }
+        },
+        overlayselect : {
+            colorScheme: {
+                dark: {
+                    background: "{slate.100}",
                     color: "{surface.0}",
                     borderColor: "{surface.800}",
                 }

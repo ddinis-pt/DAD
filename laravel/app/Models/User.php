@@ -26,6 +26,7 @@ class User extends Authenticatable
         'password',
         'photo_filename',
         'brain_coins_balance',
+        'type',
     ];
 
     /**
