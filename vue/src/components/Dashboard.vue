@@ -221,7 +221,6 @@ const isGuest = () => {
                 class="mb-4 inline-flex justify-center items-center size-[62px] rounded-xl text-white bg-slate-800 dark:bg-white dark:text-slate-800">
                   
                   <i class="pi pi-chart-bar border-white" style="font-size: 1.5rem"></i>
-
                 </span>
                 <!-- End Icon -->
 
