@@ -7,6 +7,7 @@ use App\Http\Requests\ImageRequest;
 use Illuminate\Http\Request;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
+use App\Models\Transaction;
 use Illuminate\Support\Facades\DB;
 use Error;
 use Illuminate\Support\Facades\Http;
@@ -224,6 +225,12 @@ class UserController extends Controller
         } catch (Error $e) {
             return response()->json(['message' => 'Error' + $e], 500);
         }
+    }
+
+    public function getTransactions(Request $request)
+    {
+        $transactions = Transaction::all();
+        return response()->json($transactions, 200);
     }
 
 }

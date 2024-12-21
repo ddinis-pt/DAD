@@ -74,4 +74,14 @@ class AuthController extends Controller
         $token = $user->createToken('authToken', ['*'], now()->addHours(2))->plainTextToken;
         return response()->json(['token' => $token]);
     }
+
+    public function registerAdmin(RegisterRequest $request) {
+        $data = $request->validated();
+        $data['password'] = bcrypt($data['password']);
+        $data['type'] = 'A';
+        $user = User::create($data);
+        $user->save();
+        $token = $user->createToken('authToken', ['*'], now()->addHours(2))->plainTextToken;
+        return response()->json(['token' => $token]);
+    }
 }

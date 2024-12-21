@@ -191,4 +191,9 @@ class GameController extends Controller
             ->take(3)
             ->get(), 200);
     }
+
+    public function getAllGames()
+    {
+        return response()->json(Game::all(), 200);
+    }
 }

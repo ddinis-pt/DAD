@@ -1,9 +1,9 @@
 <template>
-    <div class=" bg-gray-800 min-h-screen">
+    <div class="bg-sky-50 dark:bg-gray-800 min-h-screen">
         <Header></Header>
         <main>
 
-            <h1 class="text-3xl font-bold text-white text-center pt-8">Settings</h1>
+            <h1 class="text-3xl font-bold dark:text-white text-gray-800 text-center pt-8">Settings</h1>
 
             <div class="space-y-2 rounded-xl shadow-md bg-white px-6 py-4 mt-4 max-w-2xl mx-auto">
 

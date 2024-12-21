@@ -125,7 +125,7 @@ const showHint = () => {
 </script>
 
 <template>
-    <div class="min-h-screen flex flex-col justify-between bg-gray-800">
+    <div class="min-h-screen flex flex-col justify-between bg-sky-50 dark:bg-gray-800">
         <header>
             <div class="flex gap-x-8 gap-y-4 grid-cols-3 justify-between items-center px-4 py-2">
                 <RouterLink :to="{name: 'dashboard'}">
@@ -158,7 +158,7 @@ const showHint = () => {
                 ${nJogadas} jogadas!` : `Parabéns, jogador anónimo! Ganhou o jogo em ${timer} segundos, com apenas
                 ${nJogadas} jogadas!` }}
             </h1>
-            <div class="grid grid-cols-4 gap-4" :class="{ 'hidden': isGameWon }">
+            <div class="grid grid-cols-4 gap-4 justify-items-center" :class="{ 'hidden': isGameWon }">
                 <CardComponent v-for="(number, index) in numbers" :number="number" :key="index"
                     :isFlipped="flippedCards[index]" @has-been-flipped="() => cartaVirada(index)" />
             </div>
@@ -183,8 +183,8 @@ const showHint = () => {
                     </svg>
                     <p class="font-semibold text-center text-white ps-2">{{ nParesEncontrados }}/6</p>
                 </div>
-                <div id="flips flex items-center justify-end">
-                    <p class="font-semibold text-center text-white">Flips done: {{ nJogadas }}</p>
+                <div id="flips flex items-right justify-end">
+                    <p class="font-semibold text-right text-white">Flips done: {{ nJogadas }}</p>
                 </div>
 
             </div>

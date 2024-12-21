@@ -111,7 +111,7 @@ const getUser = async () => {
 
 const getUserPhoto = (photo) => {
     if (photo) {
-        photoFile = axios.defaults.baseURL.replaceAll('/api', '/storage/photos/' + photo)
+        photoFile = axios.defaults.baseURL.replace(/\/api(?!.*\/api)/, '/storage/photos/' + photo)
     } else {
         photoFile = avatarNoneAssetURL
     }

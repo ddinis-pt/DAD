@@ -8,6 +8,10 @@ const back = () => {
     router.push({ name: 'dashboard' })
 }
 
+const leave = () => {
+    router.push({ name: 'login' })
+}
+
 const logout = async () => {
     await authStore.logout()
     router.push({ name: 'login' })
@@ -21,15 +25,12 @@ const isPlayer = () => {
     return authStore.user && authStore.userType === 'P'
 }
 
-onBeforeMount(() => {
-    if (!authStore.user) {
-        router.push({ name: 'login' })
-    }
-})
-
 onMounted(() => {
     window.HSStaticMethods.autoInit();
-    authStore.refreshUserData();
+    if (authStore.user) {
+        authStore.refreshUserData();
+    }
+    //authStore.refreshUserData();
 
 })
 </script>
@@ -38,8 +39,8 @@ onMounted(() => {
         class="flex flex-row z-50 w-full text-sm max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 justify-between self-start">
         <!-- Logo -->
         <div class="bg-gray-800 p-2 dark:p-0 rounded-xl dark:border-neutral-700">
-            <img @click.prevent="back" class="cursor-pointer flex-none inline-block h-16" src="../../assets/cards-light.png"
-                alt="App Logo" />
+            <img @click.prevent="back" class="cursor-pointer flex-none inline-block h-16"
+                src="../../assets/cards-light.png" alt="Memory Game Logo" title="Go to dashboard" />
         </div>
         <!-- End Logo -->
         <!-- Navigation -->
@@ -62,10 +63,12 @@ onMounted(() => {
                     <div v-if="authStore.user" class="flex items-center">
                         <img class="inline-block size-[55px] rounded-full border-2 border-blue-600"
                             :src="authStore.userPhotoUrl" alt="Avatar">
-                        <h2 class="block text-xl font-bold text-gray-800 dark:text-white pl-4 pr-2">Hello, {{ authStore.userFirstLastName
+                        <h2 class="block text-xl font-bold text-gray-800 dark:text-white pl-4 pr-2">Hello, {{
+                            authStore.userFirstLastName
                             }}!
                         </h2>
-                        <i class="pi pi-chevron-down hs-dropdown-open:rotate-180 text-sm text-gray-800 dark:text-white"></i>
+                        <i
+                            class="pi pi-chevron-down hs-dropdown-open:rotate-180 text-sm text-gray-800 dark:text-white"></i>
                     </div>
                     <div v-else class="flex items-center">
                         <img @click="logout" class="inline-block size-[55px] rounded-full border-2 border-blue-600"
@@ -80,15 +83,13 @@ onMounted(() => {
                         <p class="text-sm font-medium text-gray-800 dark:text-neutral-300">{{ authStore.userEmail }}</p>
                     </div>
                     <div class="p-1 space-y-0.5">
-                        <RouterLink v-if="authStore.user"
-                            class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-white dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700"
-                            :to="{ name: 'settings' }">
+                        <RouterLink :to="{ name: 'settings' }" v-if="authStore.user"
+                            class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-white dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700">
                             <i class="pi pi-cog"></i>
                             Settings
                         </RouterLink>
-                        <RouterLink v-if="isPlayer()"
-                            class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-white dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700"
-                            :to="{ name: 'buy-coins' }">
+                        <RouterLink :to="{ name: 'buy-coins' }" v-if="isPlayer()"
+                            class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-white dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700">
                             <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                 stroke-linecap="round" stroke-linejoin="round">
@@ -99,10 +100,19 @@ onMounted(() => {
                             </svg>
                             Buy Coins
                         </RouterLink>
-                        <a class="cursor-pointer flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-white dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700"
+                        <a v-if="authStore.user"
+                            class="cursor-pointer flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-white dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700"
                             @click="logout">
                             <i class="pi pi-sign-out"></i>
                             Logout
+                        </a>
+
+                        <a v-if="!authStore.user"
+                            class="cursor-pointer flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-white dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700"
+                            @click="leave">
+                            <i class="pi pi-sign-out"></i>
+                            Leave
+
                         </a>
                     </div>
                 </div>

@@ -19,6 +19,7 @@ import DeleteAccount from '@/components/registered/DeleteAccount.vue'
 import Users from '@/components/admin/Users.vue'
 import EditUser from '@/components/admin/EditUser.vue'
 import CreateAdminAccount from '@/components/admin/CreateAdminAccount.vue'
+import Transactions from '@/components/admin/Information.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -92,6 +93,11 @@ const router = createRouter({
       path: '/users/create',
       name: 'create-user',
       component: CreateAdminAccount
+    },
+    {
+      path: '/information',
+      name: 'information',
+      component: Transactions
     },
     {
       path: '/testers',
