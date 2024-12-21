@@ -34,7 +34,7 @@ onMounted(() => {
         </CardHeader>
         <CardContent class="p-4">
             <div class="py-2">
-                <Button v-show="storeLobby.hasMoney()" @click="addGame">
+                <Button v-show="storeLobby.hasMoney()" @click="addGame" class="dark:bg-blue-600">
                     New Game
                 </Button>
                 <span v-show="!storeLobby.hasMoney()" class="text-red-500">

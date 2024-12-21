@@ -62,7 +62,7 @@ const handleMessageFromInputDialog = (message) => {
             <Label for="inputMessage" class="pt-4">
                 Press enter to send message:
             </Label>
-            <Input id="inputMessage" v-model="message" @keydown.enter="sendMessageToChat"/>
+            <Input id="inputMessage" class="dark:bg-gray-800 dark:text-white" v-model="message" @keydown.enter="sendMessageToChat"/>
         </CardHeader>
         <CardContent class="p-4">
             <div class="divide-y divide-solid divide-gray-200">

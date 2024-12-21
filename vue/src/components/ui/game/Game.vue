@@ -77,7 +77,7 @@ const quit = () => {
 </script>
 <template>
     <Toaster />
-    <Card class="relative grow mx-4 mt-8 pt-2 pb-4 px-1">
+    <Card class="relative grow mx-4 mt-8 pt-2 pb-4 px-1 bg-white dark:bg-slate-900">
         <CardHeader class="pb-0">
             <Button @click="clickCardButton" class="absolute top-4 right-4">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"

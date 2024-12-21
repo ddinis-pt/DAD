@@ -38,7 +38,7 @@ onMounted(() => {
 });
 </script>
 <template>
-    <div class="grid grid-cols-4 gap-4 border divide-y divide-x" :class="{ 'hidden': isGameWon }">
+    <div class="grid grid-cols-4 gap-4 divide-y divide-x" :class="{ 'hidden': isGameWon }">
         <CardComponent v-for="(number, index) in board" :number="number" :key="index" :index="index" :isFlipped="flipped[index]"
             @has-been-flipped="cartaVirada" :game="props.game"/>
     </div>
