@@ -214,18 +214,16 @@ const isGuest = () => {
         <div id="hs-sign-out-alert-small-window" class="size-full px-6 pb-2" role="dialog"
           tabindex="-1" aria-labelledby="hs-sign-out-alert-small-window-label">
           <div class="mt-7 opacity-100 duration-500 sm:max-w-xs sm:w-full m-3 sm:mx-auto">
-            <div class="relative flex flex-col shadow-[0px_0px_14px_5px_#a5f3fc] rounded-xl bg-white">
+            <div class="relative flex flex-col shadow-[0px_0px_14px_5px_#a5f3fc] rounded-xl bg-gray-800 dark:bg-white">
               <div class="p-4 sm:p-10 text-center overflow-y-auto ">
                 <!-- Icon -->
                 <span
-                  class="mb-4 inline-flex justify-center items-center size-[62px] rounded-xl  border-yellow-50 text-white bg-slate-800">
-                  
+                  class="mb-4 inline-flex justify-center items-center size-[62px] rounded-xl bg-white text-slate-800 dark:text-white dark:bg-slate-800">
                   <i class="pi pi-chart-bar border-white" style="font-size: 1.5rem"></i>
-
                 </span>
                 <!-- End Icon -->
 
-                <h3 id="hs-sign-out-alert-small-window-label" class="mb-2 text-2xl font-bold text-gray-800">
+                <h3 id="hs-sign-out-alert-small-window-label" class="mb-2 text-2xl font-bold text-white dark:text-gray-800">
                   Statistics
                 </h3>
                 <div class="mt-6 grid gap-y-2">
