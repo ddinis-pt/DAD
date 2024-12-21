@@ -47,6 +47,14 @@ const getCookie = (name) => {
 };
 
 const setMode = (chosenMode) => {
+    if(chosenMode === 'transactions' && authStore.userType !== 'A') {
+      toast({
+        description: 'You do not have permission to access this page',
+        title: 'Unauthorized',
+        variant: 'destructive'
+      });
+      return;
+    }
     mode.value = chosenMode;
     setCookie('modeChosen', chosenMode, 15); //Cookies expiram em 15 min
 };
@@ -654,6 +662,7 @@ onMounted(() => {
               Games
             </a>
             <a
+              v-if="authStore.userType == 'A'"
               class="py-4 px-1 inline-flex items-center gap-2 border-b-2 border-transparent text-sm whitespace-nowrap  focus:border-blue-500 dark:focus:border-blue-500 neutral-700 hover:text-blue-500 dark:hover:text-blue-500 hover:cursor-pointer"
               @click.prevent="setMode('transactions')"
               :class="{ 'text-blue-500 border-b !border-blue-500': mode === 'transactions' }"
