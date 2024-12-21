@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen  bg-gray-800">
+  <div class="min-h-screen bg-sky-50 dark:bg-gray-800">
     <Header></Header>
     <main>
       <div class="flex flex-col space-y-4">

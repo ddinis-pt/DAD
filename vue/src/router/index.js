@@ -20,7 +20,8 @@ import Statistics from '@/components/registered/Statistics.vue'
 import Users from '@/components/admin/Users.vue'
 import EditUser from '@/components/admin/EditUser.vue'
 import CreateAdminAccount from '@/components/admin/CreateAdminAccount.vue'
-import Transactions from '@/components/admin/Information.vue'
+import Games from '@/components/admin/Games.vue'
+import Transactions from '@/components/admin/Transactions.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -96,8 +97,13 @@ const router = createRouter({
       component: CreateAdminAccount
     },
     {
-      path: '/information',
-      name: 'information',
+      path: '/games',
+      name: 'games',
+      component: Games
+    },
+    {
+      path: '/transactions',
+      name: 'transactions',
       component: Transactions
     },
     {

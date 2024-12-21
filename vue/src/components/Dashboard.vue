@@ -156,7 +156,7 @@ const isGuest = () => {
           </div>
         </div>
         <!-- Game History -->
-        <div id="hs-sign-out-alert-small-window" class="size-full px-6 pb-2" role="dialog"
+        <div v-if="!isAdmin() || isGuest()" id="hs-sign-out-alert-small-window" class="size-full px-6 pb-2" role="dialog"
           tabindex="-1" aria-labelledby="hs-sign-out-alert-small-window-label">
           <div class="mt-7 opacity-100 duration-500 sm:max-w-xs sm:w-full m-3 sm:mx-auto">
             <div class="relative flex flex-col shadow-[0px_0px_14px_5px_#a5f3fc] rounded-xl bg-white dark:bg-slate-800">
@@ -183,7 +183,7 @@ const isGuest = () => {
             </div>
           </div>
         </div>
-        <!-- Information -->
+        <!-- Transactions -->
         <div v-if="isAdmin()" id="hs-sign-out-alert-small-window" class="size-full px-6 pb-2" role="dialog"
           tabindex="-1" aria-labelledby="hs-sign-out-alert-small-window-label">
           <div class="mt-7 opacity-100 duration-500 sm:max-w-xs sm:w-full m-3 sm:mx-auto">
@@ -196,13 +196,40 @@ const isGuest = () => {
                 </span>
                 <!-- End Icon -->
                 <h3 id="hs-sign-out-alert-small-window-label" class="mb-2 text-2xl font-bold text-gray-800 dark:text-white">
-                  Information
+                  Transactions
                 </h3>
                 <div class="mt-6 grid gap-y-2">
-                  <RouterLink :to="{ name: 'information' }">
+                  <RouterLink :to="{ name: 'transactions' }">
                     <button type="button"
                       class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
-                      See information
+                      See transactions
+                    </button>
+                  </RouterLink>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Games -->
+        <div v-if="isAdmin()" id="hs-sign-out-alert-small-window" class="size-full px-6 pb-2" role="dialog"
+          tabindex="-1" aria-labelledby="hs-sign-out-alert-small-window-label">
+          <div class="mt-7 opacity-100 duration-500 sm:max-w-xs sm:w-full m-3 sm:mx-auto">
+            <div class="relative flex flex-col shadow-[0px_0px_14px_5px_#a5f3fc] rounded-xl bg-white dark:bg-slate-800">
+              <div class="p-4 sm:p-10 text-center overflow-y-auto ">
+                <!-- Icon -->
+                <span
+                class="mb-4 inline-flex justify-center items-center size-[62px] rounded-xl text-white bg-slate-800 dark:bg-white dark:text-slate-800">
+                  <i class="pi pi-clone !text-2xl"></i>
+                </span>
+                <!-- End Icon -->
+                <h3 id="hs-sign-out-alert-small-window-label" class="mb-2 text-2xl font-bold text-gray-800 dark:text-white">
+                  Games
+                </h3>
+                <div class="mt-6 grid gap-y-2">
+                  <RouterLink :to="{ name: 'games' }">
+                    <button type="button"
+                      class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
+                      See games
                     </button>
                   </RouterLink>
                 </div>
