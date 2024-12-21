@@ -24,4 +24,7 @@ class Transaction extends Model
         'payment_type',
         'payment_reference',
     ];
+
+    // no created_at and updated_at columns~
+    public $timestamps = false;
 }

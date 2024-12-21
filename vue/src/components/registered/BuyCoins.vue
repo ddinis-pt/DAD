@@ -47,6 +47,8 @@ import { ref, watch } from 'vue';
 import Toaster from '@/components/ui/toast/Toaster.vue';
 import { toast } from '@/components/ui/toast';
 
+import { format } from 'date-fns';
+
 const router = useRouter()
 const authStore = useAuthStore()
 
@@ -105,5 +107,14 @@ const comprar = async () => {
                 variant: 'error'
             })
         })
+    await axios.post('/registerTransaction', {
+        transaction_datetime: format(new Date(), 'yyyy-MM-dd HH:mm:ss'),
+        user_id: authStore.user.id,
+        type: 'P',
+        euros: value.value,
+        payment_type: type.value,
+        payment_reference: reference.value,
+        brain_coins: value.value * 10,
+    })
 }
 </script>

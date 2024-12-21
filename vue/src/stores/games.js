@@ -136,6 +136,13 @@ export const useGamesStore = defineStore('games', () => {
             // give the winner 7 coins
             if (game.gameStatus !== 3) {
                 const APIresponse2 = await axios.put(`/users/${winner}/win/7`)
+                await axios.post('/registerTransaction', {
+                    transaction_datetime: format(new Date(), 'yyyy-MM-dd HH:mm:ss'),
+                    user_id: winner,
+                    type: 'I',
+                    game_id: game.id,
+                    brain_coins: 7,
+                  })
                 console.log("Winner's coins have been updated: ", APIresponse2.data)
             }
         }

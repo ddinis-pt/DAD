@@ -5,6 +5,8 @@ import { Button } from '@/components/ui/button';
 import { useRouter } from 'vue-router';
 import { toast } from "@/components/ui/toast/index.js";
 
+import { format } from 'date-fns';
+
 
 import { useErrorStore } from '@/stores/error';
 import axios from 'axios';
@@ -86,7 +88,7 @@ const submit = async () => {
         return;
     } else {
 
-     
+
         try {
             user = await authStore.register({
                 email: email.value,
@@ -102,6 +104,12 @@ const submit = async () => {
 
         if (user) {
             await axios.get('/win/10');
+            await axios.post('/registerTransaction', {
+                transaction_datetime: format(new Date(), 'yyyy-MM-dd HH:mm:ss'),
+                user_id: user.id,
+                type: 'B',
+                brain_coins: 10,
+            })
             router.push({ name: 'dashboard' })
         }
         else {
@@ -114,7 +122,7 @@ const submit = async () => {
             }
             document.getElementById('error').classList.remove('hidden')
         }
-        
+
     }
 }
 

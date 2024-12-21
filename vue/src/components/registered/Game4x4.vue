@@ -3,25 +3,12 @@ import { ref, watch, nextTick, onMounted } from 'vue';
 import axios from 'axios';
 import CardComponent from '@/components/ui/game/CardSingleplayer.vue';
 import { toast } from '@/components/ui/toast/use-toast';
+import { format } from 'date-fns';
 
 import { useAuthStore } from '@/stores/auth';
 
 const authStore = useAuthStore();
 authStore.refreshUserData();
-
-function formatDateTime(date) {
-    const pad = (num) => num.toString().padStart(2, '0');
-
-    const year = date.getFullYear();
-    const month = pad(date.getMonth() + 1);
-    const day = pad(date.getDate());
-
-    const hours = pad(date.getHours());
-    const minutes = pad(date.getMinutes());
-    const seconds = pad(date.getSeconds());
-
-    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
-}
 
 const startedAt = new Date();
 
@@ -47,6 +34,9 @@ const horas = ref(0);
 const flippedCards = ref(numbers.map(() => false));
 const currentlyFlipped = ref([]);
 
+let hintsUsed = 0;
+let gameOnDB = null
+
 let intervalo = null;
 
 watch(nParesEncontrados, async (n) => {
@@ -60,13 +50,24 @@ watch(nParesEncontrados, async (n) => {
                 created_user_id: user.id,
                 type: 'S',
                 status: 'E',
-                began_at: formatDateTime(startedAt),
-                ended_at: formatDateTime(ended_at),
+                began_at: format(startedAt, 'yyyy-MM-dd HH:mm:ss'),
+                ended_at: format(ended_at, 'yyyy-MM-dd HH:mm:ss'),
                 total_time: ((ended_at - startedAt) / 1000).toFixed(2),
                 board_id: 2,
                 total_turns_winner: nJogadas.value
             };
             await axios.post('/games', game)
+                .then((response) => {
+                    gameOnDB = response.data
+                    axios.put('/win/1')
+                    axios.post('/registerTransaction', {
+                        transaction_datetime: format(new Date(), 'yyyy-MM-dd HH:mm:ss'),
+                        user_id: authStore.user.id,
+                        type: 'I',
+                        game_id: gameOnDB.id,
+                        brain_coins: 1,
+                    })
+                })
                 .catch(() => {
                     toast({
                         title: 'Error',
@@ -74,6 +75,13 @@ watch(nParesEncontrados, async (n) => {
                         variant: 'destructive'
                     });
                 });
+            await axios.post('/registerTransaction', {
+                transaction_datetime: format(new Date(), 'yyyy-MM-dd HH:mm:ss'),
+                user_id: authStore.user.id,
+                type: 'I',
+                game_id: gameOnDB.id,
+                brain_coins: -hintsUsed,
+            })
         }
     }
 });
@@ -135,7 +143,9 @@ const showHint = async () => {
                     description: 'An error occurred while spending the coin.',
                     variant: 'destructive'
                 });
+                return;
             });
+        hintsUsed++;
         authStore.refreshUserData();
     }
     const unflippedPairs = [];

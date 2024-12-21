@@ -49,6 +49,9 @@ import Toaster from '@/components/ui/toast/Toaster.vue'
 import { toast } from '@/components/ui/toast'
 import axios from 'axios'
 
+
+import { format } from 'date-fns';
+
 const confirmation = ref('')
 const authStore = useAuthStore()
 const router = useRouter()
@@ -63,6 +66,12 @@ if (authStore.user === null) {
 const submit = async () => {
     if (confirmation.value === randomWord.value) {
         await axios.put('/spend/' + authStore.userCoins);
+        await axios.post('/registerTransaction', {
+            transaction_datetime: format(new Date(), 'yyyy-MM-dd HH:mm:ss'),
+            user_id: authStore.user.id,
+            type: 'B',
+            brain_coins: -authStore.userCoins,
+        })
         await axios.delete(`/users/${authStore.user.id}`)
             .then(() => {
                 authStore.logout()

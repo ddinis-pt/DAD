@@ -6,6 +6,7 @@ use App\Http\Requests\BuyCoinsRequest;
 use App\Http\Requests\ImageRequest;
 use Illuminate\Http\Request;
 use App\Http\Requests\UpdateUserRequest;
+use App\Http\Requests\RegisterTransactionRequest;
 use App\Models\User;
 use App\Models\Transaction;
 use Illuminate\Support\Facades\DB;
@@ -275,6 +276,20 @@ class UserController extends Controller
     {
         $transactions = Transaction::all();
         return response()->json($transactions, 200);
+    }
+
+    public function registerTransaction(RegisterTransactionRequest $request)
+    {
+        if($request->user()->type === 'A') {
+            return response()->json(['message' => 'Admins cannot register transactions'], 403);
+        }
+        $validatedData = $request->validated();
+        try {
+            $transaction = Transaction::create($validatedData);
+        } catch (Error $e) {
+            return response()->json(['message' => 'Error' + $e], 500);
+        }
+        return response()->json($transaction, 201);
     }
 
 }

@@ -5,6 +5,8 @@ import { useAuthStore } from '@/stores/auth'
 import { useRouter } from 'vue-router';
 import axios from 'axios';
 
+import { format } from 'date-fns';
+
 const router = useRouter()
 
 const authStore = useAuthStore()
@@ -15,6 +17,13 @@ const checkMoney = async (mode) => {
         if (authStore.userCoins > 1) {
             // spend one coin and redirect to the game
             await axios.put('/spend/1')
+            // register transaction
+            await axios.post('/registerTransaction', {
+                transaction_datetime: format(new Date(), 'yyyy-MM-dd HH:mm:ss'),
+                user_id: authStore.user.id,
+                type: 'B',
+                brain_coins: -1,
+            })
             authStore.refreshUserData()
             switch (mode) {
                 case 1: router.push({ name: '3by4' }); break;
@@ -226,7 +235,7 @@ const checkMoney = async (mode) => {
                         <rect x="2" y="2" width="106" height="106" rx="5" stroke="#1F2937" stroke-width="4" />
                     </svg>
 
-                        <h3 class="text-1xl font-semibold text-gray-800 dark:text-white py-2">4x4</h3>
+                    <h3 class="text-1xl font-semibold text-gray-800 dark:text-white py-2">4x4</h3>
 
                 </div>
                 <div @click.prevent="checkMoney(3)" class="py-6">
@@ -306,7 +315,7 @@ const checkMoney = async (mode) => {
                         <rect x="2" y="2" width="151" height="151" rx="5" stroke="#1F2937" stroke-width="4" />
                     </svg>
                     <h3 class="text-1xl font-semibold text-gray-800 dark:text-white py-2">6x6</h3>
-                   </div>
+                </div>
             </div>
 
         </div>

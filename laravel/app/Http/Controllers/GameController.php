@@ -41,7 +41,17 @@ class GameController extends Controller
         if (array_key_exists("began_at", $request->validated())) {
             $game->began_at = $request->validated()["began_at"];
         }
-        $game->total_time = 0;
+        if(array_key_exists("ended_at", $request->validated())){
+            $game->ended_at = $request->validated()["ended_at"];
+        }
+        if(array_key_exists("total_time", $request->validated())){
+            $game->total_time = $request->validated()["total_time"];
+        } else {
+            $game->total_time = 0;
+        }
+        if(array_key_exists("total_turns_winner", $request->validated())){
+            $game->total_turns_winner = $request->validated()["total_turns_winner"];
+        }
         $game->save();
         return response()->json(new GameResource($game), 201);
     }

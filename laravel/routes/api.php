@@ -51,12 +51,14 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     //Stats for admins
     Route::get('/stats/winners/top5', [StatsController::class, 'getTop5Winners']);
-    Route::get('/stats/losers/top5', [StatsController::class, 'getTop5Losers']); 
+    Route::get('/stats/losers/top5', [StatsController::class, 'getTop5Losers']);
     Route::get('/stats/buyers/top5', [StatsController::class, 'getTop5Buyers']);
     Route::get('/stats/spenders/top5', [StatsController::class, 'getTop5Spenders']);
     Route::put('/games/{game_id}', [GameController::class, 'updateStatus']);
     Route::post('/games/multiplayer', [GameController::class, 'insertMultiplayerGame']);
     // Route::delete('/games/{game}', [GameController::class, 'destroy']);
+
+Route::post('/registerTransaction', [UserController::class, 'registerTransaction']);
 });
 
 //Stats for all users

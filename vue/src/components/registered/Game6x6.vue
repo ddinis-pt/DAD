@@ -7,6 +7,7 @@ import { useAuthStore } from '@/stores/auth';
 import { useRouter } from 'vue-router';
 import Toaster from '@/components/ui/toast/Toaster.vue';
 import { toast } from '@/components/ui/toast/use-toast';
+import { format } from 'date-fns';
 
 const authStore = useAuthStore();
 authStore.refreshUserData();
@@ -53,6 +54,8 @@ const currentlyFlipped = ref([]);
 
 let intervalo = null;
 
+let gameOnDB = null;
+
 watch(nParesEncontrados, async (n) => {
     if (n == 18) {
         clearInterval(intervalo);
@@ -64,13 +67,24 @@ watch(nParesEncontrados, async (n) => {
                 created_user_id: user.id,
                 type: 'S',
                 status: 'E',
-                began_at: formatDateTime(startedAt),
-                ended_at: formatDateTime(ended_at),
+                began_at: format(startedAt, 'yyyy-MM-dd HH:mm:ss'),
+                ended_at: format(ended_at, 'yyyy-MM-dd HH:mm:ss'),
                 total_time: ((ended_at - startedAt) / 1000).toFixed(2),
                 board_id: 3,
                 total_turns_winner: nJogadas.value
             };
             await axios.post('/games', game)
+                .then((response) => {
+                    gameOnDB = response.data;
+                    axios.put('/win/1')
+                    axios.post('/registerTransaction', {
+                        transaction_datetime: format(new Date(), 'yyyy-MM-dd HH:mm:ss'),
+                        user_id: authStore.user.id,
+                        type: 'I',
+                        game_id: gameOnDB.id,
+                        brain_coins: 1,
+                    })
+                })
                 .catch(() => {
                     toast({
                         title: 'Error',
@@ -133,6 +147,15 @@ const showHint = async () => {
         return;
     } else {
         await axios.put('/spend/1')
+            .then(() => {
+                axios.post('/registerTransaction', {
+                    transaction_datetime: format(new Date(), 'yyyy-MM-dd HH:mm:ss'),
+                    user_id: authStore.user.id,
+                    type: 'I',
+                    game_id: gameOnDB.id,
+                    brain_coins: -1,
+                })
+            })
             .catch(() => {
                 toast({
                     title: 'Error',

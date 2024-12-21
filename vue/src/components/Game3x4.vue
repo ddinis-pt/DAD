@@ -13,10 +13,10 @@ const startedAt = new Date();
 const user = authStore.user;
 
 // Randomized numbers
-// const numbers = Array.from({ length: 6 }, (_, i) => i + 1).flatMap(n => [n, n]).sort(() => Math.random() - 0.5);
+const numbers = Array.from({ length: 6 }, (_, i) => i + 1).flatMap(n => [n, n]).sort(() => Math.random() - 0.5);
 
 // Static numbers for testing
-const numbers = [1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6];
+// const numbers = [1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6];
 
 const timer = ref(0);
 const nParesEncontrados = ref(0);
@@ -47,8 +47,7 @@ watch(nParesEncontrados, async (n) => {
                 status: 'E',
                 began_at: format(startedAt, 'yyyy-MM-dd HH:mm:ss'),
                 ended_at: format(new Date(), 'yyyy-MM-dd HH:mm:ss'),
-                //total time should have the tenths of seconds
-                total_time: timer.value,
+                total_time: timer.value.toFixed(2),
                 board_id: 1,
                 total_turns_winner: nJogadas.value,
             };
@@ -101,7 +100,24 @@ const cartaVirada = async (index) => {
     }
 }
 
-const showHint = () => {
+const showHint = async () => {
+    if (authStore.userCoins < 1) {
+        toast({
+            title: 'Not enough coins',
+            description: 'You need at least 1 coin to use the hint.',
+        });
+        return;
+    } else {
+        await axios.put('/spend/1')
+            .catch(() => {
+                toast({
+                    title: 'Error',
+                    description: 'An error occurred while spending the coin.',
+                    variant: 'destructive'
+                });
+            });
+        authStore.refreshUserData();
+    }
     const unflippedPairs = [];
 
     for (let i = 0; i < numbers.length; i++) {

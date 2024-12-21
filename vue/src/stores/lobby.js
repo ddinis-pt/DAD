@@ -81,6 +81,20 @@ export const useLobbyStore = defineStore('lobby', () => {
       // subtract 5 coins from each user
       await axios.put(`/users/${newGameOnDB.player1}/spend/5`)
       await axios.put(`/users/${newGameOnDB.player2}/spend/5`)
+      await axios.post('/registerTransaction', {
+        transaction_datetime: format(new Date(), 'yyyy-MM-dd HH:mm:ss'),
+        user_id: newGameOnDB.player1,
+        type: 'I',
+        game_id: newGameOnDB.id,
+        brain_coins: -5,
+      })
+      await axios.post('/registerTransaction', {
+        transaction_datetime: format(new Date(), 'yyyy-MM-dd HH:mm:ss'),
+        user_id: newGameOnDB.player2,
+        type: 'I',
+        game_id: newGameOnDB.id,
+        brain_coins: -5,
+      })
       storeAuth.refreshUserData()
       // After adding the game to the DB emit a message to the server to start the game
       socket.emit('startGame', newGameOnDB, (startedGame) => {

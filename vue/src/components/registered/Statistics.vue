@@ -707,7 +707,7 @@ onMounted(() => {
           />
         </div>
         <div class="bg-white shadow-md rounded-lg p-4 text-center lg:h-full flex flex-col justify-center w-46">
-          <h2 class="text-md font-bold text-black mb-2">User Distribuition</h2>
+          <h2 class="text-md font-bold text-black mb-2">User Distribution</h2>
           <Chart 
             type="doughnut" 
             :data="blockedUsers"
