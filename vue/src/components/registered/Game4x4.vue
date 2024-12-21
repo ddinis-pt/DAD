@@ -43,6 +43,7 @@ watch(nParesEncontrados, async (n) => {
     if (n == 8) {
         clearInterval(intervalo);
         isGameWon.value = true;
+        document.getElementById("background").pause();
         // Save game to database
         if (user) {
             const ended_at = new Date();
@@ -107,8 +108,10 @@ const cartaVirada = async (index) => {
             }
         }, 1000);
         isFirstMove.value = false;
+        document.getElementById("background").play();
     }
     flippedCards.value[index] = true;
+    document.getElementById("flip").play();
     currentlyFlipped.value.push(index);
     await nextTick();
     if (currentlyFlipped.value.length == 2) {
@@ -175,6 +178,12 @@ const showHint = async () => {
 </script>
 
 <template>
+    <audio id="background" volume="0.04" loop>
+        <source src="/src/assets/background-music.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="flip" volume="0.2">
+        <source src="/src/assets/flip.mp3" type="audio/mpeg">
+    </audio>
     <div class="min-h-screen flex flex-col justify-between bg-gray-50">
         <header>
             <div class="flex gap-x-8 gap-y-4 grid-cols-3 justify-between items-center px-4 py-2">
@@ -202,7 +211,7 @@ const showHint = async () => {
                 </div>
             </div>
         </header>
-        <main class="container mx-auto p-8 space-y-8">
+        <main class="container mx-auto p-8 space-y-8 max-w-xl">
             <h1 v-if="isGameWon" class="text-lg font-semibold text-center text-green-600">
                 {{ user ? `Parabéns ${authStore.userFirstLastName}! Ganhou o jogo em ${timer} segundos, com apenas
                 ${nJogadas} jogadas!` : `Parabéns, jogador anónimo! Ganhou o jogo em ${timer} segundos, com apenas
@@ -233,8 +242,8 @@ const showHint = async () => {
                     </svg>
                     <p class="font-semibold text-center text-white ps-2">{{ nParesEncontrados }}/8</p>
                 </div>
-                <div id="flips flex items-center justify-end">
-                    <p class="font-semibold text-center text-white">Flips done: {{ nJogadas }}</p>
+                <div id="flips flex items-right justify-end">
+                    <p class="font-semibold text-right text-white">Flips done: {{ nJogadas }}</p>
                 </div>
 
             </div>

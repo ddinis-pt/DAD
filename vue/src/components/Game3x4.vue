@@ -156,11 +156,8 @@ const showHint = async () => {
         <header>
             <div class="flex gap-x-8 gap-y-4 grid-cols-3 justify-between items-center px-4 py-2">
                 <RouterLink :to="{ name: 'dashboard' }">
-                    <div id="back" class="justify-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                            <path d="M12 19L5 12L12 5" stroke="black" stroke-linecap="round" stroke-linejoin="round" />
-                            <path d="M19 12H5" stroke="black" stroke-linecap="round" stroke-linejoin="round" />
-                        </svg>
+                    <div id="back" class="justify-center bg-white py-2 px-3 rounded-full">
+                        <i class="pi pi-arrow-left text-gray-900"></i>
                     </div>
                 </RouterLink>
                 <div id="time" class="justify-center">
@@ -168,19 +165,12 @@ const showHint = async () => {
                         ('0' +
                             minutos).slice(-2) + ':' + ('0' + segundos).slice(-2) }}</p>
                 </div>
-                <div v-show="authStore.user" @click="showHint" id="hint" class="justify-center">
-                    <svg width="46" height="46" viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="23" cy="23" r="23" fill="#1E293B" />
-                        <path
-                            d="M26 25C26.2 24 26.7 23.3 27.5 22.5C28.5 21.6 29 20.3 29 19C29 17.4087 28.3679 15.8826 27.2426 14.7574C26.1174 13.6321 24.5913 13 23 13C21.4087 13 19.8826 13.6321 18.7574 14.7574C17.6321 15.8826 17 17.4087 17 19C17 20 17.2 21.2 18.5 22.5C19.2 23.2 19.8 24 20 25"
-                            stroke="white" stroke-linecap="round" stroke-linejoin="round" />
-                        <path d="M20 29H26" stroke="white" stroke-linecap="round" stroke-linejoin="round" />
-                        <path d="M21 33H25" stroke="white" stroke-linecap="round" stroke-linejoin="round" />
-                    </svg>
+                <div v-show="authStore.user" @click="showHint" id="hint" class="justify-center bg-white py-2 px-3 rounded-full">
+                    <i class="pi pi-lightbulb text-gray-900"></i>
                 </div>
             </div>
         </header>
-        <main class="container mx-auto p-8 space-y-8">
+        <main class="container mx-auto p-8 space-y-8 max-w-xl">
             <h1 v-if="isGameWon" class="text-lg font-semibold text-center text-green-600">
                 {{ user ? `Parabéns ${authStore.userFirstLastName}! Ganhou o jogo em ${timer} segundos, com apenas
                 ${nJogadas} jogadas!` : `Parabéns, jogador anónimo! Ganhou o jogo em ${timer} segundos, com apenas

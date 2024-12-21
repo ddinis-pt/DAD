@@ -60,6 +60,7 @@ watch(nParesEncontrados, async (n) => {
     if (n == 18) {
         clearInterval(intervalo);
         isGameWon.value = true;
+        document.getElementById("background").pause();
         // Save game to database
         if (user) {
             const ended_at = new Date();
@@ -117,8 +118,10 @@ const cartaVirada = async (index) => {
             }
         }, 1000);
         isFirstMove.value = false;
+        document.getElementById("background").play();
     }
     flippedCards.value[index] = true;
+    document.getElementById("flip").play();
     currentlyFlipped.value.push(index);
     await nextTick();
     if (currentlyFlipped.value.length == 2) {
@@ -192,7 +195,12 @@ const showHint = async () => {
 </script>
 
 <template>
-    <Toaster />
+    <audio id="background" volume="0.04" loop>
+        <source src="/src/assets/background-music.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="flip" volume="0.2">
+        <source src="/src/assets/flip.mp3" type="audio/mpeg">
+    </audio>
     <div class="min-h-screen flex flex-col justify-between bg-gray-50">
         <header>
             <div class="flex gap-x-8 gap-y-4 grid-cols-3 justify-between items-center px-4 py-2">
