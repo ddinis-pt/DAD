@@ -82,7 +82,7 @@ const isPlayer = () => {
                     <div v-else class="flex items-center">
                         <img class="inline-block size-[55px] rounded-full border-2 border-blue-600"
                             src="../../assets/avatar-none.png" alt="Avatar">
-                        <h2 class="block text-xl font-bold text-white pl-2">Hello, Guest!</h2>
+                        <h2 class="block text-xl font-bold text-gray-800 dark:text-white pl-4 pr-2">Hello, Guest!</h2>
                     </div>
                 </button>
                 <div class="z-10 hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden min-w-60 bg-white shadow-md rounded-lg mt-2 dark:bg-slate-900 dark:border dark:border-neutral-700"

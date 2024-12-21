@@ -85,7 +85,7 @@
                           'text-yellow-500': index == 0,
                           'text-amber-600': index == 2
                         }"
-                        class="font-semibold text-amber-600 px-2 py-1 rounded-md bg-yellow-50"
+                        class="font-semibold  px-2 py-1 rounded-md bg-yellow-50"
                         >Rank {{ index + 1 }}</span
                       >
                       <span>{{ time.total_time }} seconds</span>
