@@ -1,5 +1,4 @@
 <script setup>
-import Header from '@/components/ui/Header.vue'
 import { useAuthStore } from '@/stores/auth';
 import { useRouter } from 'vue-router';
 
@@ -59,9 +58,7 @@ const logout = async () => {
                             <rect x="83.3621" y="2" width="32.9568" height="44.5096" rx="3" fill="#FACC15"
                                 stroke="#1F2937" stroke-width="4" stroke-linecap="round" />
                         </svg>
-
                     </div>
-
                     <p class="text-gray-800 dark:text-white pt-5">
                         Users are presented with a series of cards, that they must remember after a brief look. They must pick every pair of cards, with the least amount of turns and within the least amount of time possible.
                         This game is often used to train cognitive thinking, to enhance memory skills.

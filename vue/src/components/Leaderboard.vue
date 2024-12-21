@@ -1,3 +1,179 @@
+<script setup>
+import Header from '@/components/ui/Header.vue'
+import Toaster from '@/components/ui/toast/Toaster.vue'
+import { onBeforeMount, onMounted, ref } from 'vue'
+import axios from 'axios'
+import { useAuthStore } from '@/stores/auth'
+import { toast } from '@/components/ui/toast/use-toast'
+
+const authStore = useAuthStore()
+const guest = authStore.user === null
+const dataByTime = ref([])
+const dataByTurns = ref([])
+const top3Board1 = ref({
+  times: Array,
+  turns: Array
+})
+const top3Board2 = ref({
+  times: Array,
+  turns: Array
+})
+const top3Board3 = ref({
+  times: Array,
+  turns: Array
+})
+const multiplayerStats = ref({
+  victories: '',
+  losses: ''
+})
+const top5MostWins = ref({
+  nickname: String,
+  victories: Number
+})
+const top1Board1 = ref({
+  total_time: Number,
+  turns: Number,
+  nickname_time: String,
+  nickname_turns: String
+})
+const top1Board2 = ref({
+  total_time: Number,
+  turns: Number,
+  nickname_time: String,
+  nickname_turns: String
+})
+const top1Board3 = ref({
+  total_time: Number,
+  turns: Number,
+  nickname_time: String,
+  nickname_turns: String
+})
+const mode = ref('global')
+const setMode = (chosenMode) => {
+  mode.value = chosenMode
+}
+async function getTop3(board_id) {
+  try {
+    const timeResponse = await axios.get(`/leaderboard/personal/time/${board_id}`)
+    const turnResponse = await axios.get(`/leaderboard/personal/turns/${board_id}`)
+    return {
+      times: timeResponse.data,
+      turns: turnResponse.data
+    }
+  } catch (error) {
+    toast({
+      description: `An error occurred while fetching the Personal LeaderBoard data for board ${board_id}`,
+      title: 'Error on Personal LeaderBoard',
+      variant: 'destructive'
+    })
+    return {
+      times: [],
+      turns: []
+    }
+  }
+}
+async function getMultiplayerStats() {
+  try {
+    const winsResponse = await axios.get(`games/multiplayer/wins`)
+    const lossesResponse = await axios.get(`games/multiplayer/losses`)
+    return {
+      victories: winsResponse.data,
+      losses: lossesResponse.data
+    }
+  } catch (error) {
+    toast({
+      description: 'An error occurred while fetching the Multiplayer LeaderBoard data',
+      title: 'Error on Multiplayer LeaderBoard',
+      variant: 'destructive'
+    })
+    return {
+      victories: 'N/A',
+      losses: 'N/A'
+    }
+  }
+}
+async function getTop5MostWins() {
+  try {
+    const top5Response = await axios.get(`/leaderboard/top/wins`)
+    return top5Response.data
+  } catch (error) {
+    toast({
+      description: 'An error occurred while fetching the Multiplayer LeaderBoard data',
+      title: 'Error on Multiplayer LeaderBoard',
+      variant: 'destructive'
+    })
+    return []
+  }
+}
+async function getTop1(board_id) {
+  try {
+    const timeResponse = await axios.get(`/leaderboard/global/time/${board_id}`)
+    const turnResponse = await axios.get(`/leaderboard/global/turns/${board_id}`)
+    return {
+      times: timeResponse.data,
+      turns: turnResponse.data,
+      nickname_time: timeResponse.data[0].nickname,
+      nickname_turns: turnResponse.data[0].nickname
+    }
+  } catch (error) {
+    toast({
+      description: `An error occurred while fetching the Global LeaderBoard data for board ${board_id}`,
+      title: 'Error on Global LeaderBoard',
+      variant: 'destructive'
+    })
+    return {
+      times: [],
+      turns: []
+    }
+  }
+}
+onBeforeMount(async () => {
+  if (guest) {
+    mode.value = 'global'
+  } else {
+    mode.value = 'personal'
+    const board1Data = await getTop3(1)
+    const board2Data = await getTop3(2)
+    const board3Data = await getTop3(3)
+    top3Board1.value.times = board1Data.times
+    top3Board1.value.turns = board1Data.turns
+    top3Board2.value.times = board2Data.times
+    top3Board2.value.turns = board2Data.turns
+    top3Board3.value.times = board3Data.times
+    top3Board3.value.turns = board3Data.turns
+    dataByTime.value = [...board1Data.times, ...board2Data.times, ...board3Data.times]
+    dataByTurns.value = [...board1Data.turns, ...board2Data.turns, ...board3Data.turns]
+    const multiplayerStatsData = await getMultiplayerStats()
+    multiplayerStats.value.victories = multiplayerStatsData.victories
+    multiplayerStats.value.losses = multiplayerStatsData.losses
+  }
+
+  const board1GlobalData = await getTop1(1)
+  const board2GlobalData = await getTop1(2)
+  const board3GlobalData = await getTop1(3)
+
+  top1Board1.value.total_time = board1GlobalData.times[0].total_time
+  top1Board1.value.turns = board1GlobalData.turns[0].total_turns_winner
+  top1Board1.value.nickname_time = board1GlobalData.nickname_time
+  top1Board1.value.nickname_turns = board1GlobalData.nickname_turns
+
+  top1Board2.value.total_time = board2GlobalData.times[0].total_time
+  top1Board2.value.turns = board2GlobalData.turns[0].total_turns_winner
+  top1Board2.value.nickname_time = board2GlobalData.nickname_time
+  top1Board2.value.nickname_turns = board2GlobalData.nickname_turns
+
+  top1Board3.value.total_time = board3GlobalData.times[0].total_time
+  top1Board3.value.turns = board3GlobalData.turns[0].total_turns_winner
+  top1Board3.value.nickname_time = board3GlobalData.nickname_time
+  top1Board3.value.nickname_turns = board3GlobalData.nickname_turns
+  const top5MostWinsResult = await getTop5MostWins()
+  top5MostWins.value = top5MostWinsResult
+})
+
+onMounted(() => {
+  document.title = 'Memory Card Game | Leaderboard'
+})
+</script>
 <template>
   <Toaster />
   <div class="min-h-screen bg-sky-50 dark:bg-gray-800">
@@ -29,11 +205,8 @@
             </a>
           </nav>
         </div>
-
         <div v-if="mode === 'personal' && !guest">
-          <!-- Singleplayer Stats -->
           <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-            <!-- Best Times -->
             <div
               class="bg-white dark:bg-slate-900 p-6 rounded-lg shadow-lg text-gray-600 dark:text-white"
             >
@@ -94,8 +267,6 @@
                 </div>
               </div>
             </div>
-
-            <!-- Minimum Turns -->
             <div
               class="bg-white dark:bg-slate-900 p-6 rounded-lg shadow-lg text-gray-600 dark:text-white"
             >
@@ -157,20 +328,15 @@
               </div>
             </div>
           </div>
-
-          <!-- Multiplayer Stats -->
           <div class="p-6 m-8 bg-white dark:bg-slate-900 rounded-lg shadow-lg">
             <h2 class="text-xl font-bold text-indigo-700 mb-4">Multiplayer Statistics</h2>
             <div class="grid grid-cols-2 gap-4">
-              <!-- Victories Card -->
               <div class="bg-green-50 p-4 rounded-lg text-center transition-all hover:shadow-md">
                 <div class="flex items-center justify-center mb-2">
                   <span class="font-semibold text-green-700">Victories</span>
                 </div>
                 <p class="text-3xl font-bold text-green-600">{{ multiplayerStats.victories }}</p>
               </div>
-
-              <!-- Losses Card -->
               <div class="bg-red-50 p-4 rounded-lg text-center transition-all hover:shadow-md">
                 <div class="flex items-center justify-center mb-2">
                   <span class="font-semibold text-red-700">Losses</span>
@@ -194,7 +360,6 @@
                     <ul class="space-y-2">
                       <li class="flex justify-between">
                         <h3 class="text-lg font-medium">Board 3x4</h3>
-
                         <span>{{ top1Board1.total_time }} seconds</span>
                         <span>{{ top1Board1.nickname_time }}</span>
                       </li>
@@ -264,7 +429,6 @@
               </div>
             </div>
           </div>
-          <!-- A API deve devolver uma lista com 5 valores desta forma {player_name, total_wins} -->
           <div>
             <div class="p-6 m-8 bg-white dark:bg-slate-900 rounded-lg shadow-lg">
               <h2 class="text-xl font-bold text-indigo-700 mb-4">
@@ -303,199 +467,3 @@
     </main>
   </div>
 </template>
-
-<script setup>
-import Header from '@/components/ui/Header.vue'
-import Toaster from '@/components/ui/toast/Toaster.vue'
-import { onBeforeMount, ref } from 'vue'
-import axios from 'axios'
-import { useAuthStore } from '@/stores/auth'
-import { toast } from '@/components/ui/toast/use-toast'
-
-const authStore = useAuthStore()
-const guest = authStore.user === null
-const dataByTime = ref([])
-const dataByTurns = ref([])
-const top3Board1 = ref({
-  times: Array,
-  turns: Array
-})
-const top3Board2 = ref({
-  times: Array,
-  turns: Array
-})
-
-const top3Board3 = ref({
-  times: Array,
-  turns: Array
-})
-const multiplayerStats = ref({
-  victories: '',
-  losses: ''
-})
-
-const top5MostWins = ref({
-  nickname: String,
-  victories: Number
-})
-
-const top1Board1 = ref({
-  total_time: Number,
-  turns: Number,
-  nickname_time: String,
-  nickname_turns: String
-})
-
-const top1Board2 = ref({
-  total_time: Number,
-  turns: Number,
-  nickname_time: String,
-  nickname_turns: String
-})
-
-const top1Board3 = ref({
-  total_time: Number,
-  turns: Number,
-  nickname_time: String,
-  nickname_turns: String
-})
-
-const mode = ref('global')
-
-const setMode = (chosenMode) => {
-  mode.value = chosenMode
-}
-
-async function getTop3(board_id) {
-  try {
-    const timeResponse = await axios.get(`/leaderboard/personal/time/${board_id}`)
-    const turnResponse = await axios.get(`/leaderboard/personal/turns/${board_id}`)
-    return {
-      times: timeResponse.data,
-      turns: turnResponse.data
-    }
-  } catch (error) {
-    toast({
-      description: `An error occurred while fetching the Personal LeaderBoard data for board ${board_id}`,
-      title: 'Error on Personal LeaderBoard',
-      variant: 'destructive'
-    })
-    return {
-      times: [],
-      turns: []
-    }
-  }
-}
-async function getMultiplayerStats() {
-  try {
-    const winsResponse = await axios.get(`games/multiplayer/wins`)
-    const lossesResponse = await axios.get(`games/multiplayer/losses`)
-    return {
-      victories: winsResponse.data,
-      losses: lossesResponse.data
-    }
-  } catch (error) {
-    toast({
-      description: 'An error occurred while fetching the Multiplayer LeaderBoard data',
-      title: 'Error on Multiplayer LeaderBoard',
-      variant: 'destructive'
-    })
-    return {
-      victories: 'N/A',
-      losses: 'N/A'
-    }
-  }
-}
-async function getTop5MostWins() {
-  try {
-    const top5Response = await axios.get(`/leaderboard/top/wins`)
-    return top5Response.data
-  } catch (error) {
-    toast({
-      description: 'An error occurred while fetching the Multiplayer LeaderBoard data',
-      title: 'Error on Multiplayer LeaderBoard',
-      variant: 'destructive'
-    })
-    return []
-  }
-}
-
-async function getTop1(board_id) {
-  try {
-    const timeResponse = await axios.get(`/leaderboard/global/time/${board_id}`)
-    const turnResponse = await axios.get(`/leaderboard/global/turns/${board_id}`)
-    return {
-      times: timeResponse.data,
-      turns: turnResponse.data,
-      nickname_time: timeResponse.data[0].nickname,
-      nickname_turns: turnResponse.data[0].nickname
-    }
-  } catch (error) {
-    toast({
-      description: `An error occurred while fetching the Global LeaderBoard data for board ${board_id}`,
-      title: 'Error on Global LeaderBoard',
-      variant: 'destructive'
-    })
-    return {
-      times: [],
-      turns: []
-    }
-  }
-}
-
-onBeforeMount(async () => {
-  if (guest) {
-    mode.value = 'global'
-  } else {
-    mode.value = 'personal'
-    const board1Data = await getTop3(1)
-    const board2Data = await getTop3(2)
-    const board3Data = await getTop3(3)
-
-    top3Board1.value.times = board1Data.times
-    top3Board1.value.turns = board1Data.turns
-    top3Board2.value.times = board2Data.times
-    top3Board2.value.turns = board2Data.turns
-    top3Board3.value.times = board3Data.times
-    top3Board3.value.turns = board3Data.turns
-
-
-    dataByTime.value = [...board1Data.times, ...board2Data.times, ...board3Data.times]
-  dataByTurns.value = [...board1Data.turns, ...board2Data.turns, ...board3Data.turns]
-  
-  const multiplayerStatsData = await getMultiplayerStats()
-  multiplayerStats.value.victories = multiplayerStatsData.victories
-  multiplayerStats.value.losses = multiplayerStatsData.losses
-  }
-
-  const board1GlobalData = await getTop1(1)
-  const board2GlobalData = await getTop1(2)
-  const board3GlobalData = await getTop1(3)
-
-  console.log(board1GlobalData)
-
-  top1Board1.value.total_time = board1GlobalData.times[0].total_time
-  top1Board1.value.turns = board1GlobalData.turns[0].total_turns_winner
-  top1Board1.value.nickname_time = board1GlobalData.nickname_time
-  top1Board1.value.nickname_turns = board1GlobalData.nickname_turns
-
-  top1Board2.value.total_time = board2GlobalData.times[0].total_time
-  top1Board2.value.turns = board2GlobalData.turns[0].total_turns_winner
-  top1Board2.value.nickname_time = board2GlobalData.nickname_time
-  top1Board2.value.nickname_turns = board2GlobalData.nickname_turns
-
-  top1Board3.value.total_time = board3GlobalData.times[0].total_time
-  top1Board3.value.turns = board3GlobalData.turns[0].total_turns_winner
-  top1Board3.value.nickname_time = board3GlobalData.nickname_time
-  top1Board3.value.nickname_turns = board3GlobalData.nickname_turns
-
-  console.log(top1Board1.value)
-
-  
-
- 
-
-  const top5MostWinsResult = await getTop5MostWins()
-  top5MostWins.value = top5MostWinsResult
-})
-</script>

@@ -1,6 +1,5 @@
 <script setup>
 import Header from '@/components/ui/Header.vue'
-import Footer from '@/components/ui/Footer.vue';
 import { useAuthStore } from '@/stores/auth'
 import { useRouter } from 'vue-router';
 import axios from 'axios';
@@ -39,7 +38,6 @@ const showTemplate = () => {
             checkMoney(2)
         },
         reject: () => {
-
         }
     });
 };
@@ -64,7 +62,6 @@ const showTemplate2 = () => {
             checkMoney(3)
         },
         reject: () => {
-
         }
     });
 };
@@ -72,9 +69,7 @@ const showTemplate2 = () => {
 const checkMoney = async (mode) => {
     if (!guest) {
         if (authStore.userCoins > 1) {
-            // spend one coin and redirect to the game
             await axios.put('/spend/1')
-            // register transaction
             await axios.post('/registerTransaction', {
                 transaction_datetime: format(new Date(), 'yyyy-MM-dd HH:mm:ss'),
                 user_id: authStore.user.id,
@@ -92,19 +87,16 @@ const checkMoney = async (mode) => {
 }
 onMounted(() => {
     window.HSStaticMethods.autoInit();
-
     if (authStore.userCoins < 1) {
         hascoins.value = false
     }
-
+    document.title = 'Memory Card Game | Choose Game Mode'
 })
-
 </script>
 <template>
     <div class="min-h-screen grid content-between bg-sky-50 dark:bg-gray-800">
         <Header></Header>
         <div class="grid justify-center text-center justify-items-center">
-
             <h2 class="block text-2xl font-bold text-gray-800 dark:text-white py-8">Choose your board size:</h2>
             <RouterLink :to="{ name: '3by4' }">
                 <div class="py-6">
@@ -141,7 +133,6 @@ onMounted(() => {
                     <h3 class="text-1xl font-semibold text-gray-800 dark:text-white py-2">3x4</h3>
                 </div>
             </RouterLink>
-
             <div v-show="guest || !hascoins" class="justify-items-center">
                 <h2 v-if="guest" class="text-xl font-semibold text-gray-300 py-2">Only available for registered players:
                 </h2>
@@ -187,8 +178,6 @@ onMounted(() => {
                     </div>
                     <h3 class="text-1xl font-semibold text-gray-300 dark:text-white py-2">4x4</h3>
                 </div>
-
-
                 <div class="py-6">
                     <div class="dark:bg-white dark:p-2 dark:rounded-xl">
                         <svg width="155" height="155" viewBox="0 0 155 155" fill="none"
@@ -270,7 +259,6 @@ onMounted(() => {
                     </div>
                     <h3 class="text-1xl font-semibold text-gray-300 dark:text-white py-2">6x6</h3>
                 </div>
-
             </div>
             <div v-show="!guest" v-if="hascoins" class="justify-items-center">
                 <div class="py-6" @click="showTemplate()">
@@ -313,7 +301,6 @@ onMounted(() => {
                         </svg>
                     </div>
                     <h3 class="text-1xl font-semibold text-gray-800 dark:text-white py-2">4x4</h3>
-
                 </div>
                 <div class="py-6" @click="showTemplate2()">
                     <div class="dark:bg-white dark:p-2 dark:rounded-xl">
@@ -397,7 +384,6 @@ onMounted(() => {
                     <h3 class="text-1xl font-semibold text-gray-800 dark:text-white py-2">6x6</h3>
                 </div>
             </div>
-
         </div>
         <ConfirmDialog group="templating">
             <template #message="slotProps">
@@ -419,9 +405,5 @@ onMounted(() => {
                 </div>
             </template>
         </ConfirmDialog>
-
-
-
-
     </div>
 </template>

@@ -1,7 +1,6 @@
 <script setup>
 import { useAuthStore } from '@/stores/auth'
 import { useRouter } from 'vue-router';
-import { useErrorStore } from '@/stores/error';
 import Header from '@/components/ui/Header.vue'
 import { ref, onBeforeMount, onMounted } from 'vue';
 import axios from 'axios'
@@ -17,16 +16,15 @@ import Select from 'primevue/select';
 import DatePicker from 'primevue/datepicker';
 
 const router = useRouter()
-const errorStore = useErrorStore()
 const authStore = useAuthStore()
 
 const games = ref([])
 
 onMounted(() => {
     window.HSStaticMethods.autoInit();
+    document.title = 'Memory Card Game | Games'
 })
 
-// Validations
 const isPlayer = () => {
     if (authStore.userType === 'P') {
         router.push({ name: 'dashboard' })
@@ -39,7 +37,6 @@ onBeforeMount(() => {
         router.push({ name: 'login' })
     }
     isPlayer()
-
     fetchData()
 })
 
@@ -50,17 +47,12 @@ const formatDateTime = (date) => {
 async function fetchData() {
     try {
         const response = await axios.get('games/all')
-
         response.data.forEach(game => {
             game.created_at = new Date(game.created_at)
             game.updated_at = new Date(game.updated_at)
         })
         games.value = response.data
-
-
-
     } catch (error) {
-        // Handle errors
         console.error('Error fetching games:', error)
     }
 }
@@ -79,7 +71,6 @@ const showFilterMatchModes = (data) => {
     }
 }
 
-// === Games ===
 const columnsGames = [
     { field: 'created_user_id', header: 'Created User ID' },
     { field: 'winner_user_id', header: 'Winner User ID' },
@@ -161,13 +152,10 @@ const clearFilterGames = () => {
 };
 
 </script>
-
 <template>
-
     <div class="min-h-screen bg-sky-50 dark:bg-gray-800">
         <Header></Header>
         <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 content-top min-w-full  items-center	">
-
             <h1 class="text-3xl font-bold text-slate-900 dark:text-white text-center py-6">Games</h1>
             <div class="bg-white rounded-xl p-4 md:p-4 dark:bg-slate-900">
                 <DataTable :value="games" paginator :rows="10" :rowsPerPageOptions="[10, 20]" size="small" removableSort
@@ -251,6 +239,4 @@ const clearFilterGames = () => {
             </div>
         </main>
     </div>
-
-
 </template>

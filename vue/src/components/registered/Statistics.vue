@@ -28,7 +28,6 @@ const top5Winners = ref(0);
 
 const mode = ref(null);
 
-//TODO, atualizar para usar session ? talvez
 const setCookie = (name, value, minutes) => {
     const now = new Date();
     now.setTime(now.getTime() + minutes * 60 * 1000);
@@ -56,7 +55,7 @@ const setMode = (chosenMode) => {
       return;
     }
     mode.value = chosenMode;
-    setCookie('modeChosen', chosenMode, 15); //Cookies expiram em 15 min
+    setCookie('modeChosen', chosenMode, 15);
 };
 
 const top5Losers = ref(0);
@@ -117,26 +116,14 @@ const chartOptionsPie =  {
 
 const generateHorizontalGradient = (ctx, chartArea, startingColor, endingColor) => {
   const { left, right } = chartArea;
-  const gradient = ctx.createLinearGradient(left, 0, right, 0); // Gradiente horizontal
+  const gradient = ctx.createLinearGradient(left, 0, right, 0);
   gradient.addColorStop(0, startingColor);
   gradient.addColorStop(1, endingColor);
   return gradient;
 };
 
-/*
-const changeMode = (mode) => {
-  if (mode == 1) {
-    mode.value = 'users'
-  } else if (mode == 2) {
-    mode.value = 'games'
-  } else if (mode == 3) {
-    mode.value = 'transactions'
-  }
-}*/
-
 onMounted(() => {
   mode.value = getCookie('modeChosen') || 'users';
-
   const chartDataUserByMonth = {
     labels: [],
     datasets: [
@@ -169,7 +156,6 @@ onMounted(() => {
       }
     ]
   };
-
   const chartDataBlockedUsers = {
     labels: [],
     datasets: [
@@ -181,7 +167,6 @@ onMounted(() => {
       }
     ]
   };
-
   const chartDataGamesByBoard = {
     labels: [],
     datasets: [
@@ -193,7 +178,6 @@ onMounted(() => {
       }
     ]
   };
-
   const chartDateGamesByTypeAndMonth = {
     labels: [],
     datasets: [
@@ -211,7 +195,6 @@ onMounted(() => {
       }
     ]
   };
-
   const chartDataGamesCoinsUsed = {
     labels: [],
     datasets: [
@@ -223,8 +206,6 @@ onMounted(() => {
       }
     ]
   };
-
-
   axios.get('stats/users/month')
     .then(response => {
       response.data.forEach(element => {
@@ -269,8 +250,6 @@ onMounted(() => {
         chartDataUserByMonth.labels.push(element.month);
         chartDataUserByMonth.datasets[0].data.push(element.count);
       });
-
-      //Gradient
       uniqueUsers = {
         ...chartDataUserByMonth,
         datasets: [
@@ -293,17 +272,12 @@ onMounted(() => {
           variant: 'destructive'
         })
     });
-
-    
-
     axios.get('stats/purchases/week')
     .then(response => {
       response.data.forEach(element => {
         chartDataPurchasesByYear.labels.push(element.week+1);
         chartDataPurchasesByYear.datasets[0].data.push(element.count);
       });
-
-      //Gradient
       purchasesYearByWeek = {
         ...chartDataPurchasesByYear,
         datasets: [
@@ -326,7 +300,6 @@ onMounted(() => {
           variant: 'destructive'
         })
     });
-
     axios.get('stats/games/total/status')
     .then(response => {
       response.data.forEach(element => {
@@ -347,11 +320,9 @@ onMounted(() => {
         }
         chartDataDoughnut.labels.push(string);
         chartDataDoughnut.datasets[0].data.push(element.count);
-
         gamesByStatus = chartDataDoughnut;
       });
     })
-
     axios.get('stats/users/blocked').then(response => {
       response.data.forEach(element => {
         if(element.blocked == 1) {
@@ -372,7 +343,6 @@ onMounted(() => {
           variant: 'destructive'
         })
     });
-
     axios.get('stats/games/total/board').then(response => {
       response.data.forEach(element => {
         chartDataGamesByBoard.labels.push(element.board_size);
@@ -386,7 +356,6 @@ onMounted(() => {
           variant: 'destructive'
         })
     });
-
     axios.get('stats/games/total/typeAndMonth').then(response => {
       response.data.forEach(element => {
         chartDateGamesByTypeAndMonth.labels.push(element.month);
@@ -423,38 +392,12 @@ onMounted(() => {
           variant: 'destructive'
         })
     });
-
     axios.get('stats/transactions/brainCoinsUsed')
     .then(response => {
       response.data.forEach(element => {
-        /*switch(element.day_of_week){
-          case 1:
-            element.day_of_week = "monday";
-            break;
-          case 2:
-            element.day_of_week = "tuesday";
-            break;
-          case 3:
-            element.day_of_week = "wednesday";
-            break;
-          case 4:
-            element.day_of_week = "thursday";
-            break;
-          case 5:
-            element.day_of_week = "friday";
-            break;
-          case 6:
-            element.day_of_week = "saturday";
-            break;
-          case 7:
-            element.day_of_week = "sunday";
-            break;
-        }*/
         chartDataGamesCoinsUsed.labels.push(element.day_of_week);
         chartDataGamesCoinsUsed.datasets[0].data.push(element.total_brain_coins);
       });
-
-      //Gradient
       brainCoinsUsed = {
         ...chartDataGamesCoinsUsed,
         datasets: [
@@ -477,7 +420,6 @@ onMounted(() => {
           variant: 'destructive'
         })
     });
-
     axios.get('stats/users/total')
     .then(response => {
       numberOfPlayers.value = response.data;
@@ -489,7 +431,6 @@ onMounted(() => {
           variant: 'destructive'
         })
     });
-
     axios.get('stats/games/total')
     .then(response => {
       numberOfGames.value = response.data;
@@ -501,7 +442,6 @@ onMounted(() => {
           variant: 'destructive'
         })
     });
-
     axios.get('stats/games/lastWeek')
     .then(response => {
       numberOfGamesLastWeek.value = response.data;
@@ -513,7 +453,6 @@ onMounted(() => {
           variant: 'destructive'
         })
     });
-
     axios.get('stats/games/lastMonth')
     .then(response => {
       numberOfGamesLastMonth.value = response.data;
@@ -535,7 +474,6 @@ onMounted(() => {
           variant: 'destructive'
         })
       });
-
       axios.get('stats/spenders/top5').then(response => {
         top5Spenders.value = response.data;
       }).catch(() => {
@@ -545,7 +483,6 @@ onMounted(() => {
           variant: 'destructive'
         })
       });
-
       axios.get('stats/winners/top5').then(response => {
         top5Winners.value = response.data;
       }).catch(() => {
@@ -555,7 +492,6 @@ onMounted(() => {
           variant: 'destructive'
         })
       });
-
       axios.get('stats/losers/top5').then(response => {
         top5Losers.value = response.data;
       }).catch(() => {
@@ -566,7 +502,6 @@ onMounted(() => {
         })
       });
     }
-
     axios.get('stats/users/admins').then(response => {
       numberOfAdmins.value = response.data;
     }).catch(() => {
@@ -576,7 +511,6 @@ onMounted(() => {
           variant: 'destructive'
         })
     });
-
     axios.get('stats/games/multiplayer').then(response => {
       numberOfMultiplayerGames.value = response.data;
     }).catch(() => {
@@ -586,7 +520,6 @@ onMounted(() => {
           variant: 'destructive'
         })
     });
-
     axios.get('stats/purchases/total').then(response => {
       numberOfPurchases.value = response.data;
     }).catch(() => {
@@ -596,7 +529,6 @@ onMounted(() => {
           variant: 'destructive'
         })
     });
-
     axios.get('stats/transactions/total').then(response => {
       numberOfTransactions.value = response.data;
     }).catch(() => {
@@ -606,7 +538,6 @@ onMounted(() => {
           variant: 'destructive'
         })
     });
-
     axios.get('stats/purchases/totalMoney').then(response => {
       totalMoneySpent.value = response.data;
     }).catch(() => {
@@ -616,7 +547,6 @@ onMounted(() => {
           variant: 'destructive'
         })
     });
-    
     axios.get('stats/users/totalBrainCoins').then(response => {
       numberOfBrainCoins.value = response.data;
     }).catch(() => {
@@ -626,7 +556,6 @@ onMounted(() => {
           variant: 'destructive'
         })
     });
-
     axios.get('stats/users/active').then(response => {
       numberOfActiveUsers.value = response.data;
     }).catch(() => {
@@ -636,9 +565,9 @@ onMounted(() => {
           variant: 'destructive'
         })
     });
+    document.title = 'Memory Card Game | Statistics';
 });
 </script>
-
 <template>
   <Toaster></Toaster>
   <div class="min-h-screen bg-sky-50 dark:bg-gray-800">
@@ -678,24 +607,15 @@ onMounted(() => {
           <h2 class="text-md font-semibold text-gray-700 mb-1">Number of Users Registered</h2>
           <p class="text-2xl font-bold text-blue-500">{{ numberOfPlayers }}</p>
         </div>
-
         <div class="bg-white shadow-md rounded-lg p-4 text-center sm:h-24 md:h-30 lg:h-36 flex flex-col justify-center w-46">
           <h2 class="text-md font-semibold text-gray-700 mb-1">Number of Admins</h2>
           <p class="text-2xl font-bold text-green-500">{{ numberOfAdmins }}</p>
         </div>
-
         <div class="bg-white shadow-md rounded-lg p-4 text-center sm:h-24 md:h-30 lg:h-36 flex flex-col justify-center w-46">
           <h2 class="text-md font-semibold text-gray-700 mb-1">Active Users this Month</h2>
           <p class="text-2xl font-bold text-red-500">{{ numberOfActiveUsers }}</p>
         </div>
-        
-        <!--
-        <div class="bg-white shadow-md rounded-lg p-4 text-center sm:h-24 md:h-30 lg:h-36 flex flex-col justify-center w-46">
-          <h2 class="text-md font-semibold text-gray-700 mb-1">Games Played Last Week</h2>
-          <p class="text-2xl font-bold text-orange-500">{{ numberOfGamesLastWeek }}</p>
-        </div>-->
       </div>
-
       <div class="flex flex-wrap justify-center gap-4 mt-6">
         <div class="bg-white shadow-md rounded-lg p-4 text-center lg:h-full flex flex-col justify-center w-46">
           <h2 class="text-md font-bold text-black mb-2">New Users This Year</h2>
@@ -719,30 +639,23 @@ onMounted(() => {
     </div>
     <div v-if="mode === 'games'">
       <div class="flex flex-wrap justify-center gap-6 mt-20">
-
         <div class="bg-white shadow-md rounded-lg p-4 text-center sm:h-24 md:h-30 lg:h-36 flex flex-col justify-center w-46">
           <h2 class="text-md font-semibold text-gray-700 mb-1">Total Games Played</h2>
           <p class="text-2xl font-bold text-blue-500">{{ numberOfGames }}</p>
         </div>
-
         <div class="bg-white shadow-md rounded-lg p-4 text-center sm:h-24 md:h-30 lg:h-36 flex flex-col justify-center w-46">
           <h2 class="text-md font-semibold text-gray-700 mb-1">Total Multiplayer Games Played</h2>
           <p class="text-2xl font-bold text-green-500">{{ numberOfMultiplayerGames }}</p>
         </div>
-        
         <div class="bg-white shadow-md rounded-lg p-4 text-center sm:h-24 md:h-30 lg:h-36 flex flex-col justify-center w-46">
           <h2 class="text-md font-semibold text-gray-700 mb-1">Games Played Last Month</h2>
           <p class="text-2xl font-bold text-red-500">{{ numberOfGamesLastMonth }}</p>
         </div>
-        
-
         <div class="bg-white shadow-md rounded-lg p-4 text-center sm:h-24 md:h-30 lg:h-36 flex flex-col justify-center w-46">
           <h2 class="text-md font-semibold text-gray-700 mb-1">Games Played Last Week</h2>
           <p class="text-2xl font-bold text-orange-500">{{ numberOfGamesLastWeek }}</p>
         </div>
-
       </div>
-
       <div class="flex flex-wrap justify-center gap-4 mt-6">
         <div class="bg-white shadow-md rounded-lg p-4 text-center lg:h-full flex flex-col justify-center w-46">
           <h2 class="text-md font-bold text-black mb-2">Games by Month</h2>
@@ -755,7 +668,6 @@ onMounted(() => {
         </div>
       </div>
       <div class="flex flex-wrap justify-center gap-4 mt-6" v-if="authStore.userType == 'A'">
-        <!-- Tabela top 5 users que tem mais vitórias -->
         <div class="bg-white shadow-md rounded-lg p-4 text-center flex flex-col justify-top w-full max-w-sm">
           <h2 class="text-md font-bold text-black mb-4">Top 5 Winners</h2>
           <table class="table-auto w-full text-sm border-collapse">
@@ -773,7 +685,6 @@ onMounted(() => {
             </tbody>
           </table>
         </div>
-        <!-- Tabela top 5 users com mais derrotas WALL OF SHAME-->
         <div class="bg-white shadow-md rounded-lg p-4 text-center flex flex-col justify-center w-full max-w-sm">
           <h2 class="text-md font-bold text-black mb-4">Top 5 Losers</h2>
           <table class="table-auto w-full text-sm border-collapse">
@@ -813,23 +724,18 @@ onMounted(() => {
     </div>
     <div v-if="mode === 'transactions'">
       <div class="flex flex-wrap justify-center gap-6 mt-20">
-
         <div class="bg-white shadow-md rounded-lg p-4 text-center sm:h-24 md:h-30 lg:h-36 flex flex-col justify-center w-46">
           <h2 class="text-md font-semibold text-gray-700 mb-1">Total transactions done</h2>
           <p class="text-2xl font-bold text-blue-500">{{ numberOfTransactions }}</p>
         </div>
-
         <div class="bg-white shadow-md rounded-lg p-4 text-center sm:h-24 md:h-30 lg:h-36 flex flex-col justify-center w-46">
           <h2 class="text-md font-semibold text-gray-700 mb-1">Number of Purchases</h2>
           <p class="text-2xl font-bold text-green-500">{{ numberOfPurchases }}</p>
         </div>
-        
         <div class="bg-white shadow-md rounded-lg p-4 text-center sm:h-24 md:h-30 lg:h-36 flex flex-col justify-center w-46">
           <h2 class="text-md font-semibold text-gray-700 mb-1">Total Money Spent</h2>
           <p class="text-2xl font-bold text-red-500">{{ totalMoneySpent }}€</p>
         </div>
-        
-
         <div class="bg-white shadow-md rounded-lg p-4 text-center sm:h-24 md:h-30 lg:h-36 flex flex-col justify-center w-46">
           <h2 class="text-md font-semibold text-gray-700 mb-1">Total Number of Brain Coins</h2>
           <p class="text-2xl font-bold text-[#ffa500] flex justify-center ml-4">{{ numberOfBrainCoins }}
@@ -843,9 +749,7 @@ onMounted(() => {
                 </svg>
           </p>
         </div>
-
       </div>
-
       <div class="flex flex-wrap justify-center gap-4 mt-6">
         <div class="bg-white shadow-md rounded-lg p-4 text-center lg:h-full flex flex-col justify-center w-46">
           <h2 class="text-md font-bold text-black mb-2">Purchases this year by week</h2>
@@ -867,7 +771,6 @@ onMounted(() => {
         </div>  
       </div>
       <div class="flex flex-wrap justify-center gap-4 mt-6" v-if="authStore.userType == 'A'">
-        <!-- Tabela top 5 users que mais dinheiro gastaram em brain_coins -->
         <div class="bg-white shadow-md rounded-lg p-4 text-center flex flex-col justify-top w-full max-w-sm">
           <h2 class="text-md font-bold text-black mb-4">Top 5 Buyers</h2>
           <table class="table-auto w-full text-sm border-collapse">
@@ -885,7 +788,6 @@ onMounted(() => {
             </tbody>
           </table>
         </div>
-        <!-- Tabela top 5 users que mais gastaram brain_coins-->
         <div class="bg-white shadow-md rounded-lg p-4 text-center flex flex-col justify-center w-full max-w-sm">
           <h2 class="text-md font-bold text-black mb-4">Top 5 Spenders</h2>
           <table class="table-auto w-full text-sm border-collapse">

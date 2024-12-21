@@ -1,7 +1,7 @@
 <script setup>
 import router from '@/router';
 import { useAuthStore } from '@/stores/auth'
-import { onBeforeMount, onMounted, watch, ref } from 'vue';
+import { onMounted, watch } from 'vue';
 const authStore = useAuthStore()
 
 const back = () => {
@@ -23,9 +23,10 @@ const logout = async () => {
     }
 }
 
-watch(() => authStore.userCoins, (newValue, oldValue) => {
-    console.log('User coins changed from', oldValue, 'to', newValue)
-    authStore.refreshUserData()
+watch(() => authStore.userCoins, () => {
+    if (authStore.user) {
+        authStore.refreshUserData()
+    }
 })
 
 onMounted(() => {
@@ -35,10 +36,6 @@ onMounted(() => {
     }
 })
 
-const isAdmin = () => {
-    return authStore.user && authStore.userType === 'A'
-}
-
 const isPlayer = () => {
     return authStore.user && authStore.userType === 'P'
 }
@@ -46,13 +43,10 @@ const isPlayer = () => {
 <template>
     <header
         class="flex flex-row z-50 w-full text-sm max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 justify-between self-start">
-        <!-- Logo -->
         <div class="bg-gray-800 p-2 dark:p-0 rounded-xl dark:border-neutral-700">
             <img @click.prevent="back" class="cursor-pointer flex-none inline-block h-16"
                 src="../../assets/cards-light.png" alt="Memory Game Logo" title="Go to dashboard" />
         </div>
-        <!-- End Logo -->
-        <!-- Navigation -->
         <div class="flex items-center gap-x-2">
             <span v-if="isPlayer()"
                 class="mr-3 inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium border bg-gray-800 text-white border-gray-800 dark:border-white dark:text-white">
@@ -115,18 +109,15 @@ const isPlayer = () => {
                             <i class="pi pi-sign-out"></i>
                             Logout
                         </a>
-
                         <a v-if="!authStore.user"
                             class="cursor-pointer flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-white dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700"
                             @click="leave">
                             <i class="pi pi-sign-out"></i>
                             Leave
-
                         </a>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- End Navigation -->
     </header>
 </template>

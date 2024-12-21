@@ -10,7 +10,6 @@ const joinGame = (id) => {
     storeAuth.refreshUserData()
 }
 </script>
-
 <template>
     <div class="divide-y divide-solid divide-gray-200">
         <div v-for="game in storeLobby.games" :key="game.id" class="flex ps-2 pe-1">

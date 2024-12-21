@@ -4,9 +4,7 @@ import axios from 'axios';
 import CardComponent from '@/components/ui/game/CardSingleplayer.vue';
 import { toast } from '@/components/ui/toast/use-toast';
 import { format } from 'date-fns';
-import { useConfirm } from "primevue/useconfirm";
-import ConfirmDialog from 'primevue/confirmdialog';
-import { useRouter } from 'vue-router';
+
 import { useAuthStore } from '@/stores/auth';
 
 const authStore = useAuthStore();
@@ -50,7 +48,6 @@ watch(nParesEncontrados, async (n) => {
         clearInterval(intervalo);
         isGameWon.value = true;
         document.getElementById("background").pause();
-        // Save game to database
         if (user) {
             const ended_at = new Date();
             const game = {
@@ -158,7 +155,6 @@ const showHint = async () => {
         authStore.refreshUserData();
     }
     const unflippedPairs = [];
-
     for (let i = 0; i < numbers.length; i++) {
         if (!flippedCards.value[i]) {
             for (let j = i + 1; j < numbers.length; j++) {
@@ -168,7 +164,6 @@ const showHint = async () => {
             }
         }
     }
-
     if (unflippedPairs.length > 0) {
         const [index1, index2] = unflippedPairs[0];
         flippedCards.value[index1] = true;
@@ -177,8 +172,6 @@ const showHint = async () => {
             flippedCards.value[index1] = false;
             flippedCards.value[index2] = false;
         }, 750);
-    } else {
-        console.log('No unflipped pairs found.');
     }
 }
 
@@ -231,6 +224,10 @@ const showTemplateBack = () => {
         }
     });
 };
+
+onMounted(() => {
+    document.title = 'The Memory Game - Singleplayer';
+})
 </script>
 
 <template>
@@ -247,10 +244,12 @@ const showTemplateBack = () => {
                     <i class="pi pi-arrow-left text-gray-900"></i>
                 </div>
                 <div id="time" class="justify-center">
-                    <p class="font-semibold text-lg dark:text-white text-gray-900">{{ ('0' + horas).slice(-2) + ':' + ('0' +
-                        minutos).slice(-2) + ':' + ('0' + segundos).slice(-2) }}</p>
+                    <p class="font-semibold text-lg dark:text-white text-gray-900">{{ ('0' + horas).slice(-2) + ':' +
+                        ('0' +
+                            minutos).slice(-2) + ':' + ('0' + segundos).slice(-2) }}</p>
                 </div>
-                <div v-show="authStore.user" @click="showTemplateHint()" id="hint" class="justify-center bg-white py-2 px-3 rounded-full">
+                <div v-show="authStore.user" @click="showTemplateHint()" id="hint"
+                    class="justify-center bg-white py-2 px-3 rounded-full">
                     <i class="pi pi-lightbulb text-gray-900"></i>
                 </div>
             </div>
@@ -289,7 +288,6 @@ const showTemplateBack = () => {
                 <div id="flips flex items-right justify-end">
                     <p class="font-semibold text-right text-white">Flips done: {{ nJogadas }}</p>
                 </div>
-
             </div>
         </footer>
         <ConfirmDialog group="hint">
@@ -297,7 +295,8 @@ const showTemplateBack = () => {
                 <div
                     class="flex flex-col items-center w-full gap-4 border-b border-surface-200 dark:border-surface-700">
                     <i :class="slotProps.message.icon" class="!text-6xl text-primary-500"></i>
-                    <p class="pb-2">Are you sure you want to use the hint? <br> Using the Hint costs <strong>1 coin</strong></p>
+                    <p class="pb-2">Are you sure you want to use the hint? <br> Using the Hint costs <strong>1
+                            coin</strong></p>
                 </div>
             </template>
         </ConfirmDialog>

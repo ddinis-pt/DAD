@@ -98,7 +98,9 @@ export const useLobbyStore = defineStore('lobby', () => {
       storeAuth.refreshUserData()
       // After adding the game to the DB emit a message to the server to start the game
       socket.emit('startGame', newGameOnDB, (startedGame) => {
-        console.log('Game has started', startedGame)
+        if (webSocketServerResponseHasError(startedGame)) {
+          return
+        }
       })
     })
   }

@@ -1,11 +1,10 @@
 <script setup>
-import { ref, onMounted, computed } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 
 import CardComponent from './CardComponent.vue';
 import { useAuthStore } from '@/stores/auth';
 
-const nJogadas = ref(0);
 const timer = ref(0);
 
 const props = defineProps({
@@ -21,9 +20,6 @@ const flipped = props.game.flipped;
 const emits = defineEmits(['play']);
 
 const isGameWon = ref(false);
-
-const router = useRouter();
-const authStore = useAuthStore();
 
 const cartaVirada = (index) => {
     emits('play', index);

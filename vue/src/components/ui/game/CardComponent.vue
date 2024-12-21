@@ -32,7 +32,6 @@ const ghost = ref(false)
 
 if (props.game && Object.hasOwn(props.game, 'pairs')) {
     watch(() => props.game.pairs, (newValue) => {
-        // check if the card is in the pairs array
         newValue.forEach(element => {
             if (element.includes(props.index)) {
                 ghost.value = true
@@ -45,7 +44,6 @@ const emits = defineEmits(['has-been-flipped'])
 
 const number = ref(props.number)
 
-// watch on props.game flipped array
 watch(
     () => props.game.flipped[props.index],
     (newValue) => {

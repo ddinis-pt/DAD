@@ -131,7 +131,6 @@ export const useGamesStore = defineStore('games', () => {
                 player2: game.player2
             })
             const updatedGameOnDB = APIresponse.data
-            console.log('Game has ended and updated on the database: ', updatedGameOnDB)
 
             // give the winner 7 coins
             if (game.gameStatus !== 3) {
@@ -143,7 +142,6 @@ export const useGamesStore = defineStore('games', () => {
                     game_id: game.id,
                     brain_coins: 7,
                   })
-                console.log("Winner's coins have been updated: ", APIresponse2.data)
             }
         }
 
@@ -161,7 +159,6 @@ export const useGamesStore = defineStore('games', () => {
             player_won: currentPlayerWon(),
             pairs_discovered: game.player1 === storeAuth.userId ? game.pairsByPlayer1 : game.pairsByPlayer2,
         });
-        console.log("Game inserted into the multiplayer games played table: ", MPresponse.data);
     })
 
     socket.on('gameChanged', (game) => {
@@ -195,7 +192,6 @@ export const useGamesStore = defineStore('games', () => {
             total_time: Math.round((endedAt - new Date(game.began_at)) / 1000).toFixed(2)
         })
         const updatedGameOnDB = APIresponse.data
-        console.log('Game was interrupted and updated on the database: ', updatedGameOnDB)
     })
 
     return {

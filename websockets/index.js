@@ -234,15 +234,12 @@ io.on("connection", (socket) => {
     // load game state from the game data stored directly on the room object:
     const game = socket.adapter.rooms.get(roomName).game;
     const quitResult = gameEngine.quit(game, socket.id);
-    console.log(quitResult);
     if (quitResult !== true) {
       if (callback) {
         callback(quitResult);
       }
       return;
     }
-
-    console.log(game);
 
     // notify all users playing the game (in the room) that the game state has changed
     // Also, notify them that the game has been quit and the game has ended
@@ -284,12 +281,10 @@ io.on("connection", (socket) => {
     }
 
     const player2Socket = io.sockets.sockets.get(game.player2SocketId);
-    console.log("player2Socket", player2Socket.data.user);
     if (player2Socket) {
       player2Socket.leave(roomName);
     }
     const player1Socket = io.sockets.sockets.get(game.player1SocketId);
-    console.log("player1Socket", player1Socket.data.user);
     if (player1Socket) {
       player1Socket.leave(roomName);
     }

@@ -75,6 +75,20 @@ class UserController extends Controller
         return response()->json(null, 204);
     }
 
+    public function destroyByAdmin(Request $request, $id) {
+        $user = User::find($id);
+        if ($request?->user()?->type != 'A') {
+            return response()->json(['message' => 'Unauthorized'], 401);
+        }
+        if ($user == null) {
+            return response()->json(['message' => 'Forbidden'], 403);
+        }
+        $user->tokens()->delete();
+        DB::update('update users set brain_coins_balance = 0 where id = ?', [$id]);
+        $user->delete();
+        return response()->json(null, 204);
+    }
+
     public function block(Request $request, $id)
     {
         $user = User::find($id);
@@ -162,7 +176,8 @@ class UserController extends Controller
                     $user->save();
                     return response()->json(['message' => 'Coins bought successfully'], 201);
                 } else if ($pedido->status() == 422) {
-                    return response()->json(['message' => $pedido->body()['message']], $pedido->status());
+                    $obj = json_decode($pedido->body());
+                    return response()->json(['message' => $obj->message, 'status' => $obj->status], $pedido->status());
                 } else {
                     return response()->json(['message' => 'Error buying coins'], 500);
                 }

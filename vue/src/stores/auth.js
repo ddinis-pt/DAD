@@ -151,7 +151,9 @@ export const useAuthStore = defineStore('auth', () => {
   const logout = async (user) => {
     storeError.resetMessages()
     try {
-      await axios.post('auth/logout', user)
+      if(user) {
+        await axios.post('auth/logout', user)
+      }
       clearUser()
       return true
     } catch (e) {

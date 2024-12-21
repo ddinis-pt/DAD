@@ -25,7 +25,6 @@ onMounted(() => {
     storeLobby.fetchGames()
 })
 </script>
-
 <template>
     <Card class="my-8 py-2 px-1">
         <CardHeader class="pb-0">

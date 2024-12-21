@@ -1,5 +1,5 @@
 <script setup>
-import { onBeforeMount, onMounted, ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import { useAuthStore } from '@/stores/auth'
 import { useRouter, useRoute } from 'vue-router'
 import axios from 'axios';
@@ -32,7 +32,6 @@ const handleFileUpload = (event) => {
 
 const submit = async () => {
     let foto = null;
-    console.log(photo.value)
     if (photo.value !== '') {
         const form = new FormData();
         form.append('photo', photo.value);
@@ -56,7 +55,6 @@ const submit = async () => {
     if (foto === null) {
         foto = currentPhoto.value
     }
-    console.log(foto)
     await axios.put(`/users/${id.value}/update`, {
         email: email.value,
         password: password.value,
@@ -76,6 +74,25 @@ const submit = async () => {
             toast({
                 title: 'Error',
                 description: 'Unable to update user',
+                variant: 'error'
+            })
+        });
+}
+
+const deleteAccount = () => {
+    axios.delete(`/users/${id.value}/admin`)
+        .then(() => {
+            toast({
+                title: 'Success',
+                description: 'User deleted successfully',
+                variant: 'success'
+            })
+            router.push({ name: 'dashboard' })
+        })
+        .catch(() => {
+            toast({
+                title: 'Error',
+                description: 'Unable to delete user',
                 variant: 'error'
             })
         });
@@ -121,6 +138,7 @@ const getUserPhoto = (photo) => {
 <template>
     <div class="bg-gray-800 min-h-screen">
         <Header></Header>
+        <Toaster></Toaster>
         <main class="">
             <h1 class="text-3xl font-bold text-white text-center pt-8">Edit User:</h1>
             <div class="space-y-2 rounded-xl shadow-md bg-white px-6 py-4 mt-4 max-w-2xl mx-auto">
@@ -128,11 +146,8 @@ const getUserPhoto = (photo) => {
                     <h2 class="block text-2xl font-bold text-gray-800">{{ name }}</h2>
                 </div>
                 <div class="mt-5">
-
-                    <!-- Form -->
                     <form>
                         <div class="grid gap-y-4">
-                            <!-- Email -->
                             <div>
                                 <label for="email" class="block text-sm mb-2 text-gray-800">Email</label>
                                 <div class="relative">
@@ -149,8 +164,6 @@ const getUserPhoto = (photo) => {
                                     </div>
                                 </div>
                             </div>
-
-                            <!-- Nickname -->
                             <div>
                                 <label for="nickname" class="block text-sm mb-2 text-gray-800">Nickname</label>
                                 <div class="relative">
@@ -167,8 +180,6 @@ const getUserPhoto = (photo) => {
                                     </div>
                                 </div>
                             </div>
-
-                            <!-- Name -->
                             <div>
                                 <label for="name" class="block text-sm mb-2 text-gray-800">Name</label>
                                 <div class="relative">
@@ -185,8 +196,6 @@ const getUserPhoto = (photo) => {
                                     </div>
                                 </div>
                             </div>
-
-                            <!-- Password -->
                             <div>
                                 <div class="flex justify-between items-center">
                                     <label for="password" class="block text-sm mb-2 text-gray-800">Password</label>
@@ -204,8 +213,6 @@ const getUserPhoto = (photo) => {
                                     </div>
                                 </div>
                             </div>
-
-                            <!-- File Upload -->
                             <div class="flex flex-col">
                                 <label for="file-upload" class="inline-block text-sm mb-2 text-gray-800">Profile
                                     Picture</label>
@@ -216,8 +223,6 @@ const getUserPhoto = (photo) => {
                                     <span class="block text-xs text-left text-gray-500">Current profile
                                         picture</span>
                                 </div>
-
-
                                 <div class="relative">
                                     <input type="file" id="file-upload" name="file-upload"
                                         class="appearance-none py-3 px-4 border w-full bg-blue-600 rounded-lg text-sm focus:border-blue-600"
@@ -234,7 +239,6 @@ const getUserPhoto = (photo) => {
                             </button>
                         </div>
                     </form>
-                    <!-- End Form -->
                 </div>
             </div>
         </main>

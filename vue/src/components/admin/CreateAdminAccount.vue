@@ -1,9 +1,7 @@
 <script setup>
 import { onMounted, ref } from 'vue'
 import { useAuthStore } from '@/stores/auth';
-import { Button } from '@/components/ui/button';
 import { useRouter } from 'vue-router';
-import { toast } from "@/components/ui/toast/index.js";
 import Header from '@/components/ui/Header.vue'
 
 
@@ -13,7 +11,6 @@ const errorStore = useErrorStore()
 const authStore = useAuthStore()
 
 const photo = ref('')
-const photo_default = ref('avatar-none.png')
 const nickname = ref('')
 const name = ref('')
 const confirmPassword = ref('')
@@ -38,7 +35,6 @@ const submit = async () => {
     }
 
     if (photo.value !== '') {
-        console.log(photo.value)
         const form = new FormData();
         form.append('photo', photo.value)
         await axios.post('/images', form, {
@@ -102,6 +98,10 @@ const submit = async () => {
     }
 }
 
+onMounted(() => {
+    document.title = 'Memory Card Game | Register Admin'
+})
+
 </script>
 
 <template>
@@ -109,17 +109,11 @@ const submit = async () => {
         <Header></Header>
         <main>
             <h1 class="text-3xl font-bold dark:text-white text-gray-800 text-center pt-8">Register an admin account</h1>
-
             <div class="space-y-2 rounded-xl shadow-md bg-white dark:bg-slate-900 px-6 py-4 mt-4 max-w-2xl mx-auto">
-
                 <div class="mt-5">
-
-
-                    <!-- Form -->
                     <form>
                         <div class="gap-3 columns-2 pb-3">
                             <div>
-                                <!-- Email -->
                                 <div>
                                     <label for="email" class="block text-sm mb-2 text-gray-800 dark:text-white">Email</label>
                                     <div class="relative">
@@ -138,7 +132,6 @@ const submit = async () => {
                                 </div>
                             </div>
                             <div>
-                                <!-- Nickname -->
                                 <div>
                                     <label for="nickname" class="block text-sm mb-2 text-gray-800 dark:text-white">Nickname</label>
                                     <div class="relative">
@@ -155,13 +148,9 @@ const submit = async () => {
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
                         </div>
-
                         <div class="pb-3">
-
-                            <!-- Name -->
                             <div>
                                 <label for="name" class="block text-sm mb-2 text-gray-800 dark:text-white">Name</label>
                                 <div class="relative">
@@ -179,9 +168,7 @@ const submit = async () => {
                                 </div>
                             </div>
                         </div>
-
                         <div class="gap-3 columns-2 pb-3">
-                            <!-- Password -->
                             <div>
                                 <div class="flex justify-between items-center">
                                     <label for="password" class="block text-sm mb-2 text-gray-800 dark:text-white">Password</label>
@@ -201,7 +188,6 @@ const submit = async () => {
                                 </div>
                                 <p class="hidden text-xs text-red-600 mt-2" id="error">{{ responseData }}</p>
                             </div>
-                            <!-- Confirm Password -->
                             <div>
                                 <label for="confirmPassword" class="block text-sm mb-2 text-gray-800 dark:text-white">Confirm
                                     password</label>
@@ -220,10 +206,7 @@ const submit = async () => {
                                 </div>
                             </div>
                         </div>
-
                         <div class="pb-3">
-
-                            <!-- File Upload -->
                             <div class="pb-3">
                                 <label for="file-upload" class="inline-block text-sm mb-2 text-gray-800 dark:text-white">Profile
                                     Picture</label>
@@ -233,19 +216,14 @@ const submit = async () => {
                                         @change="handleFileUpload">
                                 </div>
                             </div>
-
                             <button @click.prevent="submit"
                                 class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
                                 Register
                             </button>
-
                         </div>
                     </form>
-                    <!-- End Form -->
                 </div>
-
             </div>
-
         </main>
     </div>
 </template>
