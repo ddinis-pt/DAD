@@ -38,6 +38,7 @@ watch(nParesEncontrados, async (n) => {
     if (n == 6) {
         clearInterval(intervalo);
         isGameWon.value = true;
+        document.getElementById("background").pause();
         // Save game to database
         if (user) {
             const game = {
@@ -151,7 +152,7 @@ const showHint = () => {
                         ('0' +
                             minutos).slice(-2) + ':' + ('0' + segundos).slice(-2) }}</p>
                 </div>
-                <div @click="showHint" id="hint" class="justify-center">
+                <div v-show="authStore.user" @click="showHint" id="hint" class="justify-center">
                     <svg width="46" height="46" viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <circle cx="23" cy="23" r="23" fill="#1E293B" />
                         <path
