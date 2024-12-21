@@ -23,7 +23,17 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/leaderboard/time', [GameController::class, "getTopTenByTime"]);
     Route::get('/leaderboard/turns', [GameController::class, "getTopTenByTurns"]);
 
+    Route::get('/leaderboard/personal/time/{board}', [GameController::class, "getTop3ByTime"]);
+    Route::get('/leaderboard/personal/turns/{board}', [GameController::class, "getTop3ByTurns"]);
+
+    Route::get('games/multiplayer/wins', [GameController::class, "getMultiplayerVictories"]);
+    Route::get('games/multiplayer/losses', [GameController::class, "getMultiplayerLosses"]);
+
+
+
     Route::get('/games/singleplayer/{id}', [GameController::class, "getAllSingleGamesByUser"]);
+
+
     Route::get('/games/multiplayer/{id}', [GameController::class, "getMultiplayerGamesByUser"]);
     Route::get('/games/winner/{id}', [GameController::class, "getWinnerName"]);
     Route::get('/games', [GameController::class, 'index']);
@@ -45,8 +55,9 @@ Route::get('/users/{id}', [UserController::class, "show"]);
 //Games
 
 
-
-Route::get('/leaderboard/time/global', [GameController::class, "getTopTenByTimeGlobal"]);
-Route::get('/leaderboard/turns/global', [GameController::class, "getTopTenByTurnsGlobal"]);
+Route::get('/leaderboard/top/wins', [GameController::class, "getTop5PlayersMostVictories"]);
+Route::get('/leaderboard/turns/global', [GameController::class, "getTop3ByTurnsGlobal"]);
+Route::get('/leaderboard/global/time/{board}', [GameController::class, "getTop1byTime"]);
+Route::get('/leaderboard/global/turns/{board}', [GameController::class, "getTop1byTurns"]);
 
 Route::post('/images', [UserController::class, "getImagePath"]);
