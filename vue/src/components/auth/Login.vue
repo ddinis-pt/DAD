@@ -62,7 +62,7 @@ onMounted (() => {
 
         <!-- Logo -->
         <div class="flex items-center justify-center bg-gray-800 rounded-xl py-2">
-          <img class="flex-none inline-block h-8" src="../../assets/cards-light.png" alt="ESTG Logo" />
+          <img class="flex-none inline-block h-8" src="../../assets/cards-light.png" alt="The Memory Game Logo" />
         </div>
 
         <div class="text-center py-4">

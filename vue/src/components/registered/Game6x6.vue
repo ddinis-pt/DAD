@@ -257,14 +257,14 @@ const showTemplateBack = () => {
     <audio id="flip" volume="0.2">
         <source src="/src/assets/flip.mp3" type="audio/mpeg">
     </audio>
-    <div class="min-h-screen flex flex-col justify-between bg-gray-50">
+    <div class="min-h-screen flex flex-col justify-between bg-sky-50 dark:bg-gray-800">
         <header>
             <div class="flex gap-x-8 gap-y-4 grid-cols-3 justify-between items-center px-4 py-2">
                 <div @click="showTemplateBack()" id="back" class="justify-center bg-white py-2 px-3 rounded-full">
                     <i class="pi pi-arrow-left text-gray-900"></i>
                 </div>
                 <div id="time" class="justify-center">
-                    <p class="font-semibold text-lg  text-gray-900">{{ ('0' + horas).slice(-2) + ':' + ('0' +
+                    <p class="font-semibold text-lg dark:text-white text-gray-900">{{ ('0' + horas).slice(-2) + ':' + ('0' +
                         minutos).slice(-2) + ':' + ('0' + segundos).slice(-2) }}</p>
                 </div>
                 <div v-show="authStore.user" @click="showTemplateHint()" id="hint" class="justify-center bg-white py-2 px-3 rounded-full">

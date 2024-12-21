@@ -215,7 +215,7 @@ const showTemplateBack = () => {
                     <i class="pi pi-arrow-left text-gray-900"></i>
                 </div>
                 <div id="time" class="justify-center">
-                    <p class="font-semibold text-lg  dark:text-white text-gray-900">{{ ('0' + horas).slice(-2) + ':' +
+                    <p class="font-semibold text-lg dark:text-white text-gray-900">{{ ('0' + horas).slice(-2) + ':' +
                         ('0' +
                             minutos).slice(-2) + ':' + ('0' + segundos).slice(-2) }}</p>
                 </div>
