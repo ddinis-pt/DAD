@@ -4,6 +4,7 @@ import { useAuthStore } from '@/stores/auth';
 import { Button } from '@/components/ui/button';
 import { useRouter } from 'vue-router';
 import { toast } from "@/components/ui/toast/index.js";
+import Header from '@/components/ui/Header.vue'
 
 
 import { useErrorStore } from '@/stores/error';
@@ -104,19 +105,12 @@ const submit = async () => {
 </script>
 
 <template>
-    <div class="flex items-center w-full justify-center bg-gray-800 min-h-screen min-w-screen">
-        <main class="w-full max-w-3xl py-5">
-            <div class="flex flex-col space-y-2 px-6 py-4 rounded-xl shadow-md bg-white">
+    <div class="min-h-screen bg-sky-50 dark:bg-gray-800">
+        <Header></Header>
+        <main>
+            <h1 class="text-3xl font-bold dark:text-white text-gray-800 text-center pt-8">Register an admin account</h1>
 
-                <!-- Logo -->
-                <div class="flex items-center justify-center bg-gray-800 rounded-xl py-2">
-                    <img class="flex-none inline-block h-8" src="../../assets/cards-light.png" alt="Memory Game logo" />
-                </div>
-
-                <div class="text-center py-4">
-                    <h2 class="block text-2xl font-bold text-gray-800">Register an admin account</h2>
-                </div>
-
+            <div class="space-y-2 rounded-xl shadow-md bg-white dark:bg-slate-900 px-6 py-4 mt-4 max-w-2xl mx-auto">
 
                 <div class="mt-5">
 
@@ -127,7 +121,7 @@ const submit = async () => {
                             <div>
                                 <!-- Email -->
                                 <div>
-                                    <label for="email" class="block text-sm mb-2 text-gray-800">Email</label>
+                                    <label for="email" class="block text-sm mb-2 text-gray-800 dark:text-white">Email</label>
                                     <div class="relative">
                                         <input v-model="email" type="text" id="email" name="email"
                                             placeholder="Your email goes here"
@@ -146,7 +140,7 @@ const submit = async () => {
                             <div>
                                 <!-- Nickname -->
                                 <div>
-                                    <label for="nickname" class="block text-sm mb-2 text-gray-800">Nickname</label>
+                                    <label for="nickname" class="block text-sm mb-2 text-gray-800 dark:text-white">Nickname</label>
                                     <div class="relative">
                                         <input v-model="nickname" type="text" id="nickname" name="nickname"
                                             placeholder="Your nickname goes here"
@@ -169,7 +163,7 @@ const submit = async () => {
 
                             <!-- Name -->
                             <div>
-                                <label for="name" class="block text-sm mb-2 text-gray-800">Name</label>
+                                <label for="name" class="block text-sm mb-2 text-gray-800 dark:text-white">Name</label>
                                 <div class="relative">
                                     <input v-model="name" type="text" id="name" name="name"
                                         placeholder="Your name goes here"
@@ -190,7 +184,7 @@ const submit = async () => {
                             <!-- Password -->
                             <div>
                                 <div class="flex justify-between items-center">
-                                    <label for="password" class="block text-sm mb-2 text-gray-800">Password</label>
+                                    <label for="password" class="block text-sm mb-2 text-gray-800 dark:text-white">Password</label>
                                 </div>
                                 <div class="relative">
                                     <input v-model="password" type="password" id="password" name="password"
@@ -209,7 +203,7 @@ const submit = async () => {
                             </div>
                             <!-- Confirm Password -->
                             <div>
-                                <label for="confirmPassword" class="block text-sm mb-2 text-gray-800">Confirm
+                                <label for="confirmPassword" class="block text-sm mb-2 text-gray-800 dark:text-white">Confirm
                                     password</label>
                                 <div class="relative">
                                     <input v-model="confirmPassword" type="password" id="confirmPassword"
@@ -231,7 +225,7 @@ const submit = async () => {
 
                             <!-- File Upload -->
                             <div class="pb-3">
-                                <label for="file-upload" class="inline-block text-sm mb-2 text-gray-800">Profile
+                                <label for="file-upload" class="inline-block text-sm mb-2 text-gray-800 dark:text-white">Profile
                                     Picture</label>
                                 <div class="relative">
                                     <input type="file" id="file-upload" name="file-upload"

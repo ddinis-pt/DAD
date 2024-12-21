@@ -42,28 +42,40 @@ onBeforeMount(() => {
     }
     isPlayer()
 
-    getTransactions()
-
-    getGames()
+    fetchMultipleData()
 })
 
 const formatDateTime = (date) => {
     return new Date(date).toUTCString()
 }
 
-// === Transactions ===
-const getTransactions = async () => {
-    try {
-        const response = await axios.get('transactions')
-        console.log('transactions:', response.data)
-        response.data.forEach(transaction => {
-            transaction.transaction_datetime = new Date(transaction.transaction_datetime)
-        })
-        transactions.value = response.data
-    } catch (error) {
-        console.error('Error fetching users:', error)
-    }
+async function fetchMultipleData() {
+  try {
+    const [data1, data2] = await Promise.all([
+      axios.get('transactions'),
+      axios.get('games/all'),
+    ]);
+
+    // Handle the data
+    data1.data.forEach(transaction => {
+        transaction.transaction_datetime = new Date(transaction.transaction_datetime)
+    })
+
+    data2.data.forEach(game => {
+        game.began_at = new Date(game.created_at)
+        game.ended_at = new Date(game.updated_at)
+    })
+
+    transactions.value = data1.data
+    games.value = data2.data
+    
+  } catch (error) {
+    // Handle errors
+    console.error('Error fetching data:', error)
+  }
 }
+
+// === Transactions ===
 
 const columnsTransactions = [
     { field: 'transaction_datetime', header: 'Transaction Datetime' },
@@ -131,20 +143,6 @@ const showFilterMatchModes = (data) => {
 }
 
 // === Games ===
-const getGames = async () => {
-    try {
-        const response = await axios.get('games/all')
-        console.log('games:', response.data)
-        response.data.forEach(game => {
-            game.began_at = new Date(game.created_at)
-            game.ended_at = new Date(game.updated_at)
-        })
-        games.value = response.data
-    } catch (error) {
-        console.error('Error fetching users:', error)
-    }
-}
-
 const columnsGames = [
     { field: 'created_user_id', header: 'Created User ID' },
     { field: 'winner_user_id', header: 'Winner User ID' },
@@ -225,96 +223,38 @@ const clearFilterGames = () => {
     initFiltersGames();
 };
 
-
 </script>
 
 <template>
 
-    <div class="min-h-screen bg-white dark:bg-gray-800">
+    <div class="min-h-screen bg-sky-50 dark:bg-gray-800">
         <Header></Header>
         <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 content-top min-w-full  items-center	">
 
-            <div class="border-b border-gray-200 dark:border-neutral-700">
+
                 <nav class="-mb-0.5 flex justify-center gap-x-6" aria-label="Tabs" role="tablist"
                     aria-orientation="horizontal">
                     <button type="button"
-                        class="hs-tab-active:font-semibold hs-tab-active:border-blue-600 hs-tab-active:text-blue-600 py-4 px-1 inline-flex items-center gap-x-2 border-b-2 border-transparent text-sm whitespace-nowrap text-gray-500 hover:text-blue-600 focus:outline-none focus:text-blue-600 disabled:opacity-50 disabled:pointer-events-none dark:text-neutral-400 dark:hover:text-blue-500 active"
+                        class="hs-tab-active:font-semibold hs-tab-active:border-blue-600 hs-tab-active:text-blue-600 py-4 px-1 inline-flex items-center gap-x-2 border-b-2 border-transparent text-sm whitespace-nowrap text-gray-800 hover:text-blue-600 focus:outline-none focus:text-blue-600 disabled:opacity-50 disabled:pointer-events-none dark:text-white dark:hover:text-blue-500 active"
                         id="horizontal-alignment-item-1" aria-selected="true" data-hs-tab="#horizontal-alignment-1"
                         aria-controls="horizontal-alignment-1" role="tab">
-                        Transactions
-                    </button>
-                    <button type="button"
-                        class="hs-tab-active:font-semibold hs-tab-active:border-blue-600 hs-tab-active:text-blue-600 py-4 px-1 inline-flex items-center gap-x-2 border-b-2 border-transparent text-sm whitespace-nowrap text-gray-500 hover:text-blue-600 focus:outline-none focus:text-blue-600 disabled:opacity-50 disabled:pointer-events-none dark:text-neutral-400 dark:hover:text-blue-500"
-                        id="horizontal-alignment-item-2" aria-selected="false" data-hs-tab="#horizontal-alignment-2"
-                        aria-controls="horizontal-alignment-2" role="tab">
+                        <i class="pi pi-trophy"></i>
                         Games
                     </button>
+                    <button type="button"
+                        class="hs-tab-active:font-semibold hs-tab-active:border-blue-600 hs-tab-active:text-blue-600 py-4 px-1 inline-flex items-center gap-x-2 border-b-2 border-transparent text-sm whitespace-nowrap text-gray-800 hover:text-blue-600 focus:outline-none focus:text-blue-600 disabled:opacity-50 disabled:pointer-events-none dark:text-white dark:hover:text-blue-500"
+                        id="horizontal-alignment-item-2" aria-selected="false" data-hs-tab="#horizontal-alignment-2"
+                        aria-controls="horizontal-alignment-2" role="tab">
+                        <i class="pi pi-money-bill"></i>
+                        Transactions
+                    </button>
                 </nav>
-            </div>
+
 
             <div class="mt-3">
                 <div id="horizontal-alignment-1" role="tabpanel" aria-labelledby="horizontal-alignment-item-1">
+                    <h1 class="text-3xl font-bold text-slate-900 dark:text-white text-center py-6">Games</h1>
                     <div class="bg-white rounded-xl p-4 md:p-4 dark:bg-slate-900">
-                        <h1 class="text-3xl font-bold text-slate-900 dark:text-white text-center py-6">Transactions</h1>
-                        <DataTable :value="transactions" paginator :rows="10" :rowsPerPageOptions="[10, 20]"
-                            size="small" v-model:filters="filtersTransactions" filterDisplay="menu"
-                            :globalFilterFields="['user_id']" removableSort>
-                            <template #header>
-                                <div class="flex justify-between">
-                                    <Button type="button"
-                                        class="border rounded-md py-2 px-3 inline-flex justify-center items-center"
-                                        @click="clearFilterTransactions()">
-                                        <i class="pi pi-filter-slash pr-2"></i>
-                                        <span>Clear</span>
-                                    </Button>
-                                    <IconField>
-                                        <InputIcon>
-                                            <i class="pi pi-search" />
-                                        </InputIcon>
-                                        <InputText v-model="filtersTransactions['global'].value"
-                                            placeholder="Enter user ID" />
-                                    </IconField>
-                                </div>
-                            </template>
-                            <Column v-for="col of columnsTransactions" :key="col.field" :field="col.field"
-                                :header="col.header" :sortable="true" :filterField="col.field" :showFilterMenu="true"
-                                :showFilterMatchModes="showFilterMatchModes(col.field)"
-                                :dataType="getDataType(col.field)">
-                                <template #body="slotProps">
-                                    <span v-if="col.field === 'type'">{{ typeTransaction(slotProps.data[col.field])
-                                        }}</span>
-                                    <span v-else-if="col.field === 'transaction_datetime'">{{
-                                        formatDateTime(slotProps.data[col.field]) }}</span>
-                                    <span v-else>{{ slotProps.data[col.field] }}</span>
-                                </template>
-                                <template #filter="{ filterModel }" v-if="col.field === 'transaction_datetime'">
-                                    <DatePicker v-model="filterModel.value" dateFormat="dd/mm/yy"
-                                        placeholder="dd/mm/yyyy" />
-                                </template>
-                                <template #filter="{ filterModel }" v-if="col.field === 'type'">
-                                    <Select v-model="filterModel.value" :options="typesTransactions" optionValue="value"
-                                        optionLabel="label" placeholder="Any">
-                                        <template #option="slotProps">
-                                            <span>{{ slotProps.option.label }}</span>
-                                        </template>
-                                    </Select>
-                                </template>
-                                <template #filter="{ filterModel }" v-if="col.field === 'payment_type'">
-                                    <Select v-model="filterModel.value" :options="payment_type" optionValue="value"
-                                        optionLabel="label" placeholder="Any">
-                                        <template #option="slotProps">
-                                            <span>{{ slotProps.option.label }}</span>
-                                        </template>
-                                    </Select>
-                                </template>
-                            </Column>
-                        </DataTable>
-                    </div>
-                </div>
-                <div id="horizontal-alignment-2" class="hidden" role="tabpanel"
-                    aria-labelledby="horizontal-alignment-item-2">
-                    <div class="bg-white rounded-xl p-4 md:p-4 dark:bg-slate-900 mt-8">
-                        <h1 class="text-3xl font-bold text-slate-900 dark:text-white text-center py-6">Games</h1>
                         <DataTable :value="games" paginator :rows="10" :rowsPerPageOptions="[10, 20]" size="small"
                             removableSort v-model:filters="filtersGames" filterDisplay="menu">
                             <template #header>
@@ -330,10 +270,7 @@ const clearFilterGames = () => {
                                             <i class="pi pi-search" />
                                         </InputIcon>
                                         <InputText v-model="filtersGames['created_user_id'].value"
-                                            placeholder="Enter user ID" />
-                                        <Message size="small" severity="secondary" variant="simple">Enter the ID of the
-                                            user
-                                            that created a game</Message>
+                                            placeholder="Enter created user ID" />
                                     </IconField>
                                     <IconField>
                                         <InputIcon>
@@ -341,9 +278,6 @@ const clearFilterGames = () => {
                                         </InputIcon>
                                         <InputText v-model="filtersGames['winner_user_id'].value"
                                             placeholder="Enter winner user ID" />
-                                        <Message size="small" severity="secondary" variant="simple">Enter the ID of the
-                                            user
-                                            that won a game</Message>
                                     </IconField>
                                 </div>
                             </template>
@@ -399,6 +333,67 @@ const clearFilterGames = () => {
                                         placeholder="dd/mm/yyyy" />
                                 </template>
                             </Column>
+                            <template #footer> Total of games: {{ games ? games.length : 0 }}</template>
+                        </DataTable>
+                    </div>
+                </div>
+                <div id="horizontal-alignment-2" class="hidden" role="tabpanel"
+                    aria-labelledby="horizontal-alignment-item-2">
+                    <h1 class="text-3xl font-bold text-slate-900 dark:text-white text-center py-6">Transactions</h1>
+                    <div class="bg-white rounded-xl p-4 md:p-4 dark:bg-slate-900">
+                        <DataTable :value="transactions" paginator :rows="10" :rowsPerPageOptions="[10, 20]"
+                            size="small" v-model:filters="filtersTransactions" filterDisplay="menu"
+                            :globalFilterFields="['user_id']" removableSort>
+                            <template #header>
+                                <div class="flex justify-between">
+                                    <Button type="button"
+                                        class="border rounded-md py-2 px-3 inline-flex justify-center items-center"
+                                        @click="clearFilterTransactions()">
+                                        <i class="pi pi-filter-slash pr-2"></i>
+                                        <span>Clear</span>
+                                    </Button>
+                                    <IconField>
+                                        <InputIcon>
+                                            <i class="pi pi-search" />
+                                        </InputIcon>
+                                        <InputText v-model="filtersTransactions['global'].value"
+                                            placeholder="Enter user ID" />
+                                    </IconField>
+                                </div>
+                            </template>
+                            <Column v-for="col of columnsTransactions" :key="col.field" :field="col.field"
+                                :header="col.header" :sortable="true" :filterField="col.field" :showFilterMenu="true"
+                                :showFilterMatchModes="showFilterMatchModes(col.field)"
+                                :dataType="getDataType(col.field)">
+                                <template #body="slotProps">
+                                    <span v-if="col.field === 'type'">{{ typeTransaction(slotProps.data[col.field])
+                                        }}</span>
+                                    <span v-else-if="col.field === 'transaction_datetime'">{{
+                                        formatDateTime(slotProps.data[col.field]) }}</span>
+                                    <span v-else>{{ slotProps.data[col.field] }}</span>
+                                </template>
+                                <template #filter="{ filterModel }" v-if="col.field === 'transaction_datetime'">
+                                    <DatePicker v-model="filterModel.value" dateFormat="dd/mm/yy"
+                                        placeholder="dd/mm/yyyy" />
+                                </template>
+                                <template #filter="{ filterModel }" v-if="col.field === 'type'">
+                                    <Select v-model="filterModel.value" :options="typesTransactions" optionValue="value"
+                                        optionLabel="label" placeholder="Any">
+                                        <template #option="slotProps">
+                                            <span>{{ slotProps.option.label }}</span>
+                                        </template>
+                                    </Select>
+                                </template>
+                                <template #filter="{ filterModel }" v-if="col.field === 'payment_type'">
+                                    <Select v-model="filterModel.value" :options="payment_type" optionValue="value"
+                                        optionLabel="label" placeholder="Any">
+                                        <template #option="slotProps">
+                                            <span>{{ slotProps.option.label }}</span>
+                                        </template>
+                                    </Select>
+                                </template>
+                            </Column>
+                            <template #footer> Total of transactions: {{ transactions ? transactions.length : 0 }}</template>
                         </DataTable>
                     </div>
                 </div>
