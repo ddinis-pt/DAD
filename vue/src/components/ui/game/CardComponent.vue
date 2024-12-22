@@ -53,9 +53,9 @@ watch(
 
 const getImg = computed(() => {
     if (number.value > 6) {
-        return `/src/assets/cards/c${number.value - 6}.png`;
+        return `/assets/cards/c${number.value - 6}.png`;
     }
-    return `/src/assets/cards/c${number.value}.png`;
+    return `/assets/cards/c${number.value}.png`;
 })
 
 const getText = computed(() => {

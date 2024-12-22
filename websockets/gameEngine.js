@@ -8,10 +8,10 @@ exports.createGameEngine = () => {
     // 3 -> draw
     gameFromDB.currentPlayer = gameFromDB.created_user_id;
     // Randomized numbers
-    // gameFromDB.board = Array.from({ length: 6 }, (_, i) => i + 1).flatMap(n => [n, n]).sort(() => Math.random() - 0.5);
+    gameFromDB.board = Array.from({ length: 6 }, (_, i) => i + 1).flatMap(n => [n, n]).sort(() => Math.random() - 0.5);
 
     // Static numbers for testing
-    gameFromDB.board = [1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6];
+    //gameFromDB.board = [1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6];
     gameFromDB.flipped = Array.from({ length: 12 }, () => false);
     gameFromDB.currentlyFlipped = [];
     gameFromDB.pairsFound = 0;
